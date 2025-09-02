@@ -40,7 +40,7 @@ public class Pagination : ContentControl
             nameof(PageSize),
             typeof(int),
             typeof(Pagination),
-            new PropertyMetadata(16, OnPageSizeChanged));
+            new PropertyMetadata(20, OnPageSizeChanged));
 
     /// <summary>Identifies the <see cref="PageSizeOptions"/> dependency property.</summary>
     public static readonly DependencyProperty PageSizeOptionsProperty =
@@ -74,17 +74,7 @@ public class Pagination : ContentControl
     private System.Windows.Controls.TextBlock _pageInfoTextBlock;
     private System.Windows.Controls.TextBox _pageInputTextBox;
     private System.Windows.Controls.ComboBox _pageSizeComboBox;
-
-    //static Pagination()
-    //{
-
-    //    DefaultStyleKeyProperty.OverrideMetadata(typeof(Pagination), new FrameworkPropertyMetadata(typeof(Pagination)));
-    //    // AcceptsReturnProperty.OverrideMetadata(typeof(NumberBox), new FrameworkPropertyMetadata(false));
-    //    //MaxLinesProperty.OverrideMetadata(typeof(NumberBox), new FrameworkPropertyMetadata(1));
-    //    //MinLinesProperty.OverrideMetadata(typeof(NumberBox), new FrameworkPropertyMetadata(1));
-    //    //FocusableProperty.OverrideMetadata(typeof(Pagination), new FrameworkPropertyMetadata(false));
-    //}
-
+ 
     /// <summary>
     /// 总记录数
     /// Total count of records
@@ -215,7 +205,7 @@ public class Pagination : ContentControl
     /// </summary>
     private static IEnumerable<int> CreateDefaultPageSizeOptions()
     {
-        return new int[] { 16, 32, 48 };
+        return new int[] { 10, 20,50,100,200,500,1000 };
     }
 
     /// <summary>
