@@ -122,7 +122,41 @@ public class DataGrid : System.Windows.Controls.DataGrid
                     }
                     return;
                 }
+                if (cell.Column is DataGridTemplateColumn templateColumn)
+                {
+                    // 检查编辑元素是否是ComboBox
+                    if (row != null)
+                    {
+                        this.SelectedItem = row.DataContext;
+                        this.CurrentCell = new DataGridCellInfo(cell);
 
+                        // 开始编辑
+                        this.BeginEdit();
+
+                        // 延迟查找并打开ComboBox下拉列表
+                        _ = this.Dispatcher.BeginInvoke(
+                            new Action(() =>
+                        {
+                            var comboBox = FindComboBoxInCell(cell);
+                            if (comboBox != null)
+                            {
+                                // 设置焦点并打开下拉列表
+                                comboBox.Focus();
+                                comboBox.IsDropDownOpen = true;
+
+                                // 标记正在操作ComboBox
+                                _isComboBoxSelecting = true;
+
+                                // 添加事件处理器
+                                comboBox.SelectionChanged -= ComboBox_SelectionChanged;
+                                comboBox.DropDownClosed -= ComboBox_DropDownClosed;
+                                comboBox.SelectionChanged += ComboBox_SelectionChanged;
+                                comboBox.DropDownClosed += ComboBox_DropDownClosed;
+                            }
+                        }), System.Windows.Threading.DispatcherPriority.Background);
+                    }
+                    return;
+                }
                 // 非ComboBox列的正常编辑处理
                 if (row != null)
                 {
@@ -401,10 +435,32 @@ public class DataGrid : System.Windows.Controls.DataGrid
                 comboBox.DropDownClosed -= ComboBox_DropDownClosed;
                 _isComboBoxSelecting = true;
 
-
                 // 添加新的事件处理器
                 comboBox.SelectionChanged += ComboBox_SelectionChanged;
                 comboBox.DropDownClosed += ComboBox_DropDownClosed;
+
+                // 自动打开下拉列表
+                comboBox.IsDropDownOpen = true;
+            }
+            else
+            {
+                // 如果编辑元素不是直接的ComboBox，在子元素中查找
+                var foundComboBox = FindComboBoxRecursive(e.EditingElement);
+                if (foundComboBox != null)
+                {
+                    // 移除之前的事件处理器（如果有）
+                    foundComboBox.SelectionChanged -= ComboBox_SelectionChanged;
+                    foundComboBox.DropDownClosed -= ComboBox_DropDownClosed;
+                    _isComboBoxSelecting = true;
+
+                    // 添加新的事件处理器
+                    foundComboBox.SelectionChanged += ComboBox_SelectionChanged;
+                    foundComboBox.DropDownClosed += ComboBox_DropDownClosed;
+
+                    // 设置焦点并自动打开下拉列表
+                    foundComboBox.Focus();
+                    foundComboBox.IsDropDownOpen = true;
+                }
             }
         }
     }
