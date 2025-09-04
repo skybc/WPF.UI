@@ -161,9 +161,9 @@
         TargetType="{x:Type CheckBox}">
         <Setter Property="MinHeight" Value="18" />
         <Setter Property="MinWidth" Value="18" />
-        <Setter Property="Height" Value="20"></Setter>
-        <Setter Property="Padding" Value="0"></Setter>
-        <Setter Property="Margin" Value="0"></Setter>
+        <Setter Property="Height" Value="20" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Margin" Value="0" />
 
     </Style>
     <Style BasedOn="{StaticResource DefaultCheckBoxStyle}" TargetType="{x:Type CheckBox}" />

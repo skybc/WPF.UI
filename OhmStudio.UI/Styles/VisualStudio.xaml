@@ -1,0 +1,18 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ctrls="clr-namespace:OhmStudio.UI.Controls">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/OhmStudio.UI;component/Styles/Custom/CustomControls.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/OhmStudio.UI;component/Styles/Custom/CustomWindows.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/OhmStudio.UI;Component/Styles/VS/ChromeWindow.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/OhmStudio.UI;Component/Styles/VS/GlyphButton.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/OhmStudio.UI;Component/Styles/VS/WindowSystemButton.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style BasedOn="{StaticResource ChromeWindowBaseStyle}" TargetType="{x:Type ctrls:ChromeWindow}" />
+
+    <Style BasedOn="{StaticResource GlyphButtonBaseStyle}" TargetType="{x:Type ctrls:GlyphButton}" />
+
+    <Style BasedOn="{StaticResource WindowSystemButtonBaseStyle}" TargetType="{x:Type ctrls:WindowSystemButton}" />
+
+</ResourceDictionary>

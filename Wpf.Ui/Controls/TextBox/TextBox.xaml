@@ -361,7 +361,7 @@
         <Setter Property="MinHeight" Value="20" />
         <Setter Property="MinWidth" Value="18" />
         <Setter Property="Padding" Value="1" />
-        <Setter Property="Margin" Value="0"></Setter>
+        <Setter Property="Margin" Value="0" />
         <Setter Property="Border.CornerRadius" Value="2" />
     </Style>
 

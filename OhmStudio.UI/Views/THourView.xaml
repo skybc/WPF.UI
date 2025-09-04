@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="OhmStudio.UI.Views.THourView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:OhmStudio.UI.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:OhmStudio.UI.Views"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ohmProperties="clr-namespace:OhmStudio.UI.Properties"
+             d:DesignHeight="250"
+             d:DesignWidth="400"
+             mc:Ignorable="d">
+
+    <Border BorderBrush="{DynamicResource EnvironmentMainWindowActiveDefaultBorder}" BorderThickness="1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid Background="{DynamicResource SystemColorsWindow}">
+                <TextBlock x:Name="tbTitle"
+                           Margin="4"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Text="{x:Static ohmProperties:Resources.DateTimePicker_Hour}" />
+                <controls:IconButton Height="16"
+                                     Margin="4"
+                                     HorizontalAlignment="Right"
+                                     VerticalAlignment="Center"
+                                     Click="IconButton_Click"
+                                     Icon="/OhmStudio.UI;component/Assets/Images/close.png"
+                                     ToolTip="{x:Static ohmProperties:Resources.Common_Close}" />
+            </Grid>
+            <DataGrid Name="dgHour"
+                      Grid.Row="1"
+                      AutoGenerateColumns="True"
+                      BorderThickness="0"
+                      CanUserAddRows="False"
+                      CellStyle="{DynamicResource GridCellCenter}"
+                      HeadersVisibility="None"
+                      IsReadOnly="True"
+                      SelectedCellsChanged="dgHour_SelectedCellsChanged"
+                      SelectionMode="Single"
+                      SelectionUnit="Cell" />
+
+        </Grid>
+    </Border>
+</UserControl>

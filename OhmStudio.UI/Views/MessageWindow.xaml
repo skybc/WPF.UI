@@ -1,0 +1,202 @@
+﻿<controls:ChromeWindow x:Class="OhmStudio.UI.Views.MessageWindow"
+                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                       xmlns:controls="clr-namespace:OhmStudio.UI.Controls"
+                       xmlns:converter="clr-namespace:OhmStudio.UI.Converters"
+                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                       xmlns:local="clr-namespace:OhmStudio.UI.Views"
+                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                       xmlns:ohmProperties="clr-namespace:OhmStudio.UI.Properties"
+                       MinWidth="160"
+                       MinHeight="150"
+                       d:Title="系统提示"
+                       ResizeMode="NoResize"
+                       SizeToContent="WidthAndHeight"
+                       SnapsToDevicePixels="True"
+                       UseLayoutRounding="True"
+                       mc:Ignorable="d">
+
+    <Window.Resources>
+
+        <!--<converter:DigitalCompensationConverter x:Key="DigitalCompensationConverter" />-->
+
+        <!--<Style x:Key="CloseButtonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Rectangle x:Name="ButtonBackground"
+                                       Fill="{TemplateBinding Background}"
+                                       Opacity="0" />
+                            <Border Name="Back">
+                                <Path x:Name="PathBack"
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"
+                                      Data="M0 0 10 10M0 10 10 0"
+                                      RenderTransformOrigin="0.5,0.5"
+                                      Stroke="{TemplateBinding Foreground}"
+                                      StrokeThickness="1">
+                                    <Path.LayoutTransform>
+                                        <RotateTransform x:Name="rtf" CenterX="0.5" CenterY="0.5" />
+                                    </Path.LayoutTransform>
+                                </Path>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="ButtonBackground"
+                                                             Storyboard.TargetProperty="Opacity"
+                                                             To="1"
+                                                             Duration="0:0:0.4" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="rtf"
+                                                             Storyboard.TargetProperty="Angle"
+                                                             From="0"
+                                                             To="180"
+                                                             Duration="0:0:0.4" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="ButtonBackground"
+                                                             Storyboard.TargetProperty="Opacity"
+                                                             To="0"
+                                                             Duration="0:0:0.4" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Back" Property="Background" Value="#fb7373" />
+                                <Setter TargetName="PathBack" Property="Stroke" Value="white" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Back" Property="Background" Value="#e14848" />
+                                <Setter TargetName="PathBack" Property="Stroke" Value="lightgray" />
+                            </Trigger>
+                            <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
+                                <Setter Property="Foreground" Value="{DynamicResource CommonControlsTextBoxText}" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType=Window}}" Value="False">
+                                <Setter Property="Foreground" Value="{DynamicResource CommonControlsTextBoxTextDisabled}" />
+                            </DataTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>-->
+
+    </Window.Resources>
+
+    <!--<WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="{Binding ElementName=gridTitle, Path=ActualHeight, Converter={StaticResource DigitalCompensationConverter}, ConverterParameter=-5}"
+                      GlassFrameThickness="1"
+                      ResizeBorderThickness="6"
+                      UseAeroCaptionButtons="False" />
+    </WindowChrome.WindowChrome>-->
+
+    <Grid FocusManager.FocusedElement="{Binding ElementName=btnOK}">
+        <Grid.RowDefinitions>
+            <!--<RowDefinition Height="Auto" />-->
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <!--<Grid Name="gridTitle">
+            <TextBlock x:Name="txtTitle"
+                       Margin="10,6,0,6"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center"
+                       d:Text="系统提示"
+                       Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=Title}">
+                <TextBlock.Style>
+                    <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="TextBlock">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
+                                <Setter Property="Foreground" Value="{DynamicResource CommonControlsTextBoxText}" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType=Window}}" Value="False">
+                                <Setter Property="Foreground" Value="{DynamicResource CommonControlsTextBoxTextDisabled}" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+            <Button x:Name="btnClose"
+                    Width="{Binding RelativeSource={RelativeSource Mode=Self}, Path=ActualHeight}"
+                    HorizontalAlignment="Right"
+                    Click="btnClose_Click"
+                    Focusable="False"
+                    Style="{StaticResource CloseButtonStyle}"
+                    ToolTip="{x:Static ohmProperties:Resources.Common_Close}"
+                    WindowChrome.IsHitTestVisibleInChrome="True" />
+        </Grid>-->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid>
+                <Image x:Name="imageInfo"
+                       Height="32"
+                       Margin="10,18,0,0"
+                       VerticalAlignment="Top">
+                    <Image.Style>
+                        <Style TargetType="Image">
+                            <Style.Triggers>
+                                <Trigger Property="Source" Value="{x:Null}">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
+            </Grid>
+            <Grid Grid.Column="1">
+                <TextBox x:Name="txtMessage"
+                         Padding="10,0"
+                         VerticalContentAlignment="Center"
+                         Background="Transparent"
+                         BorderBrush="Transparent"
+                         BorderThickness="0"
+                         HorizontalScrollBarVisibility="Disabled"
+                         IsReadOnly="True"
+                         TextWrapping="Wrap"
+                         UseLayoutRounding="False"
+                         VerticalScrollBarVisibility="Auto" />
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="1" Background="{DynamicResource MessageBoxButtonAreaBackground}">
+            <StackPanel HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                <StackPanel.Resources>
+                    <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="Button">
+                        <Setter Property="Margin" Value="10" />
+                        <Setter Property="Padding" Value="20,4" />
+                        <Setter Property="Visibility" Value="Collapsed" />
+                    </Style>
+                </StackPanel.Resources>
+                <Button x:Name="btnOK"
+                        Click="btnOK_Click"
+                        Content="{x:Static ohmProperties:Resources.Common_OK}" />
+                <Button x:Name="btnYes"
+                        Click="btnYes_Click"
+                        Content="{x:Static ohmProperties:Resources.Common_Yes}" />
+                <Button x:Name="btnNo"
+                        Click="btnNo_Click"
+                        Content="{x:Static ohmProperties:Resources.Common_No}" />
+                <Button x:Name="btnCancel"
+                        Click="btnCancel_Click"
+                        Content="{x:Static ohmProperties:Resources.Common_Cancel}" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</controls:ChromeWindow>
