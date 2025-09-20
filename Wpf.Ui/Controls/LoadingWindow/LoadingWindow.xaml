@@ -1,0 +1,125 @@
+﻿<!--
+    This Source Code Form is subject to the terms of the MIT License.
+    If a copy of the MIT was not distributed with this file, You can obtain one at https://opensource.org/licenses/MIT.
+    Copyright (C) Leszek Pomianowski and WPF UI Contributors.
+    All Rights Reserved.
+-->
+
+<Window
+    x:Class="Wpf.Ui.Controls.LoadingWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="clr-namespace:Wpf.Ui.Controls"
+    Title="Loading"
+    SizeToContent="WidthAndHeight"
+    AllowsTransparency="True"
+    Background="Transparent"
+    ResizeMode="NoResize"
+    ShowInTaskbar="False"
+    Topmost="True"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None">
+
+    <Window.Resources>
+        <!--  引入主题资源  -->
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="LoadingWindowTheme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid>
+
+        <!--  主加载内容容器（无遮罩模式） -->
+        <Border
+            x:Name="ContentContainer"
+            MinWidth="320"
+            MinHeight="220"
+            Padding="50,40"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Background="{StaticResource LoadingContentBackgroundBrush}"
+            BorderBrush="{StaticResource LoadingBorderBrush}"
+            BorderThickness="1"
+            CornerRadius="20"
+            Effect="{StaticResource LoadingContentShadow}">
+
+            <!--  设置缩放变换中心点  -->
+            <Border.RenderTransform>
+                <ScaleTransform x:Name="ContentScale" ScaleX="0.8" ScaleY="0.8" />
+            </Border.RenderTransform>
+            <Border.RenderTransformOrigin>0.5,0.5</Border.RenderTransformOrigin>
+
+            <StackPanel
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Orientation="Vertical">
+
+                <!--  进度环容器  -->
+                <Grid Margin="0,0,0,25">
+                    <!--  外围装饰圆环  -->
+                    <Ellipse
+                        Width="100"
+                        Height="100"
+                        Opacity="0.2"
+                        Stroke="{StaticResource LoadingBorderBrush}"
+                        StrokeThickness="1" />
+
+                    <!--  主进度环  -->
+                    <ui:ProgressRing
+                        x:Name="LoadingRing"
+                        Width="80"
+                        Height="80"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Foreground="{StaticResource LoadingProgressBrush}"
+                        IsIndeterminate="True">
+
+                        <!--  设置进度环的缩放变换  -->
+                        <ui:ProgressRing.RenderTransform>
+                            <ScaleTransform x:Name="RingScale" ScaleX="1.0" ScaleY="1.0" />
+                        </ui:ProgressRing.RenderTransform>
+                        <ui:ProgressRing.RenderTransformOrigin>0.5,0.5</ui:ProgressRing.RenderTransformOrigin>
+                    </ui:ProgressRing>
+                </Grid>
+
+                <!--  加载文本区域  -->
+                <StackPanel HorizontalAlignment="Center" Orientation="Vertical">
+                    <!--  主加载文本  -->
+                    <TextBlock
+                        x:Name="LoadingText"
+                        MaxWidth="250"
+                        FontSize="18"
+                        FontWeight="Medium"
+                        Foreground="{StaticResource LoadingTextEmphasisBrush}"
+                        LineHeight="26"
+                        Text="{Binding LoadingMessage, RelativeSource={RelativeSource AncestorType=Window}}"
+                        TextAlignment="Center"
+                        TextWrapping="Wrap" />
+
+                    <!--  装饰性下划线  -->
+                    <Rectangle
+                        Width="80"
+                        Height="2"
+                        Margin="0,15,0,0"
+                        Fill="{StaticResource LoadingProgressBrush}"
+                        Opacity="0.5"
+                        RadiusX="1"
+                        RadiusY="1" />
+
+                    <!--  副标题文本 (可选)  -->
+                    <TextBlock
+                        x:Name="SubtitleText"
+                        Margin="0,12,0,0"
+                        FontSize="14"
+                        Foreground="#FF666666"
+                        Opacity="0.8"
+                        Text="请稍候..."
+                        TextAlignment="Center" />
+                </StackPanel>
+
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

@@ -1,0 +1,158 @@
+<!--
+    Enhanced Loading Window Demo
+    展示美化后的 Loading 窗口的所有功能
+-->
+
+<Window x:Class="LoadingDemo.EnhancedLoadingDemoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ui="clr-namespace:Wpf.Ui.Controls"
+        Title="美化 Loading 窗口演示"
+        Width="700"
+        Height="500"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanResizeWithGrip">
+
+    <Window.Resources>
+        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Margin" Value="8" />
+            <Setter Property="Padding" Value="16,10" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="MinWidth" Value="140" />
+        </Style>
+        
+        <Style TargetType="GroupBox">
+            <Setter Property="Margin" Value="10" />
+            <Setter Property="Padding" Value="15" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- 标题区域 -->
+        <StackPanel Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Center" Margin="0,0,0,20">
+            <TextBlock Text="✨ WPF.UI Loading 窗口美化演示 ✨"
+                       FontSize="26"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"
+                       Foreground="{DynamicResource AccentTextFillColorPrimaryBrush}" />
+            
+            <TextBlock Text="体验半透明遮罩、流畅动画和主题适配效果"
+                       FontSize="14"
+                       HorizontalAlignment="Center"
+                       Margin="0,8,0,0"
+                       Foreground="{DynamicResource TextFillColorSecondary}" />
+        </StackPanel>
+
+        <!-- 主要内容区域 -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel Orientation="Vertical">
+
+                <!-- 基础美化演示 -->
+                <GroupBox Header="🎨 基础美化效果">
+                    <WrapPanel Orientation="Horizontal">
+                        <Button Content="基础加载 (3秒)" Click="ShowBasicLoading_Click" />
+                        <Button Content="带副标题加载" Click="ShowWithSubtitle_Click" />
+                        <Button Content="长文本演示" Click="ShowLongText_Click" />
+                        <Button Content="手动隐藏" Click="HideLoading_Click" />
+                    </WrapPanel>
+                </GroupBox>
+
+                <!-- 动画效果演示 -->
+                <GroupBox Header="🎬 动画效果演示">
+                    <WrapPanel Orientation="Horizontal">
+                        <Button Content="流畅动画演示" Click="ShowSmoothAnimation_Click" />
+                        <Button Content="文本强调动画" Click="ShowTextEmphasis_Click" />
+                        <Button Content="多步骤加载" Click="ShowMultiStep_Click" />
+                        <Button Content="快速切换演示" Click="ShowFastSwitch_Click" />
+                    </WrapPanel>
+                </GroupBox>
+
+                <!-- 实际场景演示 -->
+                <GroupBox Header="🚀 实际应用场景">
+                    <WrapPanel Orientation="Horizontal">
+                        <Button Content="文件上传模拟" Click="SimulateFileUpload_Click" />
+                        <Button Content="数据同步模拟" Click="SimulateDataSync_Click" />
+                        <Button Content="网络请求模拟" Click="SimulateNetworkRequest_Click" />
+                        <Button Content="系统初始化" Click="SimulateSystemInit_Click" />
+                    </WrapPanel>
+                </GroupBox>
+
+                <!-- 主题切换演示 -->
+                <GroupBox Header="🌓 主题适配演示">
+                    <StackPanel Orientation="Vertical">
+                        <WrapPanel Orientation="Horizontal" Margin="0,0,0,10">
+                            <Button Content="切换到深色主题" Click="SwitchToDark_Click" />
+                            <Button Content="切换到浅色主题" Click="SwitchToLight_Click" />
+                            <Button Content="主题切换加载" Click="ShowThemeSwitch_Click" />
+                        </WrapPanel>
+                        
+                        <TextBlock Text="💡 提示：切换主题后，Loading 窗口会自动适配新的颜色方案"
+                                   FontSize="12"
+                                   Foreground="{DynamicResource TextFillColorSecondary}"
+                                   TextWrapping="Wrap" />
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- 自定义配置演示 -->
+                <GroupBox Header="⚙️ 自定义配置">
+                    <StackPanel Orientation="Vertical">
+                        <WrapPanel Orientation="Horizontal" Margin="0,0,0,10">
+                            <Button Content="禁用文本动画" Click="ShowNoTextPulse_Click" />
+                            <Button Content="禁用环形动画" Click="ShowNoRingPulse_Click" />
+                            <Button Content="完全静态显示" Click="ShowStatic_Click" />
+                        </WrapPanel>
+                        
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                            <TextBox x:Name="CustomMessageTextBox" 
+                                     Text="自定义加载消息" 
+                                     Width="200" 
+                                     Margin="0,0,10,0" />
+                            <TextBox x:Name="CustomSubtitleTextBox" 
+                                     Text="自定义副标题" 
+                                     Width="200" 
+                                     Margin="0,0,10,0" />
+                            <Button Content="显示自定义" Click="ShowCustom_Click" />
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- 性能测试 -->
+                <GroupBox Header="⚡ 性能测试">
+                    <WrapPanel Orientation="Horizontal">
+                        <Button Content="快速显示隐藏" Click="PerformanceTest_Click" />
+                        <Button Content="内存泄漏测试" Click="MemoryTest_Click" />
+                        <Button Content="异步压力测试" Click="AsyncStressTest_Click" />
+                    </WrapPanel>
+                </GroupBox>
+
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- 状态栏 -->
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            
+            <StackPanel Grid.Column="0" Orientation="Horizontal">
+                <TextBlock Text="状态: " FontWeight="SemiBold" />
+                <TextBlock x:Name="StatusText" Text="就绪" />
+            </StackPanel>
+            
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <TextBlock Text="当前主题: " FontWeight="SemiBold" />
+                <TextBlock x:Name="ThemeText" Text="Auto" />
+                <TextBlock Text="  |  Loading 状态: " FontWeight="SemiBold" Margin="20,0,0,0" />
+                <TextBlock x:Name="LoadingStatusText" Text="隐藏" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

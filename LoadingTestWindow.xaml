@@ -1,0 +1,141 @@
+<!--
+    Loading Window Test Application
+-->
+
+<Window x:Class="LoadingTestApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ui="clr-namespace:Wpf.Ui.Controls"
+        Title="Loading Window Test"
+        Width="600"
+        Height="400"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanResizeWithGrip">
+
+    <Window.Resources>
+        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="Padding" Value="15,8" />
+            <Setter Property="FontSize" Value="14" />
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- 标题 -->
+        <TextBlock Grid.Row="0"
+                   Text="Loading Window Demo"
+                   FontSize="24"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center"
+                   Margin="0,0,0,20" />
+
+        <!-- 操作按钮区域 -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel Orientation="Vertical" Spacing="10">
+
+                <!-- 基本操作 -->
+                <GroupBox Header="基本操作" Padding="10">
+                    <StackPanel Orientation="Vertical" Spacing="8">
+                        
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <Button Content="显示加载窗口 (3秒)" 
+                                    Click="ShowBasicLoading_Click" />
+                            <Button Content="显示自定义消息" 
+                                    Click="ShowCustomMessage_Click" />
+                            <Button Content="手动隐藏" 
+                                    Click="HideLoading_Click" />
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <Button Content="更新消息" 
+                                    Click="UpdateMessage_Click" />
+                            <Button Content="设置父窗口" 
+                                    Click="SetOwner_Click" />
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- 异步操作演示 -->
+                <GroupBox Header="异步操作演示" Padding="10">
+                    <StackPanel Orientation="Vertical" Spacing="8">
+                        
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <Button Content="模拟数据加载" 
+                                    Click="SimulateDataLoading_Click" />
+                            <Button Content="模拟文件上传" 
+                                    Click="SimulateFileUpload_Click" />
+                            <Button Content="模拟网络请求" 
+                                    Click="SimulateNetworkRequest_Click" />
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <Button Content="ExecuteWithLoadingAsync 演示" 
+                                    Click="ExecuteWithLoadingAsync_Click" />
+                            <Button Content="多步骤加载演示" 
+                                    Click="MultiStepLoading_Click" />
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- MVVM 绑定演示 -->
+                <GroupBox Header="MVVM 绑定演示" Padding="10">
+                    <StackPanel Orientation="Vertical" Spacing="8">
+                        
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <Button Content="通过 ViewModel 显示" 
+                                    Command="{Binding ShowLoadingCommand}" />
+                            <Button Content="通过 ViewModel 隐藏" 
+                                    Command="{Binding HideLoadingCommand}" />
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <TextBox x:Name="CustomMessageTextBox" 
+                                     Text="{Binding CustomMessage, UpdateSourceTrigger=PropertyChanged}"
+                                     Width="200" 
+                                     PlaceholderText="输入自定义消息..." />
+                            <Button Content="更新消息 (MVVM)" 
+                                    Command="{Binding UpdateMessageCommand}" />
+                        </StackPanel>
+
+                        <CheckBox Content="加载状态" 
+                                  IsChecked="{Binding IsLoading, Mode=OneWay}" 
+                                  IsEnabled="False" />
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- 直接控件演示 -->
+                <GroupBox Header="直接控件使用" Padding="10">
+                    <StackPanel Orientation="Vertical" Spacing="8">
+                        
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <Button Content="创建新窗口实例" 
+                                    Click="CreateNewWindow_Click" />
+                            <Button Content="显示窗口实例" 
+                                    Click="ShowWindowInstance_Click" />
+                            <Button Content="隐藏窗口实例" 
+                                    Click="HideWindowInstance_Click" />
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- 状态栏 -->
+        <StatusBar Grid.Row="2">
+            <StatusBarItem>
+                <TextBlock x:Name="StatusText" Text="就绪" />
+            </StatusBarItem>
+            <Separator />
+            <StatusBarItem>
+                <TextBlock Text="{Binding IsLoading, StringFormat='加载状态: {0}'}" />
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</Window>
