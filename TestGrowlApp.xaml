@@ -16,6 +16,7 @@
             <Button x:Name="WarningButton" Content="Warning" Click="WarningButton_Click" Margin="5"/>
             <Button x:Name="ErrorButton" Content="Error" Click="ErrorButton_Click" Margin="5"/>
             <Button x:Name="ChangeTypeButton" Content="Change Existing Type" Click="ChangeTypeButton_Click" Margin="5"/>
+            <Button x:Name="TestSymbolIconButton" Content="Test SymbolIcon Foreground" Click="TestSymbolIconButton_Click" Margin="5"/>
         </StackPanel>
         
         <!-- GrowlControl -->

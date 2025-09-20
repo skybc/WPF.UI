@@ -128,6 +128,7 @@ public class FontIcon : IconElement
             FontStyle = FontStyle,
             FontWeight = FontWeight,
             Text = Glyph,
+            Foreground = Foreground,
             Visibility = Visibility.Visible,
             Focusable = false,
         };
@@ -135,6 +136,19 @@ public class FontIcon : IconElement
         SetCurrentValue(FocusableProperty, false);
 
         return TextBlock;
+    }
+
+    protected override void OnForegroundChanged(DependencyPropertyChangedEventArgs args)
+    {
+        base.OnForegroundChanged(args);
+        
+        if (TextBlock is not null)
+        {
+            TextBlock.SetCurrentValue(
+                System.Windows.Controls.TextBlock.ForegroundProperty,
+                (Brush)args.NewValue
+            );
+        }
     }
 
     private static void OnFontFamilyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

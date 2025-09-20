@@ -95,4 +95,10 @@ public partial class TestGrowlApp : Window
             }
         }
     }
+
+    private void TestSymbolIconButton_Click(object sender, RoutedEventArgs e)
+    {
+        var testWindow = new TestGrowlApp.TestSymbolIconForeground();
+        testWindow.Show();
+    }
 }
