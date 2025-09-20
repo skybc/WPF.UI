@@ -1,0 +1,24 @@
+<Window x:Class="TestGrowlApp"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+        Title="Growl Test" Height="600" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <!-- Buttons to test different GrowlType -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10">
+            <Button x:Name="InfoButton" Content="Info" Click="InfoButton_Click" Margin="5"/>
+            <Button x:Name="SuccessButton" Content="Success" Click="SuccessButton_Click" Margin="5"/>
+            <Button x:Name="WarningButton" Content="Warning" Click="WarningButton_Click" Margin="5"/>
+            <Button x:Name="ErrorButton" Content="Error" Click="ErrorButton_Click" Margin="5"/>
+            <Button x:Name="ChangeTypeButton" Content="Change Existing Type" Click="ChangeTypeButton_Click" Margin="5"/>
+        </StackPanel>
+        
+        <!-- GrowlControl -->
+        <ui:GrowlControl x:Name="GrowlPanel" Grid.Row="1" Margin="10"/>
+    </Grid>
+</Window>

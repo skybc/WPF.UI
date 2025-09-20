@@ -139,4 +139,11 @@ public class UiApplication
                     )
             );
     }
+
+    public static object FindResource(object resourceKey)
+    {
+        return Application.Current.FindResource(resourceKey);
+    }
+  
+
 }

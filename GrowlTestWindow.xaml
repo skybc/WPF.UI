@@ -1,0 +1,49 @@
+<Window x:Class="TestApp.GrowlTestWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:Wpf.Ui.Controls;assembly=Wpf.Ui"
+        Title="Growl Test Window" Height="600" Width="800"
+        Background="{DynamicResource ApplicationBackgroundBrush}">
+    
+    <Grid>
+        <!-- GrowlControl 放在顶层用于显示通知 -->
+        <controls:GrowlControl x:Name="GrowlPanel" />
+        
+        <!-- 测试按钮区域 -->
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Spacing="10">
+            <TextBlock Text="点击按钮测试不同类型的Growl消息" 
+                       FontSize="16" 
+                       HorizontalAlignment="Center" 
+                       Margin="0,0,0,20"/>
+            
+            <Button Content="Info 消息" 
+                    Click="ShowInfo_Click" 
+                    Width="150" Height="35"
+                    Background="{DynamicResource PaletteLightBlueBrush}"
+                    Foreground="White"/>
+            
+            <Button Content="Success 消息" 
+                    Click="ShowSuccess_Click" 
+                    Width="150" Height="35"
+                    Background="{DynamicResource PaletteGreenBrush}"
+                    Foreground="White"/>
+            
+            <Button Content="Warning 消息" 
+                    Click="ShowWarning_Click" 
+                    Width="150" Height="35"
+                    Background="{DynamicResource PaletteOrangeBrush}"
+                    Foreground="White"/>
+            
+            <Button Content="Error 消息" 
+                    Click="ShowError_Click" 
+                    Width="150" Height="35"
+                    Background="{DynamicResource PaletteRedBrush}"
+                    Foreground="White"/>
+            
+            <Button Content="清除所有消息" 
+                    Click="ClearAll_Click" 
+                    Width="150" Height="35"
+                    Margin="0,20,0,0"/>
+        </StackPanel>
+    </Grid>
+</Window>

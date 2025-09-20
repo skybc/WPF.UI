@@ -78,6 +78,7 @@
         <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Controls/Separator/Separator.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Controls/Slider/Slider.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Controls/Snackbar/Snackbar.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Controls/Growl/GrowlControl.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Controls/SplitButton/SplitButton.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Controls/StatusBar/StatusBar.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Controls/TabControl/TabControl.xaml" />
@@ -99,6 +100,8 @@
         <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Controls/Window/Window.xaml" />
         <!--  PaginationControl.xaml  -->
         <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Controls/Pagination/Pagination.xaml" />
-
+        <!--  Icon.xaml  -->
+        <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Resources/Icon.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Controls/Growl/GrowlControl.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
