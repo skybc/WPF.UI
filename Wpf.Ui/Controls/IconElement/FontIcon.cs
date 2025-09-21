@@ -1,4 +1,4 @@
-// This Source Code Form is subject to the terms of the MIT License.
+﻿// This Source Code Form is subject to the terms of the MIT License.
 // If a copy of the MIT was not distributed with this file, You can obtain one at https://opensource.org/licenses/MIT.
 // Copyright (C) Leszek Pomianowski and WPF UI Contributors.
 // All Rights Reserved.
@@ -110,9 +110,49 @@ public class FontIcon : IconElement
 
     protected TextBlock? TextBlock { get; set; }
 
+    private Brush _previousTextBlockForeground = Brushes.Transparent;
+    private bool _hasPreviousTextBlockForeground;
+
     public FontIcon()
     {
         SetCurrentValue(FontSizeProperty, UiApplication.Current.Resources["DefaultIconFontSize"]);
+        IsEnabledChanged += FontIcon_IsEnabledChanged;
+    }
+
+    private void FontIcon_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+    {
+        if (TextBlock is null)
+            return;
+
+        if (!IsEnabled)
+        {
+            // save visual foreground once and show disabled brush
+            if (!_hasPreviousTextBlockForeground)
+            {
+                _previousTextBlockForeground = TextBlock.Foreground;
+                _hasPreviousTextBlockForeground = true;
+            }
+
+            TextBlock.SetCurrentValue(System.Windows.Controls.TextBlock.ForegroundProperty, SystemColors.GrayTextBrush);
+        }
+        else
+        {
+            // restore saved visual foreground if present
+            if (_hasPreviousTextBlockForeground)
+            {
+                TextBlock.SetCurrentValue(System.Windows.Controls.TextBlock.ForegroundProperty, _previousTextBlockForeground);
+
+                // also update Foreground DP so control's Foreground reflects restored color
+                SetCurrentValue(ForegroundProperty, _previousTextBlockForeground);
+
+                _hasPreviousTextBlockForeground = false;
+                _previousTextBlockForeground = Brushes.Transparent;
+            }
+            else
+            {
+                TextBlock.SetCurrentValue(System.Windows.Controls.TextBlock.ForegroundProperty, Foreground);
+            }
+        }
     }
 
     protected override UIElement InitializeChildren()
@@ -135,19 +175,46 @@ public class FontIcon : IconElement
 
         SetCurrentValue(FocusableProperty, false);
 
+        UpdateTextBlockForeground();
+
         return TextBlock;
     }
 
     protected override void OnForegroundChanged(DependencyPropertyChangedEventArgs args)
     {
         base.OnForegroundChanged(args);
-        
-        if (TextBlock is not null)
+        if (TextBlock is null)
+            return;
+
+        var newBrush = (Brush)args.NewValue;
+
+        if (!IsEnabled)
         {
-            TextBlock.SetCurrentValue(
-                System.Windows.Controls.TextBlock.ForegroundProperty,
-                (Brush)args.NewValue
-            );
+            // remember the desired Foreground while control is disabled
+            _previousTextBlockForeground = newBrush;
+            _hasPreviousTextBlockForeground = true;
+
+            // keep showing disabled brush
+            TextBlock.SetCurrentValue(System.Windows.Controls.TextBlock.ForegroundProperty, SystemColors.GrayTextBrush);
+        }
+        else
+        {
+            TextBlock.SetCurrentValue(System.Windows.Controls.TextBlock.ForegroundProperty, newBrush);
+        }
+    }
+
+    private void UpdateTextBlockForeground()
+    {
+        if (TextBlock is null)
+            return;
+
+        if (!IsEnabled)
+        {
+            TextBlock.SetCurrentValue(System.Windows.Controls.TextBlock.ForegroundProperty, SystemColors.GrayTextBrush);
+        }
+        else
+        {
+            TextBlock.SetCurrentValue(System.Windows.Controls.TextBlock.ForegroundProperty, Foreground);
         }
     }
 

@@ -44,6 +44,10 @@ public abstract class IconElement : FrameworkElement
         set => SetValue(ForegroundProperty, value);
     }
 
+    // Keep a reference to the last effective (non-disabled) foreground so we can restore it
+    private Brush _effectiveForeground = Brushes.Transparent;
+    private bool _hasEffectiveForeground;
+
     protected override int VisualChildrenCount => 1;
 
     private Grid? _layoutRoot;
@@ -51,6 +55,38 @@ public abstract class IconElement : FrameworkElement
     protected abstract UIElement InitializeChildren();
 
     protected virtual void OnForegroundChanged(DependencyPropertyChangedEventArgs args) { }
+    protected virtual void OnIsEnabledChangedCore(DependencyPropertyChangedEventArgs e) { }
+
+    public IconElement()
+    {
+        IsEnabledChanged += IconElement_IsEnabledChanged;
+    }
+
+    private void IconElement_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+    {
+        // When becoming disabled, swap to a disabled foreground brush; when enabled, restore.
+        if (!IsEnabled)
+        {
+            if (!_hasEffectiveForeground)
+            {
+                _effectiveForeground = Foreground;
+                _hasEffectiveForeground = true;
+            }
+
+            // Use SystemColors.GrayTextBrush for disabled state
+            SetCurrentValue(ForegroundProperty, SystemColors.GrayTextBrush);
+        }
+        else
+        {
+            if (_hasEffectiveForeground)
+            {
+                SetCurrentValue(ForegroundProperty, _effectiveForeground);
+                _hasEffectiveForeground = false;
+            }
+        }
+
+        OnIsEnabledChangedCore(e);
+    }
 
     private void EnsureLayoutRoot()
     {
