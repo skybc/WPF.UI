@@ -11,11 +11,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ui="clr-namespace:Wpf.Ui.Controls"
     Title="Loading"
-    SizeToContent="WidthAndHeight"
     AllowsTransparency="True"
     Background="Transparent"
     ResizeMode="NoResize"
     ShowInTaskbar="False"
+    SizeToContent="WidthAndHeight"
     Topmost="True"
     WindowStartupLocation="CenterScreen"
     WindowStyle="None">
@@ -29,9 +29,9 @@
         </ResourceDictionary>
     </Window.Resources>
 
-    <Grid>
+    <Grid Background="Transparent">
 
-        <!--  主加载内容容器（无遮罩模式） -->
+        <!--  主加载内容容器（无遮罩模式）  -->
         <Border
             x:Name="ContentContainer"
             MinWidth="320"
@@ -42,8 +42,7 @@
             Background="{StaticResource LoadingContentBackgroundBrush}"
             BorderBrush="{StaticResource LoadingBorderBrush}"
             BorderThickness="1"
-            CornerRadius="20"
-            Effect="{StaticResource LoadingContentShadow}">
+            CornerRadius="8">
 
             <!--  设置缩放变换中心点  -->
             <Border.RenderTransform>
