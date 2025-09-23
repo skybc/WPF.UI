@@ -23,36 +23,59 @@
     <system:Double x:Key="NumberBoxButtonHeight">24</system:Double>
     <system:Double x:Key="NumberBoxButtonIconSize">14</system:Double>
 
-    <Style x:Key="DefaultUiNumberBoxStyle" TargetType="{x:Type controls:NumberBox}">
+    <Style x:Key="DefaultUiNumberBoxStyle"
+            TargetType="{x:Type controls:NumberBox}">
         <!--  Universal WPF UI focus  -->
-        <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
+        <Setter Property="FocusVisualStyle"
+                Value="{DynamicResource DefaultControlFocusVisualStyle}"/>
         <!--  Universal WPF UI focus  -->
         <!--  Universal WPF UI ContextMenu  -->
-        <Setter Property="ContextMenu" Value="{DynamicResource DefaultControlContextMenu}" />
+        <Setter Property="ContextMenu"
+                Value="{DynamicResource DefaultControlContextMenu}"/>
         <!--  Universal WPF UI ContextMenu  -->
-        <Setter Property="Foreground" Value="{DynamicResource TextControlForeground}" />
-        <Setter Property="CaretBrush" Value="{DynamicResource TextControlForeground}" />
-        <Setter Property="Cursor" Value="Arrow" />
-        <Setter Property="Background" Value="{DynamicResource TextControlBackground}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource TextControlElevationBorderBrush}" />
-        <Setter Property="BorderThickness" Value="{StaticResource NumberBoxBorderThemeThickness}" />
-        <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
-        <Setter Property="HorizontalAlignment" Value="Stretch" />
-        <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="VerticalContentAlignment" Value="Top" />
-        <Setter Property="MinHeight" Value="{DynamicResource TextControlThemeMinHeight}" />
-        <Setter Property="MinWidth" Value="{DynamicResource TextControlThemeMinWidth}" />
-        <Setter Property="Padding" Value="{DynamicResource TextControlThemePadding}" />
-        <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
-        <Setter Property="ClearButtonEnabled" Value="True" />
-        <Setter Property="IconPlacement" Value="Left" />
-        <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource TextControlForeground}"/>
+        <Setter Property="CaretBrush"
+                Value="{DynamicResource TextControlForeground}"/>
+        <Setter Property="Cursor"
+                Value="Arrow"/>
+        <Setter Property="Background"
+                Value="{DynamicResource TextControlBackground}"/>
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource TextControlElevationBorderBrush}"/>
+        <Setter Property="BorderThickness"
+                Value="{StaticResource NumberBoxBorderThemeThickness}"/>
+        <Setter Property="FontSize"
+                Value="{DynamicResource ControlContentThemeFontSize}"/>
+        <Setter Property="HorizontalAlignment"
+                Value="Stretch"/>
+        <Setter Property="VerticalAlignment"
+                Value="Center"/>
+        <Setter Property="HorizontalContentAlignment"
+                Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment"
+                Value="Top"/>
+        <Setter Property="MinHeight"
+                Value="{DynamicResource TextControlThemeMinHeight}"/>
+        <Setter Property="MinWidth"
+                Value="{DynamicResource TextControlThemeMinWidth}"/>
+        <Setter Property="Padding"
+                Value="{DynamicResource TextControlThemePadding}"/>
+        <Setter Property="Border.CornerRadius"
+                Value="{DynamicResource ControlCornerRadius}"/>
+        <Setter Property="ClearButtonEnabled"
+                Value="True"/>
+        <Setter Property="IconPlacement"
+                Value="Left"/>
+        <Setter Property="SnapsToDevicePixels"
+                Value="True"/>
+        <Setter Property="OverridesDefaultStyle"
+                Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:NumberBox}">
-                    <Grid HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}">
+                    <Grid HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalAlignment}">
                         <Border
                             x:Name="ContentBorder"
                             Width="{TemplateBinding Width}"
@@ -66,14 +89,17 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="{TemplateBinding Border.CornerRadius}">
-                            <Grid HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                            <Grid HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <Grid Grid.Column="0" Background="Transparent">
+                                <Grid Grid.Column="0"
+                                        Background="Transparent">
                                     <ContentControl
                                         x:Name="ControlIconLeft"
                                         Margin="{StaticResource NumberBoxLeftIconMargin}"
@@ -82,7 +108,7 @@
                                         Content="{TemplateBinding Icon}"
                                         FontSize="16"
                                         Foreground="{TemplateBinding Foreground}"
-                                        IsTabStop="False" />
+                                        IsTabStop="False"/>
                                 </Grid>
                                 <Grid
                                     x:Name="TextContentArea"
@@ -92,38 +118,41 @@
                                         <controls:PassiveScrollViewer
                                             x:Name="PART_ContentHost"
                                             Style="{DynamicResource DefaultTextBoxScrollViewerStyle}"
-                                            TextElement.Foreground="{TemplateBinding Foreground}" />
+                                            TextElement.Foreground="{TemplateBinding Foreground}"/>
                                         <TextBlock
                                             x:Name="PlaceholderTextBox"
                                             Margin="0"
                                             Padding="1,0"
                                             VerticalAlignment="Top"
                                             Foreground="{DynamicResource TextControlPlaceholderForeground}"
-                                            Text="{TemplateBinding PlaceholderText}" />
+                                            Text="{TemplateBinding PlaceholderText}"/>
                                     </Grid>
                                 </Grid>
                                 <!--  Buttons and Icons have no padding from the main element to allow absolute positions if height is larger than the text entry zone  -->
-                                <StackPanel
+                                <Button
                                     Grid.Column="2"
+                                    x:Name="PART_ClearButton"
+                                    Width="{StaticResource NumberBoxButtonHeight}"
+                                    Height="{StaticResource NumberBoxButtonHeight}"
+                                    Margin="{StaticResource NumberBoxButtonMargin}"
+                                    Padding="{StaticResource NumberBoxButtonPadding}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Top"
+                                    HorizontalContentAlignment="Center"
+                                    VerticalContentAlignment="Center"
+                                    Background="Transparent"
+                                    BorderBrush="Transparent"
+                                    Focusable="False"
+                                    Foreground="{DynamicResource TextControlButtonForeground}"
+                                    IsTabStop="False">
+                                    <controls:SymbolIcon FontSize="{StaticResource NumberBoxButtonIconSize}"
+                                            Symbol="Dismiss24"/>
+                                </Button>
+                                <StackPanel
+                                    Grid.Column="3"
                                     Background="Transparent"
                                     Orientation="Vertical">
-                                    <Button
-                                        x:Name="PART_ClearButton"
-                                        Width="{StaticResource NumberBoxButtonHeight}"
-                                        Height="{StaticResource NumberBoxButtonHeight}"
-                                        Margin="{StaticResource NumberBoxButtonMargin}"
-                                        Padding="{StaticResource NumberBoxButtonPadding}"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Top"
-                                        HorizontalContentAlignment="Center"
-                                        VerticalContentAlignment="Center"
-                                        Background="Transparent"
-                                        BorderBrush="Transparent"
-                                        Focusable="False"
-                                        Foreground="{DynamicResource TextControlButtonForeground}"
-                                        IsTabStop="False">
-                                        <controls:SymbolIcon FontSize="{StaticResource NumberBoxButtonIconSize}" Symbol="Dismiss24" />
-                                    </Button>
+
                                     <RepeatButton
                                         x:Name="PART_InlineIncrementButton"
                                         Width="{StaticResource NumberBoxButtonHeight}"
@@ -139,7 +168,8 @@
                                         Foreground="{DynamicResource TextControlButtonForeground}"
                                         IsTabStop="False"
                                         Visibility="Collapsed">
-                                        <controls:SymbolIcon FontSize="{StaticResource NumberBoxButtonIconSize}" Symbol="ChevronUp24" />
+                                        <controls:SymbolIcon FontSize="{StaticResource NumberBoxButtonIconSize}"
+                                                Symbol="ChevronUp24"/>
                                     </RepeatButton>
                                     <RepeatButton
                                         x:Name="PART_InlineDecrementButton"
@@ -157,19 +187,20 @@
                                         Foreground="{DynamicResource TextControlButtonForeground}"
                                         IsTabStop="False"
                                         Visibility="Collapsed">
-                                        <controls:SymbolIcon FontSize="{StaticResource NumberBoxButtonIconSize}" Symbol="ChevronDown24" />
+                                        <controls:SymbolIcon FontSize="{StaticResource NumberBoxButtonIconSize}"
+                                                Symbol="ChevronDown24"/>
                                     </RepeatButton>
                                 </StackPanel>
                                 <ContentControl
                                     x:Name="ControlIconRight"
-                                    Grid.Column="3"
+                                    Grid.Column="4"
                                     Margin="{StaticResource NumberBoxRightIconMargin}"
                                     Padding="0"
                                     VerticalAlignment="Top"
                                     Content="{TemplateBinding Icon}"
                                     FontSize="16"
                                     Foreground="{TemplateBinding Foreground}"
-                                    IsTabStop="False" />
+                                    IsTabStop="False"/>
                             </Grid>
                         </Border>
                         <!--  The Accent Border is a separate element so that changes to the border thickness do not affect the position of the element  -->
@@ -179,74 +210,155 @@
                             VerticalAlignment="Stretch"
                             BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}"
                             BorderThickness="{StaticResource NumberBoxAccentBorderThemeThickness}"
-                            CornerRadius="{TemplateBinding Border.CornerRadius}" />
+                            CornerRadius="{TemplateBinding Border.CornerRadius}"/>
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="CurrentPlaceholderEnabled" Value="False">
-                            <Setter TargetName="PlaceholderTextBox" Property="Visibility" Value="Collapsed" />
+                        <Trigger Property="CurrentPlaceholderEnabled"
+                                Value="False">
+                            <Setter TargetName="PlaceholderTextBox"
+                                    Property="Visibility"
+                                    Value="Collapsed"/>
                         </Trigger>
-                        <Trigger Property="ShowClearButton" Value="False">
-                            <Setter TargetName="PART_ClearButton" Property="Visibility" Value="Collapsed" />
-                            <Setter TargetName="PART_ClearButton" Property="Margin" Value="0" />
+                        <Trigger Property="ShowClearButton"
+                                Value="False">
+                            <Setter TargetName="PART_ClearButton"
+                                    Property="Visibility"
+                                    Value="Collapsed"/>
+                            <Setter TargetName="PART_ClearButton"
+                                    Property="Margin"
+                                    Value="0"/>
                         </Trigger>
-                        <Trigger Property="ClearButtonEnabled" Value="False">
-                            <Setter TargetName="PART_ClearButton" Property="Visibility" Value="Collapsed" />
-                            <Setter TargetName="PART_ClearButton" Property="Margin" Value="0" />
+                        <Trigger Property="ClearButtonEnabled"
+                                Value="False">
+                            <Setter TargetName="PART_ClearButton"
+                                    Property="Visibility"
+                                    Value="Collapsed"/>
+                            <Setter TargetName="PART_ClearButton"
+                                    Property="Margin"
+                                    Value="0"/>
                         </Trigger>
-                        <Trigger Property="SpinButtonPlacementMode" Value="Hidden">
-                            <Setter TargetName="PART_InlineIncrementButton" Property="Margin" Value="0" />
-                            <Setter TargetName="PART_InlineDecrementButton" Property="Margin" Value="0" />
+                        <Trigger Property="SpinButtonPlacementMode"
+                                Value="Hidden">
+                            <Setter TargetName="PART_InlineIncrementButton"
+                                    Property="Margin"
+                                    Value="0"/>
+                            <Setter TargetName="PART_InlineDecrementButton"
+                                    Property="Margin"
+                                    Value="0"/>
                         </Trigger>
-                        <Trigger Property="SpinButtonPlacementMode" Value="Inline">
-                            <Setter TargetName="PART_InlineIncrementButton" Property="Visibility" Value="Visible" />
-                            <Setter TargetName="PART_InlineDecrementButton" Property="Visibility" Value="Visible" />
+                        <Trigger Property="SpinButtonPlacementMode"
+                                Value="Inline">
+                            <Setter TargetName="PART_InlineIncrementButton"
+                                    Property="Visibility"
+                                    Value="Visible"/>
+                            <Setter TargetName="PART_InlineDecrementButton"
+                                    Property="Visibility"
+                                    Value="Visible"/>
                         </Trigger>
-                        <Trigger Property="IconPlacement" Value="Left">
-                            <Setter TargetName="ControlIconRight" Property="Visibility" Value="Collapsed" />
-                            <Setter TargetName="ControlIconRight" Property="Margin" Value="0" />
+                        <Trigger Property="IconPlacement"
+                                Value="Left">
+                            <Setter TargetName="ControlIconRight"
+                                    Property="Visibility"
+                                    Value="Collapsed"/>
+                            <Setter TargetName="ControlIconRight"
+                                    Property="Margin"
+                                    Value="0"/>
                         </Trigger>
-                        <Trigger Property="IconPlacement" Value="Right">
-                            <Setter TargetName="ControlIconLeft" Property="Visibility" Value="Collapsed" />
-                            <Setter TargetName="ControlIconLeft" Property="Margin" Value="0" />
+                        <Trigger Property="IconPlacement"
+                                Value="Right">
+                            <Setter TargetName="ControlIconLeft"
+                                    Property="Visibility"
+                                    Value="Collapsed"/>
+                            <Setter TargetName="ControlIconLeft"
+                                    Property="Margin"
+                                    Value="0"/>
                         </Trigger>
-                        <Trigger Property="Icon" Value="{x:Null}">
-                            <Setter TargetName="ControlIconRight" Property="Visibility" Value="Collapsed" />
-                            <Setter TargetName="ControlIconRight" Property="Margin" Value="0" />
-                            <Setter TargetName="ControlIconLeft" Property="Visibility" Value="Collapsed" />
-                            <Setter TargetName="ControlIconLeft" Property="Margin" Value="0" />
+                        <Trigger Property="Icon"
+                                Value="{x:Null}">
+                            <Setter TargetName="ControlIconRight"
+                                    Property="Visibility"
+                                    Value="Collapsed"/>
+                            <Setter TargetName="ControlIconRight"
+                                    Property="Margin"
+                                    Value="0"/>
+                            <Setter TargetName="ControlIconLeft"
+                                    Property="Visibility"
+                                    Value="Collapsed"/>
+                            <Setter TargetName="ControlIconLeft"
+                                    Property="Margin"
+                                    Value="0"/>
                         </Trigger>
-                        <Trigger Property="IsFocused" Value="True">
-                            <Setter TargetName="AccentBorder" Property="BorderThickness" Value="0,0,0,2" />
-                            <Setter TargetName="AccentBorder" Property="BorderBrush" Value="{DynamicResource TextControlFocusedBorderBrush}" />
-                            <Setter TargetName="ContentBorder" Property="Background" Value="{DynamicResource TextControlBackgroundFocused}" />
+                        <Trigger Property="IsFocused"
+                                Value="True">
+                            <Setter TargetName="AccentBorder"
+                                    Property="BorderThickness"
+                                    Value="0,0,0,2"/>
+                            <Setter TargetName="AccentBorder"
+                                    Property="BorderBrush"
+                                    Value="{DynamicResource TextControlFocusedBorderBrush}"/>
+                            <Setter TargetName="ContentBorder"
+                                    Property="Background"
+                                    Value="{DynamicResource TextControlBackgroundFocused}"/>
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
-                                <Condition Property="IsEnabled" Value="True" />
-                                <Condition Property="IsMouseOver" Value="True" />
-                                <Condition Property="IsFocused" Value="False" />
+                                <Condition Property="IsEnabled"
+                                        Value="True"/>
+                                <Condition Property="IsMouseOver"
+                                        Value="True"/>
+                                <Condition Property="IsFocused"
+                                        Value="False"/>
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="ContentBorder" Property="Background" Value="{DynamicResource TextControlBackgroundPointerOver}" />
+                            <Setter TargetName="ContentBorder"
+                                    Property="Background"
+                                    Value="{DynamicResource TextControlBackgroundPointerOver}"/>
                         </MultiTrigger>
-                        <Trigger Property="IsReadOnly" Value="True">
-                            <Setter Property="SpinButtonPlacementMode" Value="Hidden" />
-                            <Setter TargetName="PART_ClearButton" Property="Visibility" Value="Collapsed" />
-                            <Setter TargetName="PART_ClearButton" Property="Margin" Value="0" />
+                        <Trigger Property="IsReadOnly"
+                                Value="True">
+                            <Setter Property="SpinButtonPlacementMode"
+                                    Value="Hidden"/>
+                            <Setter TargetName="PART_ClearButton"
+                                    Property="Visibility"
+                                    Value="Collapsed"/>
+                            <Setter TargetName="PART_ClearButton"
+                                    Property="Margin"
+                                    Value="0"/>
                         </Trigger>
-                        <Trigger Property="IsEnabled" Value="True">
-                            <Setter TargetName="TextContentArea" Property="Cursor" Value="IBeam" />
+                        <Trigger Property="IsEnabled"
+                                Value="True">
+                            <Setter TargetName="TextContentArea"
+                                    Property="Cursor"
+                                    Value="IBeam"/>
                         </Trigger>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="TextContentArea" Property="Cursor" Value="Arrow" />
-                            <Setter TargetName="ContentBorder" Property="Background" Value="{DynamicResource TextControlBackgroundDisabled}" />
-                            <Setter TargetName="ContentBorder" Property="BorderBrush" Value="{DynamicResource TextControlBorderBrushDisabled}" />
-                            <Setter TargetName="AccentBorder" Property="BorderBrush" Value="{DynamicResource TextControlBorderBrushDisabled}" />
-                            <Setter TargetName="ControlIconLeft" Property="Foreground" Value="{DynamicResource TextControlForegroundDisabled}" />
-                            <Setter TargetName="ControlIconRight" Property="Foreground" Value="{DynamicResource TextControlForegroundDisabled}" />
-                            <Setter TargetName="PlaceholderTextBox" Property="Foreground" Value="{DynamicResource TextControlForegroundDisabled}" />
-                            <Setter Property="Foreground" Value="{DynamicResource TextControlForegroundDisabled}" />
-                            <Setter Property="ClearButtonEnabled" Value="False" />
-                            <Setter Property="SpinButtonPlacementMode" Value="Hidden" />
+                        <Trigger Property="IsEnabled"
+                                Value="False">
+                            <Setter TargetName="TextContentArea"
+                                    Property="Cursor"
+                                    Value="Arrow"/>
+                            <Setter TargetName="ContentBorder"
+                                    Property="Background"
+                                    Value="{DynamicResource TextControlBackgroundDisabled}"/>
+                            <Setter TargetName="ContentBorder"
+                                    Property="BorderBrush"
+                                    Value="{DynamicResource TextControlBorderBrushDisabled}"/>
+                            <Setter TargetName="AccentBorder"
+                                    Property="BorderBrush"
+                                    Value="{DynamicResource TextControlBorderBrushDisabled}"/>
+                            <Setter TargetName="ControlIconLeft"
+                                    Property="Foreground"
+                                    Value="{DynamicResource TextControlForegroundDisabled}"/>
+                            <Setter TargetName="ControlIconRight"
+                                    Property="Foreground"
+                                    Value="{DynamicResource TextControlForegroundDisabled}"/>
+                            <Setter TargetName="PlaceholderTextBox"
+                                    Property="Foreground"
+                                    Value="{DynamicResource TextControlForegroundDisabled}"/>
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource TextControlForegroundDisabled}"/>
+                            <Setter Property="ClearButtonEnabled"
+                                    Value="False"/>
+                            <Setter Property="SpinButtonPlacementMode"
+                                    Value="Hidden"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -254,6 +366,7 @@
         </Setter>
     </Style>
 
-    <Style BasedOn="{StaticResource DefaultUiNumberBoxStyle}" TargetType="{x:Type controls:NumberBox}" />
+    <Style BasedOn="{StaticResource DefaultUiNumberBoxStyle}"
+            TargetType="{x:Type controls:NumberBox}"/>
 
 </ResourceDictionary>
