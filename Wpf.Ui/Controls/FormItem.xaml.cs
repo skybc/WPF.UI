@@ -1,4 +1,4 @@
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -31,7 +31,7 @@ namespace Wpf.Ui.Controls
         /// 标题区域内边距。
         /// </summary>
         public static readonly DependencyProperty TitlePaddingProperty = DependencyProperty.Register(
-            nameof(TitlePadding), typeof(Thickness), typeof(FormItem), new PropertyMetadata(new Thickness(0)));
+            nameof(TitlePadding), typeof(Thickness), typeof(FormItem), new PropertyMetadata(new Thickness(4,0,4,0)));
 
         /// <summary>
         /// 标题前景色。
