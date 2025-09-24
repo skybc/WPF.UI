@@ -91,6 +91,10 @@ public class DataGrid : System.Windows.Controls.DataGrid
     {
         base.OnPreviewMouseLeftButtonDown(e);
 
+        // 如果整个DataGrid是只读的，直接返回
+        if (this.IsReadOnly)
+            return;
+
         // 获取点击的单元格
         var hitTest = VisualTreeHelper.HitTest(this, e.GetPosition(this));
         if (hitTest?.VisualHit != null)
@@ -172,6 +176,13 @@ public class DataGrid : System.Windows.Controls.DataGrid
 
     protected override void OnKeyDown(KeyEventArgs e)
     {
+        // 如果整个DataGrid是只读的，对于非导航键直接返回
+        if (this.IsReadOnly && !IsNavigationKey(e.Key))
+        {
+            base.OnKeyDown(e);
+            return;
+        }
+
         // 处理方向键和Tab键导航并自动进入编辑
         if (e.Key == Key.Up || e.Key == Key.Down || e.Key == Key.Left || e.Key == Key.Right ||
             e.Key == Key.Tab)
@@ -188,7 +199,7 @@ public class DataGrid : System.Windows.Controls.DataGrid
             // 延迟进入编辑状态，让导航完成
             this.Dispatcher.BeginInvoke(new Action(() =>
             {
-                if (this.CurrentCell.IsValid && this.CurrentCell.Column != null)
+                if (this.CurrentCell.IsValid && this.CurrentCell.Column != null && !this.IsReadOnly)
                 {
                     var currentCellInfo = this.CurrentCell;
                     var column = currentCellInfo.Column;
@@ -223,7 +234,7 @@ public class DataGrid : System.Windows.Controls.DataGrid
                     // 延迟进入编辑状态
                     this.Dispatcher.BeginInvoke(new Action(() =>
                     {
-                        if (!IsColumnReadOnly(currentColumn))
+                        if (!this.IsReadOnly && !IsColumnReadOnly(currentColumn))
                         {
                             this.BeginEdit();
                         }
@@ -247,7 +258,7 @@ public class DataGrid : System.Windows.Controls.DataGrid
             // 对于其他按键（如字符输入），检查是否应该自动进入编辑模式
             if (IsTextInputKey(e.Key))
             {
-                if (this.CurrentCell.IsValid && this.CurrentCell.Column != null)
+                if (this.CurrentCell.IsValid && this.CurrentCell.Column != null && !this.IsReadOnly)
                 {
                     var column = this.CurrentCell.Column;
                     if (!IsColumnReadOnly(column))
@@ -265,6 +276,10 @@ public class DataGrid : System.Windows.Controls.DataGrid
 
     private bool IsColumnReadOnly(DataGridColumn column)
     {
+        // 首先检查整个DataGrid是否为只读
+        if (this.IsReadOnly)
+            return true;
+
         // 检查列是否为只读
         if (column is DataGridBoundColumn boundColumn)
         {
@@ -273,6 +288,14 @@ public class DataGrid : System.Windows.Controls.DataGrid
 
         // 对于其他类型的列，默认为可编辑
         return false;
+    }
+
+    private bool IsNavigationKey(Key key)
+    {
+        // 检查是否为导航按键
+        return key == Key.Up || key == Key.Down || key == Key.Left || key == Key.Right ||
+               key == Key.Tab || key == Key.Enter || key == Key.Escape ||
+               key == Key.Home || key == Key.End || key == Key.PageUp || key == Key.PageDown;
     }
 
     private bool IsTextInputKey(Key key)
