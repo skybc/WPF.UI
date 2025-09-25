@@ -5,39 +5,48 @@
     /// </summary>
     public class CommandManager
     {
-         
-        private readonly Stack<IUndoableCommand> _undoStack = new();
-        private readonly Stack<IUndoableCommand> _redoStack = new();
+
+        private readonly Stack<IUndoableCommand> undoStack = new Stack<IUndoableCommand>();
+        private readonly Stack<IUndoableCommand> redoStack = new Stack<IUndoableCommand>();
+
         /// <summary>
-        /// zh: 执行一个可撤销的命令，并将其添加到撤销栈中
+        /// zh: 执行一个可撤销的命令，并将其添加到撤销栈中.
         /// </summary>
-        /// <param name="cmd"></param>
+        /// <param name="cmd">The command to execute and add to the undo stack.</param>
         public void ExecuteCommand(IUndoableCommand cmd)
         {
             cmd.Execute();
-            _undoStack.Push(cmd);
-            _redoStack.Clear();
+            this.undoStack.Push(cmd);
+            this.redoStack.Clear();
         }
 
+        /// <summary>
+        /// 撤销上一个命令.
+        /// </summary>
         public void Undo()
         {
-            if (_undoStack.Any())
+            if (this.undoStack.Any())
             {
-                var cmd = _undoStack.Pop();
+                var cmd = this.undoStack.Pop();
                 cmd.Undo();
-                _redoStack.Push(cmd);
+                this.redoStack.Push(cmd);
             }
         }
 
+        /// <summary>
+        /// 重做上一个被撤销的命令.
+        /// </summary>
         public void Redo()
         {
-            if (_redoStack.Any())
+            if (this.redoStack.Any())
             {
-                var cmd = _redoStack.Pop();
+                var cmd = this.redoStack.Pop();
                 cmd.Execute();
-                _undoStack.Push(cmd);
+                this.undoStack.Push(cmd);
             }
         }
     }
 
 }
+
+
