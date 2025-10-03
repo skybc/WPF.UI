@@ -3,9 +3,6 @@
     If a copy of the MIT was not distributed with this file, You can obtain one at https://opensource.org/licenses/MIT.
     Copyright (C) Leszek Pomianowski and WPF UI Contributors.
     All Rights Reserved.
-    
-    Based on Microsoft XAML for Win UI
-    Copyright (c) Microsoft Corporation. All Rights Reserved.
 -->
 
 <ResourceDictionary
@@ -13,5 +10,278 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:Wpf.Ui.Controls"
     xmlns:converters="clr-namespace:Wpf.Ui.Converters"
-    xmlns:system="clr-namespace:System;assembly=mscorlib" />
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
 
+    <!-- Color to Brush Converter -->
+    <converters:ColorToBrushConverter x:Key="ColorToBrushConverter" />
+
+    <!-- Color Picker Style -->
+    <Style TargetType="{x:Type controls:ColorPicker}">
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
+        <Setter Property="Background" Value="{DynamicResource ControlFillColorDefaultBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding" Value="8,5,8,5" />
+        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="MinWidth" Value="120" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
+        <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:ColorPicker}">
+                    <Grid>
+                        <Border
+                            x:Name="ContentBorder"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding Border.CornerRadius}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Current Color Display -->
+                                <Border
+                                    Grid.Column="0"
+                                    Width="80"
+                                    Height="24"
+                                    Margin="4,0,0,0"
+                                    Background="{Binding Value, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource ColorToBrushConverter}}"
+                                    BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}"
+                                    BorderThickness="1"
+                                    CornerRadius="2" />
+
+                                <!-- Dropdown Toggle Button -->
+                                <ToggleButton
+                                    x:Name="PART_ToggleButton"
+                                    Grid.Column="1"
+                                    Width="24"
+                                    Height="24"
+                                    Margin="4,0,0,0"
+                                    Padding="0"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Focusable="False">
+                                    <controls:SymbolIcon
+                                        FontSize="12"
+                                        Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                        Symbol="ChevronDown24" />
+                                </ToggleButton>
+                            </Grid>
+                        </Border>
+
+                        <!-- Popup -->
+                        <Popup
+                            x:Name="PART_Popup"
+                            AllowsTransparency="True"
+                            Focusable="False"
+                            IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                            Placement="Bottom"
+                            PlacementTarget="{Binding ElementName=ContentBorder}"
+                            PopupAnimation="Slide"
+                            StaysOpen="False">
+                            <Border
+                                MinWidth="300"
+                                Margin="0,4,0,0"
+                                Padding="12"
+                                Background="{DynamicResource ComboBoxDropDownBackground}"
+                                BorderBrush="{DynamicResource ComboBoxDropDownBorderBrush}"
+                                BorderThickness="1"
+                                CornerRadius="{DynamicResource PopupCornerRadius}">
+                                <Border.Effect>
+                                    <DropShadowEffect
+                                        BlurRadius="12"
+                                        Direction="270"
+                                        Opacity="0.15"
+                                        ShadowDepth="4"
+                                        Color="Black" />
+                                </Border.Effect>
+
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="12" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+
+                                    <!-- Top Section: Color Picker + RGBA Inputs -->
+                                    <Grid Grid.Row="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="200" />
+                                            <ColumnDefinition Width="12" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <!-- Color Wheel Placeholder (will implement later) -->
+                                        <Border
+                                            Grid.Column="0"
+                                            Width="200"
+                                            Height="200"
+                                            Background="{DynamicResource ControlFillColorSecondaryBrush}"
+                                            BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}"
+                                            BorderThickness="1"
+                                            CornerRadius="4">
+                                            <TextBlock
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                FontSize="12"
+                                                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                                Text="Color Wheel" />
+                                        </Border>
+
+                                        <!-- RGBA Inputs -->
+                                        <StackPanel Grid.Column="2" VerticalAlignment="Top">
+                                            <!-- R Input -->
+                                            <Grid Margin="0,0,0,8">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="20" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock
+                                                    Grid.Column="0"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="12"
+                                                    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                                    Text="R" />
+                                                <controls:NumberBox
+                                                    Grid.Column="1"
+                                                    MinWidth="60"
+                                                    Maximum="255"
+                                                    Minimum="0"
+                                                    SpinButtonPlacementMode="Compact"
+                                                    Value="{Binding Red, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                            </Grid>
+
+                                            <!-- G Input -->
+                                            <Grid Margin="0,0,0,8">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="20" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock
+                                                    Grid.Column="0"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="12"
+                                                    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                                    Text="G" />
+                                                <controls:NumberBox
+                                                    Grid.Column="1"
+                                                    MinWidth="60"
+                                                    Maximum="255"
+                                                    Minimum="0"
+                                                    SpinButtonPlacementMode="Compact"
+                                                    Value="{Binding Green, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                            </Grid>
+
+                                            <!-- B Input -->
+                                            <Grid Margin="0,0,0,8">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="20" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock
+                                                    Grid.Column="0"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="12"
+                                                    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                                    Text="B" />
+                                                <controls:NumberBox
+                                                    Grid.Column="1"
+                                                    MinWidth="60"
+                                                    Maximum="255"
+                                                    Minimum="0"
+                                                    SpinButtonPlacementMode="Compact"
+                                                    Value="{Binding Blue, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                            </Grid>
+
+                                            <!-- A Input -->
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="20" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock
+                                                    Grid.Column="0"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="12"
+                                                    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                                    Text="A" />
+                                                <controls:NumberBox
+                                                    Grid.Column="1"
+                                                    MinWidth="60"
+                                                    Maximum="255"
+                                                    Minimum="0"
+                                                    SpinButtonPlacementMode="Compact"
+                                                    Value="{Binding Alpha, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                            </Grid>
+                                        </StackPanel>
+                                    </Grid>
+
+                                    <!-- Bottom Section: Preset Colors -->
+                                    <ItemsControl Grid.Row="2" ItemsSource="{TemplateBinding PresetColors}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel Orientation="Horizontal" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Button
+                                                    Width="24"
+                                                    Height="24"
+                                                    Margin="2"
+                                                    Padding="0"
+                                                    Background="{Binding Converter={StaticResource ColorToBrushConverter}}"
+                                                    BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}"
+                                                    BorderThickness="1"
+                                                    Tag="{Binding}">
+                                                    <Button.Template>
+                                                        <ControlTemplate TargetType="Button">
+                                                            <Border
+                                                                Background="{TemplateBinding Background}"
+                                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                                CornerRadius="4">
+                                                                <Border.Style>
+                                                                    <Style TargetType="Border">
+                                                                        <Style.Triggers>
+                                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                                <Setter Property="BorderBrush" Value="{DynamicResource SystemAccentColorSecondaryBrush}" />
+                                                                                <Setter Property="BorderThickness" Value="2" />
+                                                                            </Trigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </Border.Style>
+                                                            </Border>
+                                                        </ControlTemplate>
+                                                    </Button.Template>
+                                                </Button>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </Grid>
+                            </Border>
+                        </Popup>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ContentBorder" Property="Background" Value="{DynamicResource ControlFillColorSecondaryBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsDropDownOpen" Value="True">
+                            <Setter TargetName="PART_ToggleButton" Property="IsChecked" Value="True" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>
