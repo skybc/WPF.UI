@@ -39,6 +39,7 @@
         <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Controls/ContextMenu/ContextMenuLoader.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Controls/DataGrid/DataGrid.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Controls/DatePicker/DatePicker.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Controls/Divider/Divider.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Controls/DropDownButton/DropDownButton.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Controls/DynamicScrollBar/DynamicScrollBar.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Controls/DynamicScrollViewer/DynamicScrollViewer.xaml" />
