@@ -1,9 +1,9 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converter="clr-namespace:Wpf.Ui.Converters"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml">
     <converter:BoolReToVisibilityConverter x:Key="BoolReToVisibilityConverter" />
     <converter:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
-    <converter:BoolReConverter x:Key="BoolReConverter"></converter:BoolReConverter>
+    <converter:BoolReConverter x:Key="BoolReConverter" />
 </ResourceDictionary>
