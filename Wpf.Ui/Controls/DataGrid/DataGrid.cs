@@ -11,6 +11,8 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.ComponentModel;
+using System.Collections.Generic;
 
 // ReSharper disable once CheckNamespace
 namespace Wpf.Ui.Controls;
@@ -28,6 +30,14 @@ namespace Wpf.Ui.Controls;
 public class DataGrid : System.Windows.Controls.DataGrid
 {
     private bool _isComboBoxSelecting = false;
+    // Descriptors used to observe column Width changes
+    private readonly Dictionary<DataGridColumn, DependencyPropertyDescriptor> _widthDescriptors = new();
+
+    /// <summary>
+    /// Raised when any column's width changes.
+    /// </summary>
+    public event EventHandler<DataGridColumnEventArgs>? ColumnWidthChanged;
+
     public DataGrid()
     {
         // 设置单击编辑功能
@@ -577,11 +587,50 @@ public class DataGrid : System.Windows.Controls.DataGrid
 
         UpdateColumnElementStyles();
 
-        base.OnInitialized(e);
+        base.OnInitialized(e); 
+        this.ColumnHeaderStyle = new Style(typeof(DataGridColumnHeader), this.ColumnHeaderStyle);
+        this.ColumnHeaderStyle.Setters.Add(new EventSetter(SizeChangedEvent, new SizeChangedEventHandler(DataGridCell_SizeChanged)));
+
+
+
+    }
+
+    private void DataGridCell_SizeChanged(object sender, SizeChangedEventArgs e)
+    { 
+        if (sender is DataGridColumnHeader header)
+        {
+            if (header.Column != null)
+            {
+                Column_WidthChanged(header.Column, e);
+            }
+        }
     }
 
     private void ColumnsOnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
+        // Manage WidthChanged subscriptions for added/removed/reset actions
+        if (e != null)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add && e.NewItems != null)
+            {
+                foreach (DataGridColumn c in e.NewItems)
+                    AttachColumnWidthChanged(c);
+            }
+            else if (e.Action == NotifyCollectionChangedAction.Remove && e.OldItems != null)
+            {
+                foreach (DataGridColumn c in e.OldItems)
+                    DetachColumnWidthChanged(c);
+            }
+            else
+            {
+                // For Reset or Replace, refresh subscriptions for all columns
+                foreach (DataGridColumn singleColumn in Columns)
+                    DetachColumnWidthChanged(singleColumn);
+                foreach (DataGridColumn singleColumn in Columns)
+                    AttachColumnWidthChanged(singleColumn);
+            }
+        }
+
         UpdateColumnElementStyles();
     }
 
@@ -591,10 +640,19 @@ public class DataGrid : System.Windows.Controls.DataGrid
         {
             UpdateSingleColumn(singleColumn);
         }
+
+        // Ensure width change handlers are attached
+        foreach (DataGridColumn singleColumn in Columns)
+        {
+            AttachColumnWidthChanged(singleColumn);
+        }
+
     }
 
     private void UpdateSingleColumn(DataGridColumn dataGridColumn)
     {
+        // Ensure width change handler is attached for this column
+        AttachColumnWidthChanged(dataGridColumn);
         switch (dataGridColumn)
         {
             case DataGridCheckBoxColumn checkBoxColumn:
@@ -713,6 +771,65 @@ public class DataGrid : System.Windows.Controls.DataGrid
                 }
 
                 break;
+        }
+    }
+
+    private void AttachColumnWidthChanged(DataGridColumn column)
+    {
+        if (column == null) return;
+
+        // If already have a descriptor for this column, remove previous handler first
+        if (_widthDescriptors.TryGetValue(column, out var existingDescriptor))
+        {
+            try
+            {
+                existingDescriptor.RemoveValueChanged(column, Column_WidthChanged);
+            }
+            catch { }
+            _widthDescriptors.Remove(column);
+        }
+
+        var descriptor = DependencyPropertyDescriptor.FromProperty(DataGridColumn.WidthProperty, typeof(DataGridColumn));
+        if (descriptor != null)
+        {
+            descriptor.AddValueChanged(column, Column_WidthChanged);
+            _widthDescriptors[column] = descriptor;
+        }
+    }
+
+    private void DetachColumnWidthChanged(DataGridColumn column)
+    {
+        if (column == null) return;
+
+        if (_widthDescriptors.TryGetValue(column, out var descriptor))
+        {
+            try
+            {
+                descriptor.RemoveValueChanged(column, Column_WidthChanged);
+            }
+            catch { }
+            _widthDescriptors.Remove(column);
+        }
+    }
+
+    private void Column_WidthChanged(object? sender, EventArgs e)
+    {
+        if (sender is DataGridColumn column)
+        {
+            ColumnWidthChanged?.Invoke(this, new DataGridColumnEventArgs(column));
+        }
+    }
+
+    /// <summary>
+    /// Event args for when a DataGrid column width changes.
+    /// </summary>
+    public class DataGridColumnEventArgs : EventArgs
+    {
+        public DataGridColumn Column { get; }
+
+        public DataGridColumnEventArgs(DataGridColumn column)
+        {
+            Column = column;
         }
     }
 }
