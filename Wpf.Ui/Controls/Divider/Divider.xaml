@@ -1,4 +1,4 @@
-<!--
+﻿<!--
     This Source Code Form is subject to the terms of the MIT License.
     If a copy of the MIT was not distributed with this file, You can obtain one at https://opensource.org/licenses/MIT.
     Copyright (C) Leszek Pomianowski and WPF UI Contributors.
@@ -26,7 +26,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:Divider}">
                     <Grid>
-                        <!-- Horizontal Divider -->
+                        <!--  Horizontal Divider  -->
                         <Grid x:Name="HorizontalDivider" Visibility="Visible">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition x:Name="LeftColumn" Width="*" />
@@ -34,7 +34,7 @@
                                 <ColumnDefinition x:Name="RightColumn" Width="*" />
                             </Grid.ColumnDefinitions>
 
-                            <!-- Left Line -->
+                            <!--  Left Line  -->
                             <Border
                                 x:Name="LeftLine"
                                 Grid.Column="0"
@@ -42,7 +42,7 @@
                                 VerticalAlignment="Center"
                                 Background="{TemplateBinding LineStroke}" />
 
-                            <!-- Content -->
+                            <!--  Content  -->
                             <ContentPresenter
                                 x:Name="ContentPresenter"
                                 Grid.Column="1"
@@ -50,7 +50,7 @@
                                 VerticalAlignment="Center"
                                 TextElement.Foreground="{TemplateBinding Foreground}" />
 
-                            <!-- Right Line -->
+                            <!--  Right Line  -->
                             <Border
                                 x:Name="RightLine"
                                 Grid.Column="2"
@@ -59,7 +59,7 @@
                                 Background="{TemplateBinding LineStroke}" />
                         </Grid>
 
-                        <!-- Vertical Divider -->
+                        <!--  Vertical Divider  -->
                         <Grid x:Name="VerticalDivider" Visibility="Collapsed">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*" />
@@ -67,7 +67,7 @@
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
 
-                            <!-- Top Line -->
+                            <!--  Top Line  -->
                             <Border
                                 x:Name="TopLine"
                                 Grid.Row="0"
@@ -75,7 +75,7 @@
                                 HorizontalAlignment="Center"
                                 Background="{TemplateBinding LineStroke}" />
 
-                            <!-- Content (Vertical) -->
+                            <!--  Content (Vertical)  -->
                             <ContentPresenter
                                 x:Name="VerticalContentPresenter"
                                 Grid.Row="1"
@@ -87,7 +87,7 @@
                                 </ContentPresenter.LayoutTransform>
                             </ContentPresenter>
 
-                            <!-- Bottom Line -->
+                            <!--  Bottom Line  -->
                             <Border
                                 x:Name="BottomLine"
                                 Grid.Row="2"
@@ -98,39 +98,39 @@
                     </Grid>
 
                     <ControlTemplate.Triggers>
-                        <!-- Vertical Orientation -->
+                        <!--  Vertical Orientation  -->
                         <Trigger Property="Orientation" Value="Vertical">
                             <Setter TargetName="HorizontalDivider" Property="Visibility" Value="Collapsed" />
                             <Setter TargetName="VerticalDivider" Property="Visibility" Value="Visible" />
                         </Trigger>
 
-                        <!-- Content Alignment: Left -->
+                        <!--  Content Alignment: Left  -->
                         <Trigger Property="ContentAlignment" Value="Left">
                             <Setter TargetName="LeftColumn" Property="Width" Value="Auto" />
                             <Setter TargetName="LeftLine" Property="Visibility" Value="Collapsed" />
                             <Setter TargetName="ContentPresenter" Property="Margin" Value="0,0,12,0" />
                         </Trigger>
 
-                        <!-- Content Alignment: Right -->
+                        <!--  Content Alignment: Right  -->
                         <Trigger Property="ContentAlignment" Value="Right">
                             <Setter TargetName="RightColumn" Property="Width" Value="Auto" />
                             <Setter TargetName="RightLine" Property="Visibility" Value="Collapsed" />
                             <Setter TargetName="ContentPresenter" Property="Margin" Value="12,0,0,0" />
                         </Trigger>
 
-                        <!-- Content Alignment: Center (default) -->
+                        <!--  Content Alignment: Center (default)  -->
                         <Trigger Property="ContentAlignment" Value="Center">
                             <Setter TargetName="ContentPresenter" Property="Margin" Value="12,0,12,0" />
                             <Setter TargetName="VerticalContentPresenter" Property="Margin" Value="0,12,0,12" />
                         </Trigger>
 
-                        <!-- Content Alignment: Stretch (acts as Center) -->
+                        <!--  Content Alignment: Stretch (acts as Center)  -->
                         <Trigger Property="ContentAlignment" Value="Stretch">
                             <Setter TargetName="ContentPresenter" Property="Margin" Value="12,0,12,0" />
                             <Setter TargetName="VerticalContentPresenter" Property="Margin" Value="0,12,0,12" />
                         </Trigger>
 
-                        <!-- Hide content when Content is null or empty -->
+                        <!--  Hide content when Content is null or empty  -->
                         <Trigger Property="Content" Value="{x:Null}">
                             <Setter TargetName="ContentPresenter" Property="Visibility" Value="Collapsed" />
                             <Setter TargetName="VerticalContentPresenter" Property="Visibility" Value="Collapsed" />

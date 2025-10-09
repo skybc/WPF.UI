@@ -7,8 +7,13 @@ namespace Wpf.Ui.Controls
     /// <summary>
     /// 表单项控件。左侧显示 Title，右侧显示自定义内容。
     /// </summary>
-    public partial class FormItem : UserControl
+    public class FormItem : ContentControl
     {
+        static FormItem()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(FormItem), new FrameworkPropertyMetadata(typeof(FormItem)));
+        }
+
         /// <summary>
         /// 表单项标题。
         /// </summary>
@@ -17,9 +22,26 @@ namespace Wpf.Ui.Controls
 
         /// <summary>
         /// 标题区域宽度。
+        /// Changed to GridLength so it can be bound to ColumnDefinition.Width.
         /// </summary>
         public static readonly DependencyProperty TitleWidthProperty = DependencyProperty.Register(
-            nameof(TitleWidth), typeof(double), typeof(FormItem), new PropertyMetadata(120.0));
+            nameof(TitleWidth), typeof(GridLength), typeof(FormItem), new PropertyMetadata(new GridLength(120.0), OnTitleWidthChanged));
+
+        private static void OnTitleWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is FormItem formItem && e.NewValue is GridLength newWidth)
+            {
+                // If pixel-based width is negative, clamp to 0
+                if (newWidth.GridUnitType == GridUnitType.Pixel && newWidth.Value < 0)
+                {
+                    formItem.SetValue(TitleWidthProperty, new GridLength(0.0));
+                }
+                else
+                {
+                    // no-op: valid GridLength
+                }
+            }
+        }
 
         /// <summary>
         /// 标题水平对齐方式。
@@ -31,7 +53,7 @@ namespace Wpf.Ui.Controls
         /// 标题区域内边距。
         /// </summary>
         public static readonly DependencyProperty TitlePaddingProperty = DependencyProperty.Register(
-            nameof(TitlePadding), typeof(Thickness), typeof(FormItem), new PropertyMetadata(new Thickness(4,0,4,0)));
+            nameof(TitlePadding), typeof(Thickness), typeof(FormItem), new PropertyMetadata(new Thickness(4, 0, 4, 0)));
 
         /// <summary>
         /// 标题前景色。
@@ -69,9 +91,9 @@ namespace Wpf.Ui.Controls
         /// <summary>
         /// 标题区域宽度。
         /// </summary>
-        public double TitleWidth
+        public GridLength TitleWidth
         {
-            get => (double)GetValue(TitleWidthProperty);
+            get => (GridLength)GetValue(TitleWidthProperty);
             set => SetValue(TitleWidthProperty, value);
         }
 
@@ -131,7 +153,6 @@ namespace Wpf.Ui.Controls
 
         public FormItem()
         {
-            InitializeComponent();
             // 默认绑定主题色
             if (TitleForeground == null)
             {

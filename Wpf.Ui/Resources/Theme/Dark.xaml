@@ -1,4 +1,4 @@
-<!--
+﻿<!--
     This Source Code Form is subject to the terms of the MIT License.
     If a copy of the MIT was not distributed with this file, You can obtain one at https://opensource.org/licenses/MIT.
     Copyright (C) Leszek Pomianowski and WPF UI Contributors.
@@ -381,6 +381,12 @@
     <SolidColorBrush x:Key="CardBorderBrushPressed" Color="{StaticResource ControlStrokeColorDefault}" />
     <SolidColorBrush x:Key="CardBorderBrushDisabled" Color="{StaticResource ControlStrokeColorDefault}" />
     <SolidColorBrush x:Key="CardFooterBackground" Color="{StaticResource CardBackgroundFillColorSecondary}" />
+
+    <!--  EnhancedCard additional resources  -->
+    <SolidColorBrush x:Key="CardBorderBrushHover" Color="{DynamicResource SystemAccentColorSecondary}" />
+    <SolidColorBrush x:Key="CardHoverOverlayBrush" Color="#0FFFFFFF" />
+    <SolidColorBrush x:Key="CardSeparatorBrush" Color="{StaticResource DividerStrokeColorDefault}" />
+    <SolidColorBrush x:Key="CardShadowBrush" Color="#000000" />
 
     <!--  CheckBox  -->
     <SolidColorBrush x:Key="CheckBoxBackground" Color="{StaticResource ControlAltFillColorSecondary}" />

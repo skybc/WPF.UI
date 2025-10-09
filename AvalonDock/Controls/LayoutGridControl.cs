@@ -1,4 +1,4 @@
-/************************************************************************
+﻿/************************************************************************
    AvalonDock
 
    Copyright (C) 2007-2013 Xceed Software Inc.
@@ -198,9 +198,7 @@ namespace AvalonDock.Controls
 			var root = _model.Root;
 			var manager = root?.Manager;
 			if (manager == null) return;
-			FixChildrenDockLengths();
-			//Debug.Assert(InternalChildren.Count == _model.ChildrenCount + (_model.ChildrenCount - 1));
-
+			FixChildrenDockLengths(); 
 			#region Setup GridRows/Cols
 
 			RowDefinitions.Clear();
