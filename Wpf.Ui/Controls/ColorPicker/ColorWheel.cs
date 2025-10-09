@@ -258,7 +258,8 @@ public class ColorWheel : Control
         var baseColor = ColorHelper.HsvToRgb(Hue, 1.0, 1.0, 1.0);
         
         // Draw multiple gradient segments to simulate 2D gradient
-        int steps = 20;
+        // Use more steps (60) for smoother gradient without banding
+        int steps = 60;
         for (int i = 0; i < steps; i++)
         {
             double t = (double)i / steps;
@@ -277,6 +278,7 @@ public class ColorWheel : Control
             var colorEnd = ColorHelper.HsvToRgb(Hue, tNext, 1.0, 1.0);
             
             // Draw gradient from edge to black corner (p3)
+            // Use multiple color stops for smoother gradient
             var gradBrush = new LinearGradientBrush()
             {
                 StartPoint = edgeStart,
@@ -284,6 +286,10 @@ public class ColorWheel : Control
                 GradientStops = new GradientStopCollection
                 {
                     new GradientStop(colorStart, 0.0),
+                    new GradientStop(Color.FromRgb(
+                        (byte)(colorStart.R * 0.5),
+                        (byte)(colorStart.G * 0.5),
+                        (byte)(colorStart.B * 0.5)), 0.5),
                     new GradientStop(Colors.Black, 1.0)
                 }
             };
