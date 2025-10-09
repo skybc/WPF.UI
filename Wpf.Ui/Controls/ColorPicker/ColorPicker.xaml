@@ -119,22 +119,14 @@
                                             <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>
 
-                                        <!-- Color Wheel Placeholder (will implement later) -->
-                                        <Border
+                                        <!-- Color Wheel -->
+                                        <controls:ColorWheel
                                             Grid.Column="0"
                                             Width="200"
                                             Height="200"
-                                            Background="{DynamicResource ControlFillColorSecondaryBrush}"
-                                            BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}"
-                                            BorderThickness="1"
-                                            CornerRadius="4">
-                                            <TextBlock
-                                                HorizontalAlignment="Center"
-                                                VerticalAlignment="Center"
-                                                FontSize="12"
-                                                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                                Text="Color Wheel" />
-                                        </Border>
+                                            Hue="{Binding Hue, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                            Saturation="{Binding Saturation, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                            Value="{Binding Brightness, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" />
 
                                         <!-- RGBA Inputs -->
                                         <StackPanel Grid.Column="2" VerticalAlignment="Top">
