@@ -355,7 +355,6 @@ public class ColorPicker : Control
             Color.FromRgb(0xFF, 0x57, 0x22), // PaletteDeepOrangeColor
             Color.FromRgb(0x79, 0x55, 0x48), // PaletteBrownColor
             Color.FromRgb(0x9E, 0x9E, 0x9E), // PaletteGreyColor
-            Color.FromRgb(0x60, 0x7D, 0x8B), // PaletteBlueGreyColor
         };
     }
 }
