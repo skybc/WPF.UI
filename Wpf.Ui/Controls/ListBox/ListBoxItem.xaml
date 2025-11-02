@@ -10,17 +10,26 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converters="clr-namespace:Wpf.Ui.Converters">
 
-    <converters:BrushToColorConverter x:Key="BrushToColorConverter" />
+    <converters:BrushToColorConverter x:Key="BrushToColorConverter"/>
 
-    <Style x:Key="DefaultListBoxItemStyle" TargetType="{x:Type ListBoxItem}">
-        <Setter Property="Foreground" Value="{DynamicResource ListBoxItemForeground}" />
-        <Setter Property="Background" Value="{DynamicResource ListBoxItemSelectedBackgroundThemeBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource ListBoxItemSelectedBackgroundThemeBrush}" />
-        <Setter Property="Margin" Value="0" />
-        <Setter Property="Padding" Value="12" />
-        <Setter Property="Border.CornerRadius" Value="0" />
-        <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="OverridesDefaultStyle" Value="True" />
+    <Style x:Key="DefaultListBoxItemStyle"
+            TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Foreground"
+                Value="{DynamicResource ListBoxItemForeground}"/>
+        <Setter Property="Background"
+                Value="{DynamicResource ListBoxItemSelectedBackgroundThemeBrush}"/>
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource ListBoxItemSelectedBackgroundThemeBrush}"/>
+        <Setter Property="Margin"
+                Value="0"/>
+        <Setter Property="Padding"
+                Value="12"/>
+        <Setter Property="Border.CornerRadius"
+                Value="0"/>
+        <Setter Property="SnapsToDevicePixels"
+                Value="True"/>
+        <Setter Property="OverridesDefaultStyle"
+                Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBoxItem}">
@@ -31,16 +40,23 @@
                         Background="Transparent"
                         BorderThickness="1"
                         CornerRadius="{TemplateBinding Border.CornerRadius}">
-                        <ContentPresenter />
+                        <ContentPresenter/>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MenuBarItemBackgroundSelected}" />
+                        <Trigger Property="IsMouseOver"
+                                Value="True">
+                            <Setter TargetName="Border"
+                                    Property="Background"
+                                    Value="{DynamicResource MenuBarItemBackgroundSelected}"/>
                         </Trigger>
 
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource ListBoxItemSelectedBackgroundThemeBrush}" />
-                            <Setter Property="Foreground" Value="{DynamicResource ListBoxItemSelectedForegroundThemeBrush}" />
+                        <Trigger Property="IsSelected"
+                                Value="True">
+                            <Setter TargetName="Border"
+                                    Property="Background"
+                                    Value="{DynamicResource ListBoxItemSelectedBackgroundThemeBrush}"/>
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource ListBoxItemSelectedForegroundThemeBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -48,6 +64,15 @@
         </Setter>
     </Style>
 
-    <Style BasedOn="{StaticResource DefaultListBoxItemStyle}" TargetType="{x:Type ListBoxItem}" />
+    <Style BasedOn="{StaticResource DefaultListBoxItemStyle}"
+            TargetType="{x:Type ListBoxItem}"/>
+
+    <!--ListBoxItemStyle.Small-->
+    <Style x:Key="ListBoxItemStyle.Small"
+            BasedOn="{StaticResource DefaultListBoxItemStyle}"
+            TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Padding"
+                Value="4,2,4,2"/>
+    </Style>
 
 </ResourceDictionary>
