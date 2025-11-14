@@ -1,0 +1,113 @@
+<Page
+    x:Class="Wpf.Ui.Gallery.Views.Pages.Layout.PropertyPanelPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:Wpf.Ui.Gallery.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Wpf.Ui.Gallery.Views.Pages.Layout"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:system="clr-namespace:System;assembly=System.Runtime"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    Title="PropertyPanelPage"
+    controls:PageControlDocumentation.DocumentationType="{x:Type ui:PropertyPanel}"
+    d:DataContext="{d:DesignInstance local:PropertyPanelPage,
+                                     IsDesignTimeCreatable=False}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+    ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    mc:Ignorable="d">
+
+    <ScrollViewer>
+        <StackPanel Margin="20">
+            <!-- Basic PropertyPanel Example -->
+            <controls:ControlExample
+                Margin="0,0,0,20"
+                HeaderText="Basic PropertyPanel"
+                XamlCode="&lt;ui:PropertyPanel SelectedObject=&quot;{Binding SampleData}&quot; /&gt;">
+                <ui:PropertyPanel SelectedObject="{Binding ViewModel.SampleData}" Width="400" HorizontalAlignment="Left" />
+            </controls:ControlExample>
+
+            <!-- PropertyPanel with Custom Style -->
+            <controls:ControlExample
+                Margin="0,0,0,20"
+                HeaderText="PropertyPanel with Custom Styling"
+                XamlCode="&lt;ui:PropertyPanel SelectedObject=&quot;{Binding SampleData}&quot;&gt;&#10;    &lt;ui:PropertyPanel.ItemContainerStyle&gt;&#10;        &lt;Style TargetType=&quot;ContentPresenter&quot;&gt;&#10;            &lt;Setter Property=&quot;Margin&quot; Value=&quot;0,8,0,8&quot; /&gt;&#10;        &lt;/Style&gt;&#10;    &lt;/ui:PropertyPanel.ItemContainerStyle&gt;&#10;&lt;/ui:PropertyPanel&gt;">
+                
+                <ui:PropertyPanel SelectedObject="{Binding ViewModel.SampleData}" Width="400" HorizontalAlignment="Left">
+                    <ui:PropertyPanel.ItemContainerStyle>
+                        <Style TargetType="ContentPresenter">
+                            <Setter Property="Margin" Value="0,8,0,8" />
+                            <Setter Property="Background" Value="{DynamicResource CardBackgroundFillColorDefaultBrush}" />
+                            <Setter Property="CornerRadius" Value="4" />
+                            <Setter Property="Padding" Value="12" />
+                        </Style>
+                    </ui:PropertyPanel.ItemContainerStyle>
+                </ui:PropertyPanel>
+            </controls:ControlExample>
+
+            <!-- PropertyPanel Side by Side -->
+            <controls:ControlExample
+                Margin="0,0,0,20"
+                HeaderText="Multiple PropertyPanels - Compare Objects"
+                XamlCode="&lt;!-- Multiple PropertyPanels can be used side by side --&gt;&#10;&lt;Grid&gt;&#10;    &lt;Grid.ColumnDefinitions&gt;&#10;        &lt;ColumnDefinition Width=&quot;*&quot; /&gt;&#10;        &lt;ColumnDefinition Width=&quot;20&quot; /&gt;&#10;        &lt;ColumnDefinition Width=&quot;*&quot; /&gt;&#10;    &lt;/Grid.ColumnDefinitions&gt;&#10;    &lt;ui:PropertyPanel Grid.Column=&quot;0&quot; SelectedObject=&quot;{Binding SampleData1}&quot; /&gt;&#10;    &lt;ui:PropertyPanel Grid.Column=&quot;2&quot; SelectedObject=&quot;{Binding SampleData2}&quot; /&gt;&#10;&lt;/Grid&gt;">
+                
+                <Grid Height="500">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="20" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="Object 1" FontWeight="Bold" Margin="0,0,0,10" />
+                        <ui:PropertyPanel SelectedObject="{Binding ViewModel.SampleData}" />
+                    </StackPanel>
+                    
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="Object 2 (Different Values)" FontWeight="Bold" Margin="0,0,0,10" />
+                        <ui:PropertyPanel>
+                            <ui:PropertyPanel.SelectedObject>
+                                <local:SampleObject 
+                                    Name="Another Item"
+                                    Description="Different description"
+                                    IsEnabled="False"
+                                    Count="25"
+                                    Percentage="33.3"
+                                    Category="High"
+                                    SliderValue="75" />
+                            </ui:PropertyPanel.SelectedObject>
+                        </ui:PropertyPanel>
+                    </StackPanel>
+                </Grid>
+            </controls:ControlExample>
+            
+            <!-- Information Section -->
+            <controls:ControlExample
+                HeaderText="PropertyPanel Features"
+                XamlCode="&lt;!-- PropertyPanel automatically generates editors based on:&#10;- Property types (string, bool, int, double, enum, DateTime)&#10;- PropertyPanelAttribute settings&#10;- Custom editor types and templates --&gt;">
+                
+                <StackPanel>
+                    <TextBlock TextWrapping="Wrap" Margin="0,0,0,10">
+                        <Run FontWeight="Bold">PropertyPanel Features:</Run><LineBreak />
+                        • Automatic editor generation based on property types<LineBreak />
+                        • Support for string, bool, numeric, enum, DateTime properties<LineBreak />
+                        • Custom editors through PropertyPanelAttribute<LineBreak />
+                        • Slider support with Min/Max/Step values<LineBreak />
+                        • Custom element types (like PasswordBox)<LineBreak />
+                        • Property ordering and grouping<LineBreak />
+                        • Display names and descriptions<LineBreak />
+                        • Two-way data binding with INotifyPropertyChanged
+                    </TextBlock>
+                    
+                    <TextBlock TextWrapping="Wrap" Foreground="{DynamicResource TextFillColorSecondaryBrush}">
+                        <Run FontWeight="Bold">Usage:</Run><LineBreak />
+                        Mark properties with [PropertyPanel] attribute to make them visible in the panel.
+                        The control will automatically generate appropriate editors based on property types.
+                    </TextBlock>
+                </StackPanel>
+            </controls:ControlExample>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

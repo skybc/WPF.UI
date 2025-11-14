@@ -7,6 +7,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wpf.Ui", "Wpf.Ui\Wpf.Ui.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wpf.Ui.Abstractions", "Wpf.Ui.Abstractions\Wpf.Ui.Abstractions.csproj", "{269B1126-656E-0BB8-BD9D-6CD5B6EA52B8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wpf.Ui.Gallery", "Wpf.Ui.Gallery\Wpf.Ui.Gallery.csproj", "{059F91D7-86DD-378C-85D1-D18852E88DF1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wpf.Ui.DependencyInjection", "Wpf.Ui.DependencyInjection\Wpf.Ui.DependencyInjection.csproj", "{7E40B315-4563-A83A-CC2F-BDD15CDDD85B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wpf.Ui.SyntaxHighlight", "Wpf.Ui.SyntaxHighlight\Wpf.Ui.SyntaxHighlight.csproj", "{F999AD81-5BB0-D01A-2221-DFDFFC603539}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wpf.Ui.ToastNotifications", "Wpf.Ui.ToastNotifications\Wpf.Ui.ToastNotifications.csproj", "{D4EFDEC2-71CF-E45F-60EF-2E9DB6BA568A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wpf.Ui.Tray", "Wpf.Ui.Tray\Wpf.Ui.Tray.csproj", "{AE5D4FEC-E027-C60E-54CB-13A808483E1F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +31,26 @@ Global
 		{269B1126-656E-0BB8-BD9D-6CD5B6EA52B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{269B1126-656E-0BB8-BD9D-6CD5B6EA52B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{269B1126-656E-0BB8-BD9D-6CD5B6EA52B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{059F91D7-86DD-378C-85D1-D18852E88DF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{059F91D7-86DD-378C-85D1-D18852E88DF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{059F91D7-86DD-378C-85D1-D18852E88DF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{059F91D7-86DD-378C-85D1-D18852E88DF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E40B315-4563-A83A-CC2F-BDD15CDDD85B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E40B315-4563-A83A-CC2F-BDD15CDDD85B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E40B315-4563-A83A-CC2F-BDD15CDDD85B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E40B315-4563-A83A-CC2F-BDD15CDDD85B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F999AD81-5BB0-D01A-2221-DFDFFC603539}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F999AD81-5BB0-D01A-2221-DFDFFC603539}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F999AD81-5BB0-D01A-2221-DFDFFC603539}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F999AD81-5BB0-D01A-2221-DFDFFC603539}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4EFDEC2-71CF-E45F-60EF-2E9DB6BA568A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4EFDEC2-71CF-E45F-60EF-2E9DB6BA568A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4EFDEC2-71CF-E45F-60EF-2E9DB6BA568A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4EFDEC2-71CF-E45F-60EF-2E9DB6BA568A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE5D4FEC-E027-C60E-54CB-13A808483E1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE5D4FEC-E027-C60E-54CB-13A808483E1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE5D4FEC-E027-C60E-54CB-13A808483E1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE5D4FEC-E027-C60E-54CB-13A808483E1F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
