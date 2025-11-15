@@ -76,6 +76,7 @@ public partial class MainWindowViewModel(IStringLocalizer<Translations> localize
                 new NavigationViewItem(nameof(ListBox), typeof(ListBoxPage)),
                 new NavigationViewItem(nameof(Ui.Controls.ListView), typeof(ListViewPage)),
                 new NavigationViewItem(nameof(TreeView), typeof(TreeViewPage)),
+                new NavigationViewItem("Transfer", typeof(TransferPage)),
 #if DEBUG
                 new NavigationViewItem("TreeList", typeof(TreeListPage)),
 #endif
