@@ -74,6 +74,7 @@
         <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Controls/PasswordBox/PasswordBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Controls/ProgressBar/ProgressBar.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Controls/ProgressRing/ProgressRing.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Controls/PropertyPanel/PropertyPanel.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Controls/RadioButton/RadioButton.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Controls/RatingControl/RatingControl.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Controls/RichTextBox/RichTextBox.xaml" />

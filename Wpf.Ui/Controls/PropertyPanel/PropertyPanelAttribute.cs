@@ -90,4 +90,9 @@ public sealed class PropertyPanelAttribute : Attribute
     /// Optional SelectedValuePath for ComboBox.
     /// </summary>
     public string? SelectedValuePath { get; set; }
+
+    /// <summary>
+    /// Width for the DisplayName label. When 0, uses the PropertyPanel's DisplayNameWidth. Defaults to 0.
+    /// </summary>
+    public double DisplayNameWidth { get; set; } = 0d;
 }

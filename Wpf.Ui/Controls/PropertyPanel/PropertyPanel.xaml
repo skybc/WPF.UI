@@ -1,71 +1,125 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Wpf.Ui.Controls">
 
-    <!-- Default editor templates aligned with Wpf.Ui look and feel -->
-
-    <!-- Text editor -->
-    <DataTemplate x:Key="PropertyPanel.TextTemplate">
-        <TextBox Text="{Binding CurrentValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                 ToolTip="{Binding Description}"
-                 MinWidth="120"/>
+    <!--  DataTemplate for PropertyItem  -->
+    <DataTemplate DataType="{x:Type local:PropertyItem}">
+        <local:PropertyItemContainer />
     </DataTemplate>
 
-    <!-- Bool editor -->
-    <DataTemplate x:Key="PropertyPanel.BoolTemplate">
-        <CheckBox IsChecked="{Binding CurrentValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                  ToolTip="{Binding Description}"/>
+    <!--  DataTemplate for PropertyGroupItem  -->
+    <DataTemplate DataType="{x:Type local:PropertyGroupItem}">
+        <local:PropertyGroupContainer />
     </DataTemplate>
 
-    <!-- Enum / Combo editor -->
-    <DataTemplate x:Key="PropertyPanel.EnumTemplate">
-        <ComboBox ToolTip="{Binding Description}"
-                  ItemsSource="{Binding EnumValues}"
-                  SelectedItem="{Binding CurrentValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-    </DataTemplate>
+    <!--  Style for ToggleButton in PropertyPanel header  -->
+    <Style x:Key="PropertyPanelToggleButtonStyle" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                        <ContentPresenter
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Content="{TemplateBinding Content}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Background" Value="#E0E0E0" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#F0F0F0" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
-    <!-- Number (textbox) editor -->
-    <DataTemplate x:Key="PropertyPanel.NumberTemplate">
-        <TextBox MinWidth="120" ToolTip="{Binding Description}">
-            <TextBox.Text>
-                <Binding Path="CurrentValue" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" StringFormat="{}{0:g}">
-                    <Binding.ValidationRules>
-                        <ExceptionValidationRule/>
-                    </Binding.ValidationRules>
-                </Binding>
-            </TextBox.Text>
-        </TextBox>
-    </DataTemplate>
+    <!--  Default style for PropertyPanel  -->
+    <Style TargetType="{x:Type local:PropertyPanel}">
+        <Setter Property="Padding" Value="12" />
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <StackPanel IsItemsHost="True" Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:PropertyPanel}">
+                    <Border
+                        Padding="{TemplateBinding Padding}"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                        <DockPanel>
+                            <!--  Header with search and sort buttons  -->
+                            <Grid
+                                Height="40"
+                                Margin="0,0,0,8"
+                                DockPanel.Dock="Top">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
 
-    <!-- Slider editor (for numeric) -->
-    <DataTemplate x:Key="PropertyPanel.SliderTemplate">
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" ToolTip="{Binding Description}">
-            <Slider Minimum="{Binding Min}" Maximum="{Binding Max}" TickFrequency="{Binding Step}"
-                    IsSnapToTickEnabled="True"
-                    Value="{Binding CurrentValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    Width="160"/>
-            <TextBlock Margin="8,0,0,0" VerticalAlignment="Center"
-                       Text="{Binding CurrentValue}"/>
-        </StackPanel>
-    </DataTemplate>
+                                <!--  Sort by Category ToggleButton  -->
+                                <ToggleButton
+                                    x:Name="SortByCategoryButton"
+                                    Grid.Column="0"
+                                    Width="40"
+                                    Height="40"
+                                    Margin="0,0,4,0"
+                                    Style="{StaticResource PropertyPanelToggleButtonStyle}"
+                                    ToolTip="Sort by Category">
+                                    <TextBlock FontSize="18" Text="📁" />
+                                </ToggleButton>
 
-    <!-- Date editor -->
-    <DataTemplate x:Key="PropertyPanel.DateTemplate">
-        <DatePicker SelectedDate="{Binding CurrentValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    ToolTip="{Binding Description}"/>
-    </DataTemplate>
+                                <!--  Sort by Name ToggleButton  -->
+                                <ToggleButton
+                                    x:Name="SortByNameButton"
+                                    Grid.Column="1"
+                                    Width="40"
+                                    Height="40"
+                                    Margin="0,0,12,0"
+                                    Style="{StaticResource PropertyPanelToggleButtonStyle}"
+                                    ToolTip="Sort by Name">
+                                    <TextBlock FontSize="18" Text="🔤" />
+                                </ToggleButton>
 
-    <!-- Default item template for a row in the property panel -->
-    <DataTemplate x:Key="PropertyPanel.ItemTemplate">
-        <Grid VerticalAlignment="Center">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="8"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Text="{Binding DisplayName}" VerticalAlignment="Center"/>
-            <ContentPresenter Grid.Column="2"
-                              Content="{Binding}"
-                              ContentTemplateSelector="{DynamicResource PropertyPanel.TemplateSelector}"/>
-        </Grid>
-    </DataTemplate>
+                                <!--  Search TextBox  -->
+                                <TextBox
+                                    Grid.Column="2"
+                                    Height="32"
+                                    Margin="0,0,0,0"
+                                    Padding="8,6,8,6"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SearchText, UpdateSourceTrigger=PropertyChanged}" />
+                            </Grid>
+
+                            <!--  Items Presenter  -->
+                            <ScrollViewer
+                                Focusable="False"
+                                HorizontalScrollBarVisibility="Disabled"
+                                VerticalScrollBarVisibility="Auto">
+                                <ItemsPresenter />
+                            </ScrollViewer>
+                        </DockPanel>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

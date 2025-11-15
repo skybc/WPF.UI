@@ -8,7 +8,7 @@ namespace Wpf.Ui.Controls;
 /// <summary>
 /// Runtime item representing a reflected property to be edited.
 /// </summary>
-public sealed class PropertyItem : INotifyPropertyChanged
+public sealed class PropertyItem : INotifyPropertyChanged, IDisposable
 {
     private readonly object _owner;
     private readonly PropertyInfo _property;
@@ -16,12 +16,13 @@ public sealed class PropertyItem : INotifyPropertyChanged
     private readonly Type _propertyType;
     private readonly Type _underlyingType;
     private readonly INotifyPropertyChanged? _ownerInpc;
+    private bool _isDisposed;
 
     public PropertyItem(object owner, PropertyInfo property, PropertyPanelAttribute attribute)
     {
-        _owner = owner;
-        _property = property;
-        _attribute = attribute;
+        this._owner = owner;
+        this._property = property;
+        this._attribute = attribute;
 
         _propertyType = property.PropertyType;
         _underlyingType = Nullable.GetUnderlyingType(_propertyType) ?? _propertyType;
@@ -37,10 +38,12 @@ public sealed class PropertyItem : INotifyPropertyChanged
             _ownerInpc.PropertyChanged += OwnerOnPropertyChanged;
         }
     }
-
+    public object Owner => _owner;
     public string Name => _property.Name;
 
     public string DisplayName => string.IsNullOrWhiteSpace(_attribute.DisplayName) ? Name : _attribute.DisplayName!;
+
+    public double DisplayNameWidth => _attribute.DisplayNameWidth;
 
     public string? Description => _attribute.Description;
 
@@ -128,4 +131,23 @@ public sealed class PropertyItem : INotifyPropertyChanged
     public event PropertyChangedEventHandler? PropertyChanged;
 
     private void OnPropertyChanged(string name) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+
+    /// <summary>
+    /// Cleans up resources and event handlers to prevent memory leaks.
+    /// </summary>
+    public void Dispose()
+    {
+        if (this._isDisposed)
+        {
+            return;
+        }
+
+        this._isDisposed = true;
+
+        // Unsubscribe from owner property changes
+        if (this._ownerInpc != null)
+        {
+            this._ownerInpc.PropertyChanged -= OwnerOnPropertyChanged;
+        }
+    }
 }
