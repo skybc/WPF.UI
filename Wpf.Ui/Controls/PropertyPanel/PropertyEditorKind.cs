@@ -34,6 +34,12 @@ public enum PropertyEditorKind
     /// <summary>Edits the value through a color picker.</summary>
     ColorPicker,
     
+    /// <summary>Edits the value through a file selection dialog.</summary>
+    FileSelect,
+    
+    /// <summary>Edits the value through a directory selection dialog.</summary>
+    DirectorySelect,
+    
     /// <summary>Custom editor provided via template.</summary>
     Custom,
 }

@@ -74,25 +74,44 @@ public sealed class PropertyPanelAttribute : Attribute
     /// When editor is ComboBox and property is not an enum,
     /// ItemsSource can be provided via resource key or binding path. Use this for custom scenarios.
     /// </summary>
+    /// <remarks>
+    /// Deprecated: Use <see cref="PropertyComboBoxAttribute"/> instead for ComboBox-specific configuration.
+    /// </remarks>
     public object? ItemsSourceResourceKey { get; set; }
 
     /// <summary>
     /// DataContext-relative binding path used as ItemsSource when editor is ComboBox and property is not an enum.
     /// </summary>
+    /// <remarks>
+    /// Deprecated: Use <see cref="PropertyComboBoxAttribute.ItemsSourcePath"/> instead.
+    /// </remarks>
     public string? ItemsSourcePath { get; set; }
 
     /// <summary>
     /// Optional DisplayMemberPath for ComboBox.
     /// </summary>
+    /// <remarks>
+    /// Deprecated: Use <see cref="PropertyComboBoxAttribute.DisplayMemberPath"/> instead.
+    /// </remarks>
     public string? DisplayMemberPath { get; set; }
 
     /// <summary>
     /// Optional SelectedValuePath for ComboBox.
     /// </summary>
+    /// <remarks>
+    /// Deprecated: Use <see cref="PropertyComboBoxAttribute.SelectedValuePath"/> instead.
+    /// </remarks>
     public string? SelectedValuePath { get; set; }
 
     /// <summary>
     /// Width for the DisplayName label. When 0, uses the PropertyPanel's DisplayNameWidth. Defaults to 0.
     /// </summary>
     public double DisplayNameWidth { get; set; } = 0d;
+
+    /// <summary>
+    /// Optional IValueConverter type for the binding. The type must implement <see cref="System.Windows.Data.IValueConverter"/>.
+    /// This is used when binding a custom editor element to the property value.
+    /// Only applies when <see cref="EditorElementType"/> is specified.
+    /// </summary>
+    public Type? Converter { get; set; }
 }

@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Globalization;
 using System.Reflection;
+using System.Windows.Data;
 
 namespace Wpf.Ui.Controls;
 
@@ -13,9 +14,13 @@ public sealed class PropertyItem : INotifyPropertyChanged, IDisposable
     private readonly object _owner;
     private readonly PropertyInfo _property;
     private readonly PropertyPanelAttribute _attribute;
+    private readonly PropertyFileAttribute? _fileAttribute;
+    private readonly PropertyComboBoxAttribute? _comboBoxAttribute;
     private readonly Type _propertyType;
     private readonly Type _underlyingType;
     private readonly INotifyPropertyChanged? _ownerInpc;
+    private IValueConverter? _converter;
+    private bool _converterInitialized;
     private bool _isDisposed;
 
     public PropertyItem(object owner, PropertyInfo property, PropertyPanelAttribute attribute)
@@ -26,6 +31,12 @@ public sealed class PropertyItem : INotifyPropertyChanged, IDisposable
 
         _propertyType = property.PropertyType;
         _underlyingType = Nullable.GetUnderlyingType(_propertyType) ?? _propertyType;
+
+        // Try to get PropertyFileAttribute if it exists
+        _fileAttribute = property.GetCustomAttribute<PropertyFileAttribute>();
+
+        // Try to get PropertyComboBoxAttribute if it exists
+        _comboBoxAttribute = property.GetCustomAttribute<PropertyComboBoxAttribute>();
 
         if (IsEnum)
         {
@@ -68,6 +79,16 @@ public sealed class PropertyItem : INotifyPropertyChanged, IDisposable
     public double Max => _attribute.Max;
 
     public double Step => _attribute.Step;
+
+    public PropertyFileAttribute? FileAttribute => _fileAttribute;
+
+    public PropertyComboBoxAttribute? ComboBoxAttribute => _comboBoxAttribute;
+
+    /// <summary>
+    /// Gets the IValueConverter instance if one is specified in the attribute.
+    /// Converter is lazily instantiated and cached.
+    /// </summary>
+    public IValueConverter? Converter => GetConverter();
 
     public object? CurrentValue
     {
@@ -117,6 +138,48 @@ public sealed class PropertyItem : INotifyPropertyChanged, IDisposable
         catch
         {
             return value;
+        }
+    }
+
+    /// <summary>
+    /// Gets or creates the IValueConverter instance from the Converter type specified in the attribute.
+    /// </summary>
+    /// <returns>An instance of the converter, or null if no converter is specified or instantiation fails.</returns>
+    private IValueConverter? GetConverter()
+    {
+        if (_converterInitialized)
+        {
+            return _converter;
+        }
+
+        _converterInitialized = true;
+
+        var converterType = _attribute.Converter;
+        if (converterType == null)
+        {
+            return null;
+        }
+
+        // Validate that the type implements IValueConverter
+        if (!typeof(IValueConverter).IsAssignableFrom(converterType))
+        {
+            System.Diagnostics.Debug.WriteLine(
+                $"Warning: Converter type '{converterType.FullName}' does not implement IValueConverter");
+            return null;
+        }
+
+        try
+        {
+            // Try to instantiate the converter with a parameterless constructor
+            var instance = Activator.CreateInstance(converterType) as IValueConverter;
+            _converter = instance;
+            return instance;
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine(
+                $"Error instantiating converter '{converterType.FullName}': {ex.Message}");
+            return null;
         }
     }
 
