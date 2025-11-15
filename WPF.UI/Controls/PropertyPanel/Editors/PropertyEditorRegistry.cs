@@ -30,6 +30,7 @@ internal static class PropertyEditorRegistry
         // Register default editors in order of precedence
         RegisterEditor(new FileSelectEditor());
         RegisterEditor(new DirectorySelectEditor());
+        RegisterEditor(new FontSelectEditor());
         RegisterEditor(new ColorPickerEditor());
         RegisterEditor(new DatePickerEditor());
         RegisterEditor(new SliderEditor());

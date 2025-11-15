@@ -51,14 +51,14 @@
 
                                 <!--  Current Color Display  -->
                                 <Border
-                                    Grid.Column="0"
-                                    Width="80"
-                                    Height="24"
+                                    x:Name="PART_ColorBorder"
+                                    Grid.Column="0"                                 
                                     Margin="4,0,0,0"
                                     Background="{Binding Value, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource ColorToBrushConverter}}"
                                     BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}"
                                     BorderThickness="1"
-                                    CornerRadius="2" />
+                                    CornerRadius="2"
+                                    Cursor="Hand" />
 
                                 <!--  Dropdown Toggle Button  -->
                                 <ToggleButton

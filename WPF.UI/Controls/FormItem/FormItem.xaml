@@ -10,7 +10,7 @@
                 <ControlTemplate TargetType="{x:Type local:FormItem}">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="{TemplateBinding TitleWidth }" />
+                            <ColumnDefinition Width="{TemplateBinding TitleWidth}" />
                             <ColumnDefinition Width="1*" />
                         </Grid.ColumnDefinitions>
                         <TextBlock

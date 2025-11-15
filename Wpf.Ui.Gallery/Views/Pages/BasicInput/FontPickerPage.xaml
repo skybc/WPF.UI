@@ -1,0 +1,181 @@
+﻿<Page
+    x:Class="Wpf.Ui.Gallery.Views.Pages.BasicInput.FontPickerPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:Wpf.Ui.Gallery.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Wpf.Ui.Gallery.Views.Pages.BasicInput"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    Title="FontPickerPage"
+    controls:PageControlDocumentation.DocumentationType="{x:Type ui:FontPickerControl}"
+    d:DataContext="{d:DesignInstance local:FontPickerPage,
+                                     IsDesignTimeCreatable=False}"
+    d:DesignHeight="1200"
+    d:DesignWidth="800"
+    ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+    ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Controls/FontPicker/FontPickerControl.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <StackPanel Margin="0,0,0,24">
+
+        <!--  Basic FontPickerControl Example  -->
+        <controls:ControlExample
+            Margin="0"
+            HeaderText="Basic font picker control."
+            XamlCode="&lt;ui:FontPickerControl FontSettings=&quot;{Binding CurrentFontSettings}&quot; PreviewText=&quot;Sample Text&quot; /&gt;">
+            <ui:FontPickerControl FontSettings="{Binding ViewModel.BasicFontSettings, Mode=TwoWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:FontPickerPage}}" PreviewText="Font Preview Sample" />
+        </controls:ControlExample>
+
+        <!--  Divider  -->
+        <Border
+            Height="1"
+            Margin="0,32,0,32"
+            Background="{DynamicResource ControlStrokeColorDefaultBrush}" />
+
+        <!--  Example: Title Font  -->
+        <controls:ControlExample
+            Margin="0"
+            HeaderText="Title font settings example."
+            XamlCode="&lt;!-- For document or editor title styling --&gt;&#x0a;&lt;ui:FontPickerControl&#x0a;    FontSettings=&quot;{Binding TitleFontSettings}&quot;&#x0a;    PreviewText=&quot;Document Title&quot; /&gt;">
+            <StackPanel>
+                <ui:FontPickerControl FontSettings="{Binding ViewModel.TitleFontSettings, Mode=TwoWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:FontPickerPage}}" PreviewText="Document Title" />
+                <TextBlock
+                    Margin="0,12,0,0"
+                    FontSize="12"
+                    Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                    Text="Preview:" />
+                <Border
+                    Padding="16"
+                    Background="{DynamicResource ControlFillColorDefaultBrush}"
+                    BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}"
+                    BorderThickness="1"
+                    CornerRadius="{DynamicResource ControlCornerRadius}">
+                    <TextBlock
+                        FontFamily="{Binding ViewModel.TitleFontSettings.FontFamily, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:FontPickerPage}}"
+                        FontSize="{Binding ViewModel.TitleFontSettings.FontSize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:FontPickerPage}}"
+                        FontStyle="{Binding ViewModel.TitleFontSettings.FontStyle, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:FontPickerPage}}"
+                        FontWeight="{Binding ViewModel.TitleFontSettings.FontWeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:FontPickerPage}}"
+                        Foreground="{Binding ViewModel.TitleFontSettings.Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:FontPickerPage}}"
+                        Text="This is a title with custom font settings" />
+                </Border>
+            </StackPanel>
+        </controls:ControlExample>
+
+        <!--  Divider  -->
+        <Border
+            Height="1"
+            Margin="0,32,0,32"
+            Background="{DynamicResource ControlStrokeColorDefaultBrush}" />
+
+        <!--  Example: Body Font  -->
+        <controls:ControlExample
+            Margin="0"
+            HeaderText="Body text font settings example."
+            XamlCode="&lt;!-- For document or editor body text styling --&gt;&#x0a;&lt;ui:FontPickerControl&#x0a;    FontSettings=&quot;{Binding BodyFontSettings}&quot;&#x0a;    PreviewText=&quot;Body Text Sample&quot; /&gt;">
+            <StackPanel>
+                <ui:FontPickerControl FontSettings="{Binding ViewModel.BodyFontSettings, Mode=TwoWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:FontPickerPage}}" PreviewText="Body Text Sample" />
+                <TextBlock
+                    Margin="0,12,0,0"
+                    FontSize="12"
+                    Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                    Text="Preview:" />
+                <Border
+                    Padding="16"
+                    Background="{DynamicResource ControlFillColorDefaultBrush}"
+                    BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}"
+                    BorderThickness="1"
+                    CornerRadius="{DynamicResource ControlCornerRadius}">
+                    <TextBlock
+                        FontFamily="{Binding ViewModel.BodyFontSettings.FontFamily, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:FontPickerPage}}"
+                        FontSize="{Binding ViewModel.BodyFontSettings.FontSize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:FontPickerPage}}"
+                        FontStyle="{Binding ViewModel.BodyFontSettings.FontStyle, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:FontPickerPage}}"
+                        FontWeight="{Binding ViewModel.BodyFontSettings.FontWeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:FontPickerPage}}"
+                        Foreground="{Binding ViewModel.BodyFontSettings.Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:FontPickerPage}}"
+                        Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                        TextWrapping="Wrap" />
+                </Border>
+            </StackPanel>
+        </controls:ControlExample>
+
+        <!--  Divider  -->
+        <Border
+            Height="1"
+            Margin="0,32,0,32"
+            Background="{DynamicResource ControlStrokeColorDefaultBrush}" />
+
+        <!--  Example: Code Font  -->
+        <controls:ControlExample
+            Margin="0"
+            HeaderText="Code/Monospace font settings example."
+            XamlCode="&lt;!-- For code editor or monospace text --&gt;&#x0a;&lt;ui:FontPickerControl&#x0a;    FontSettings=&quot;{Binding CodeFontSettings}&quot;&#x0a;    PreviewText=&quot;Code Sample&quot; /&gt;">
+            <StackPanel>
+                <ui:FontPickerControl FontSettings="{Binding ViewModel.CodeFontSettings, Mode=TwoWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:FontPickerPage}}" PreviewText="Code Sample" />
+                <TextBlock
+                    Margin="0,12,0,0"
+                    FontSize="12"
+                    Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                    Text="Preview:" />
+                <Border
+                    Padding="16"
+                    Background="{DynamicResource ControlFillColorDefaultBrush}"
+                    BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}"
+                    BorderThickness="1"
+                    CornerRadius="{DynamicResource ControlCornerRadius}">
+                    <TextBlock  
+                        FontFamily="{Binding ViewModel.CodeFontSettings.FontFamily, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:FontPickerPage}}"
+                        FontSize="{Binding ViewModel.CodeFontSettings.FontSize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:FontPickerPage}}"
+                        FontStyle="{Binding ViewModel.CodeFontSettings.FontStyle, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:FontPickerPage}}"
+                        FontWeight="{Binding ViewModel.CodeFontSettings.FontWeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:FontPickerPage}}"
+                        Foreground="{Binding ViewModel.CodeFontSettings.Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:FontPickerPage}}"
+                        Text="public class FontSettings { }" />
+                </Border>
+            </StackPanel>
+        </controls:ControlExample>
+
+        <!--  Divider  -->
+        <Border
+            Height="1"
+            Margin="0,32,0,32"
+            Background="{DynamicResource ControlStrokeColorDefaultBrush}" />
+
+        <!--  Combined Example: Settings Panel  -->
+        <controls:ControlExample
+            Margin="0"
+            HeaderText="Complete settings panel with multiple font pickers."
+            XamlCode="&lt;!-- Multiple font pickers for a settings panel --&gt;">
+            <StackPanel>
+                <StackPanel>
+                    <TextBlock
+                        FontSize="13"
+                        FontWeight="SemiBold"
+                        Text="Title Font" />
+                    <ui:FontPickerControl FontSettings="{Binding ViewModel.TitleFontSettings, Mode=TwoWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:FontPickerPage}}" PreviewText="Title" />
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock
+                        FontSize="13"
+                        FontWeight="SemiBold"
+                        Text="Body Font" />
+                    <ui:FontPickerControl FontSettings="{Binding ViewModel.BodyFontSettings, Mode=TwoWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:FontPickerPage}}" PreviewText="Body" />
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock
+                        FontSize="13"
+                        FontWeight="SemiBold"
+                        Text="Code Font" />
+                    <ui:FontPickerControl FontSettings="{Binding ViewModel.CodeFontSettings, Mode=TwoWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:FontPickerPage}}" PreviewText="Code" />
+                </StackPanel>
+            </StackPanel>
+        </controls:ControlExample>
+    </StackPanel>
+</Page>

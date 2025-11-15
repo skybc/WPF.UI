@@ -16,7 +16,7 @@ internal class ComboBoxEditor : PropertyEditorBase
 {
     public override PropertyEditorKind EditorKind => PropertyEditorKind.ComboBox;
 
-    public override bool CanHandle(PropertyItem item) => 
+    public override bool CanHandle(PropertyItem item) =>
         item.Attribute.Editor == PropertyEditorKind.ComboBox || item.IsEnum;
 
     public override FrameworkElement CreateEditor(PropertyItem item, PropertyPanel panel)
@@ -77,7 +77,15 @@ internal class ComboBoxEditor : PropertyEditorBase
         }
 
         var binding = CreateValueBinding(item);
-        comboBox.SetBinding(ComboBox.SelectedItemProperty, binding);
+
+        if (!string.IsNullOrWhiteSpace(attr.SelectedValuePath))
+        {
+            comboBox.SetBinding(ComboBox.SelectedValueProperty, binding);
+        }
+        else
+        {
+            comboBox.SetBinding(ComboBox.SelectedItemProperty, binding);
+        }
         SetCommonProperties(comboBox, item);
 
         return comboBox;

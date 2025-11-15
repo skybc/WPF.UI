@@ -1,4 +1,4 @@
-<!--
+﻿<!--
     This Source Code Form is subject to the terms of the MIT License.
     If a copy of the MIT was not distributed with this file, You can obtain one at https://opensource.org/licenses/MIT.
     Copyright (C) Leszek Pomianowski and WPF UI Contributors.
@@ -17,7 +17,7 @@
     <Thickness x:Key="EnhancedCardFooterPadding">16,12,16,16</Thickness>
     <Thickness x:Key="EnhancedCardBorderThemeThickness">1</Thickness>
 
-    <!-- Shadow offset values for different elevation levels -->
+    <!--  Shadow offset values for different elevation levels  -->
     <system:Double x:Key="EnhancedCardElevation0Offset">0</system:Double>
     <system:Double x:Key="EnhancedCardElevation1Offset">1</system:Double>
     <system:Double x:Key="EnhancedCardElevation2Offset">2</system:Double>
@@ -47,8 +47,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:EnhancedCard}">
                     <Grid>
-                        <!-- Shadow layers for elevation effect -->
-                        <!-- Bottom shadow layer (darkest) -->
+                        <!--  Shadow layers for elevation effect  -->
+                        <!--  Bottom shadow layer (darkest)  -->
                         <Border
                             x:Name="ShadowLayer3"
                             Margin="0,0,0,-6"
@@ -56,8 +56,8 @@
                             CornerRadius="{TemplateBinding CornerRadius}"
                             Opacity="0.06"
                             Visibility="Collapsed" />
-                        
-                        <!-- Middle shadow layer -->
+
+                        <!--  Middle shadow layer  -->
                         <Border
                             x:Name="ShadowLayer2"
                             Margin="0,0,0,-4"
@@ -65,8 +65,8 @@
                             CornerRadius="{TemplateBinding CornerRadius}"
                             Opacity="0.08"
                             Visibility="Collapsed" />
-                        
-                        <!-- Top shadow layer (lightest) -->
+
+                        <!--  Top shadow layer (lightest)  -->
                         <Border
                             x:Name="ShadowLayer1"
                             Margin="0,0,0,-2"
@@ -75,7 +75,7 @@
                             Opacity="0.1"
                             Visibility="Collapsed" />
 
-                        <!-- Main card container -->
+                        <!--  Main card container  -->
                         <Border
                             x:Name="RootBorder"
                             Background="{TemplateBinding Background}"
@@ -89,7 +89,7 @@
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
 
-                                <!-- Header Section -->
+                                <!--  Header Section  -->
                                 <Border
                                     x:Name="HeaderBorder"
                                     Grid.Row="0"
@@ -101,7 +101,7 @@
                                         TextElement.FontWeight="SemiBold" />
                                 </Border>
 
-                                <!-- Separator between Header and Content -->
+                                <!--  Separator between Header and Content  -->
                                 <Border
                                     x:Name="HeaderSeparator"
                                     Grid.Row="0"
@@ -111,7 +111,7 @@
                                     Background="{DynamicResource CardSeparatorBrush}"
                                     Visibility="Collapsed" />
 
-                                <!-- Content Section -->
+                                <!--  Content Section  -->
                                 <Border
                                     x:Name="ContentBorder"
                                     Grid.Row="1"
@@ -122,7 +122,7 @@
                                         VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                                 </Border>
 
-                                <!-- Separator between Content and Footer -->
+                                <!--  Separator between Content and Footer  -->
                                 <Border
                                     x:Name="FooterSeparator"
                                     Grid.Row="2"
@@ -132,7 +132,7 @@
                                     Background="{DynamicResource CardSeparatorBrush}"
                                     Visibility="Collapsed" />
 
-                                <!-- Footer Section -->
+                                <!--  Footer Section  -->
                                 <Border
                                     x:Name="FooterBorder"
                                     Grid.Row="2"
@@ -148,7 +148,7 @@
                             </Grid>
                         </Border>
 
-                        <!-- Hover overlay for clickable cards -->
+                        <!--  Hover overlay for clickable cards  -->
                         <Border
                             x:Name="HoverOverlay"
                             Background="{DynamicResource CardHoverOverlayBrush}"
@@ -158,21 +158,21 @@
                     </Grid>
 
                     <ControlTemplate.Triggers>
-                        <!-- Header visibility -->
+                        <!--  Header visibility  -->
                         <Trigger Property="HasHeader" Value="True">
                             <Setter TargetName="HeaderBorder" Property="Visibility" Value="Visible" />
                             <Setter TargetName="HeaderSeparator" Property="Visibility" Value="Visible" />
                             <Setter TargetName="ContentBorder" Property="Padding" Value="{StaticResource EnhancedCardContentPadding}" />
                         </Trigger>
 
-                        <!-- Footer visibility -->
+                        <!--  Footer visibility  -->
                         <Trigger Property="HasFooter" Value="True">
                             <Setter TargetName="FooterBorder" Property="Visibility" Value="Visible" />
                             <Setter TargetName="FooterSeparator" Property="Visibility" Value="Visible" />
                             <Setter TargetName="ContentBorder" Property="Padding" Value="{StaticResource EnhancedCardContentPadding}" />
                         </Trigger>
 
-                        <!-- Elevation levels (shadow depth) -->
+                        <!--  Elevation levels (shadow depth)  -->
                         <Trigger Property="Elevation" Value="1">
                             <Setter TargetName="ShadowLayer1" Property="Visibility" Value="Visible" />
                             <Setter TargetName="ShadowLayer1" Property="Margin" Value="0,0,0,-1" />
@@ -214,7 +214,7 @@
                             <Setter TargetName="ShadowLayer3" Property="Opacity" Value="0.10" />
                         </Trigger>
 
-                        <!-- Clickable behavior with hover effects -->
+                        <!--  Clickable behavior with hover effects  -->
                         <Trigger Property="IsClickable" Value="True">
                             <Setter TargetName="HoverOverlay" Property="Visibility" Value="Visible" />
                             <Setter Property="Cursor" Value="Hand" />
@@ -238,7 +238,7 @@
                             <Setter TargetName="RootBorder" Property="Background" Value="{DynamicResource CardBackgroundPressed}" />
                         </MultiTrigger>
 
-                        <!-- Disabled state -->
+                        <!--  Disabled state  -->
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Opacity" Value="0.6" />
                         </Trigger>

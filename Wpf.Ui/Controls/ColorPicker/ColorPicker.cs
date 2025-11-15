@@ -19,13 +19,16 @@ using System.Windows.Media;
 /// </summary>
 [TemplatePart(Name = PartToggleButton, Type = typeof(ToggleButton))]
 [TemplatePart(Name = PartPopup, Type = typeof(Popup))]
+[TemplatePart(Name = PartColorBorder, Type = typeof(Border))]
 public class ColorPicker : Control
 {
     private const string PartToggleButton = "PART_ToggleButton";
     private const string PartPopup = "PART_Popup";
+    private const string PartColorBorder = "PART_ColorBorder";
 
     private ToggleButton? toggleButton;
     private Popup? popup;
+    private Border? colorBorder;
     private bool isUpdatingColor;
 
     /// <summary>Identifies the <see cref="Value"/> dependency property.</summary>
@@ -215,12 +218,23 @@ public class ColorPicker : Control
             toggleButton.Click -= OnToggleButtonClick;
         }
 
+        if (colorBorder != null)
+        {
+            colorBorder.MouseLeftButtonDown -= OnColorBorderMouseLeftButtonDown;
+        }
+
         toggleButton = GetTemplateChild(PartToggleButton) as ToggleButton;
         popup = GetTemplateChild(PartPopup) as Popup;
+        colorBorder = GetTemplateChild(PartColorBorder) as Border;
 
         if (toggleButton != null)
         {
             toggleButton.Click += OnToggleButtonClick;
+        }
+
+        if (colorBorder != null)
+        {
+            colorBorder.MouseLeftButtonDown += OnColorBorderMouseLeftButtonDown;
         }
 
         if (popup != null)
@@ -239,6 +253,12 @@ public class ColorPicker : Control
     private void OnToggleButtonClick(object sender, RoutedEventArgs e)
     {
         SetCurrentValue(IsDropDownOpenProperty, !IsDropDownOpen);
+    }
+
+    private void OnColorBorderMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        SetCurrentValue(IsDropDownOpenProperty, !IsDropDownOpen);
+        e.Handled = true;
     }
 
     private void OnPopupOpened(object? sender, System.EventArgs e)

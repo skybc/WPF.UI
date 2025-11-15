@@ -42,4 +42,5 @@ public enum PropertyEditorKind
     
     /// <summary>Custom editor provided via template.</summary>
     Custom,
+    FontPicker,
 }
