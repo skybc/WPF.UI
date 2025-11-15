@@ -28,6 +28,7 @@ internal class ComboBoxEditor : PropertyEditorBase
         };
 
         // For enum types
+        var comboAttr = item.ComboBoxAttribute;
         if (item.IsEnum)
         {
             comboBox.ItemsSource = item.EnumValues;
@@ -35,7 +36,6 @@ internal class ComboBoxEditor : PropertyEditorBase
         else
         {
             // For non-enum combo boxes, try to get ComboBoxAttribute first
-            var comboAttr = item.ComboBoxAttribute;
             if (comboAttr != null)
             {
                 if (!string.IsNullOrWhiteSpace(comboAttr.ItemsSourcePath))
@@ -54,31 +54,12 @@ internal class ComboBoxEditor : PropertyEditorBase
                     comboBox.SelectedValuePath = comboAttr.SelectedValuePath;
                 }
             }
-            else
-            {
-                // Fallback to PropertyPanelAttribute for backward compatibility
-                var attr = item.Attribute;
-                if (!string.IsNullOrWhiteSpace(attr.ItemsSourcePath))
-                {
-                    var itemsBinding = new Binding(attr.ItemsSourcePath);
-                    comboBox.SetBinding(ItemsControl.ItemsSourceProperty, itemsBinding);
-                }
-
-                if (!string.IsNullOrWhiteSpace(attr.DisplayMemberPath))
-                {
-                    comboBox.DisplayMemberPath = attr.DisplayMemberPath;
-                }
-
-                if (!string.IsNullOrWhiteSpace(attr.SelectedValuePath))
-                {
-                    comboBox.SelectedValuePath = attr.SelectedValuePath;
-                }
-            }
+             
         }
 
         var binding = CreateValueBinding(item);
 
-        if (!string.IsNullOrWhiteSpace(attr.SelectedValuePath))
+        if (!string.IsNullOrWhiteSpace(item.ComboBoxAttribute?.SelectedValuePath))
         {
             comboBox.SetBinding(ComboBox.SelectedValueProperty, binding);
         }

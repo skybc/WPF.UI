@@ -6,6 +6,11 @@
 
     <Thickness x:Key="TimePickerBorderThemeThickness">1,1,1,1</Thickness>
 
+    <!--  TimeSpan Converters  -->
+    <controls:TimeSpanToHourConverter x:Key="TimeSpanToHourConverter" />
+    <controls:TimeSpanToMinuteConverter x:Key="TimeSpanToMinuteConverter" />
+    <controls:TimeSpanToAMPMConverter x:Key="TimeSpanToAMPMConverter" />
+
     <Style x:Key="DefaultUiTimePickerStyle" TargetType="{x:Type controls:TimePicker}">
         <!--  Universal WPF UI focus  -->
         <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
@@ -49,41 +54,143 @@
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
 
-                                <Grid x:Name="GridColumnHour" Grid.Column="0">
-                                    <TextBlock
-                                        Margin="6"
-                                        HorizontalAlignment="Center"
-                                        Foreground="{TemplateBinding Foreground}"
-                                        Text="hour" />
-                                </Grid>
-                                <Border
-                                    x:Name="GridColumnMinute"
+                                <!--  Hour Display  -->
+                                <TextBlock
+                                    Grid.Column="0"
+                                    Margin="6,0"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontSize="16"
+                                    FontWeight="SemiBold"
+                                    Foreground="{TemplateBinding Foreground}"
+                                    Text="{TemplateBinding Time, Converter={StaticResource TimeSpanToHourConverter}}" />
+
+                                <!--  Separator  -->
+                                <TextBlock
                                     Grid.Column="1"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="1,0,1,0">
-                                    <TextBlock
-                                        Margin="6"
-                                        HorizontalAlignment="Center"
-                                        Foreground="{TemplateBinding Foreground}"
-                                        Text="minute" />
-                                </Border>
-                                <Grid x:Name="GridColumnType" Grid.Column="2">
-                                    <TextBlock
-                                        Margin="6"
-                                        HorizontalAlignment="Center"
-                                        Foreground="{TemplateBinding Foreground}"
-                                        Text="AM" />
-                                </Grid>
+                                    Margin="2,0"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontSize="16"
+                                    Foreground="{TemplateBinding Foreground}"
+                                    Text=":" />
+
+                                <!--  Minute Display  -->
+                                <TextBlock
+                                    Grid.Column="2"
+                                    Margin="6,0"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontSize="16"
+                                    FontWeight="SemiBold"
+                                    Foreground="{TemplateBinding Foreground}"
+                                    Text="{TemplateBinding Time, Converter={StaticResource TimeSpanToMinuteConverter}}" />
+
+                                <!--  AM/PM Separator  -->
+                                <TextBlock
+                                    Grid.Column="3"
+                                    Margin="6,0"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Foreground="{TemplateBinding Foreground}"
+                                    Text=" " />
+
+                                <!--  AM/PM Display (only for 12-hour clock)  -->
+                                <TextBlock
+                                    x:Name="AMPMTextBlock"
+                                    Grid.Column="4"
+                                    Margin="2,0,6,0"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    Foreground="{TemplateBinding Foreground}"
+                                    Text="{TemplateBinding Time, Converter={StaticResource TimeSpanToAMPMConverter}}"
+                                    Visibility="Visible" />
                             </Grid>
                         </Border>
 
-                        <Popup x:Name="TimePickerPopup">
-                            <Border>
-                                <TextBlock Text="Todo" />
+                        <Popup
+                            x:Name="TimePickerPopup"
+                            AllowsTransparency="True"
+                            Placement="Bottom"
+                            PlacementTarget="{Binding ElementName=ContentBorder}">
+                            <Border
+                                Padding="12"
+                                Background="{DynamicResource ControlFillColorDefaultBrush}"
+                                BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}"
+                                BorderThickness="1"
+                                CornerRadius="{DynamicResource ControlCornerRadius}">
+                                <StackPanel>
+                                    <!--  Hour Selector  -->
+                                    <StackPanel Margin="0,0,0,12">
+                                        <TextBlock
+                                            Margin="0,0,0,8"
+                                            FontSize="12"
+                                            FontWeight="SemiBold"
+                                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                            Text="小时" />
+                                        <Grid Margin="0,0,0,4">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <Slider
+                                                x:Name="HourSlider"
+                                                Grid.Column="0"
+                                                Height="32"
+                                                Maximum="23"
+                                                Minimum="0"
+                                                TickFrequency="1"
+                                                IsSnapToTickEnabled="True"
+                                                VerticalAlignment="Center" />
+                                            <TextBlock
+                                                Grid.Column="1"
+                                                Margin="12,0,0,0"
+                                                MinWidth="40"
+                                                FontSize="14"
+                                                FontWeight="SemiBold"
+                                                Text="{Binding Value, ElementName=HourSlider, StringFormat='00'}" />
+                                        </Grid>
+                                    </StackPanel>
+
+                                    <!--  Minute Selector  -->
+                                    <StackPanel Margin="0,0,0,12">
+                                        <TextBlock
+                                            Margin="0,0,0,8"
+                                            FontSize="12"
+                                            FontWeight="SemiBold"
+                                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                            Text="分钟" />
+                                        <Grid Margin="0,0,0,4">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <Slider
+                                                x:Name="MinuteSlider"
+                                                Grid.Column="0"
+                                                Height="32"
+                                                Maximum="59"
+                                                Minimum="0"
+                                                TickFrequency="1"
+                                                IsSnapToTickEnabled="True"
+                                                VerticalAlignment="Center" />
+                                            <TextBlock
+                                                Grid.Column="1"
+                                                Margin="12,0,0,0"
+                                                MinWidth="40"
+                                                FontSize="14"
+                                                FontWeight="SemiBold"
+                                                Text="{Binding Value, ElementName=MinuteSlider, StringFormat='00'}" />
+                                        </Grid>
+                                    </StackPanel>
+                                </StackPanel>
                             </Border>
                         </Popup>
                     </Grid>
@@ -103,7 +210,7 @@
                             <Setter Property="Foreground" Value="{DynamicResource TimePickerButtonForegroundPressed}" />
                         </Trigger>
                         <Trigger Property="ClockIdentifier" Value="Clock24Hour">
-                            <Setter TargetName="GridColumnType" Property="Visibility" Value="Hidden" />
+                            <Setter TargetName="AMPMTextBlock" Property="Visibility" Value="Collapsed" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

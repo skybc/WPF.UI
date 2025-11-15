@@ -6,6 +6,10 @@
 // ReSharper disable once CheckNamespace
 namespace Wpf.Ui.Controls;
 
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+
 /// <summary>
 /// Represents a control that allows a user to pick a time value.
 /// </summary>
@@ -24,7 +28,7 @@ public class TimePicker : System.Windows.Controls.Primitives.ButtonBase
         nameof(Time),
         typeof(TimeSpan),
         typeof(TimePicker),
-        new PropertyMetadata(TimeSpan.Zero)
+        new PropertyMetadata(TimeSpan.Zero, OnTimeChanged)
     );
 
     /// <summary>Identifies the <see cref="SelectedTime"/> dependency property.</summary>
@@ -50,6 +54,19 @@ public class TimePicker : System.Windows.Controls.Primitives.ButtonBase
         typeof(TimePicker),
         new PropertyMetadata(ClockIdentifier.Clock24Hour)
     );
+
+    /// <summary>Identifies the <see cref="IsPopupOpen"/> dependency property.</summary>
+    public static readonly DependencyProperty IsPopupOpenProperty = DependencyProperty.Register(
+        nameof(IsPopupOpen),
+        typeof(bool),
+        typeof(TimePicker),
+        new PropertyMetadata(false)
+    );
+
+    private Slider? _hourSlider;
+    private Slider? _minuteSlider;
+    private Popup? _popup;
+    private bool _isUpdatingFromTime;
 
     /// <summary>
     /// Gets or sets the content for the control's header.
@@ -95,5 +112,101 @@ public class TimePicker : System.Windows.Controls.Primitives.ButtonBase
     {
         get => (ClockIdentifier)GetValue(ClockIdentifierProperty);
         set => SetValue(ClockIdentifierProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets whether the time picker popup is open.
+    /// </summary>
+    public bool IsPopupOpen
+    {
+        get => (bool)GetValue(IsPopupOpenProperty);
+        set => SetValue(IsPopupOpenProperty, value);
+    }
+
+    public TimePicker()
+    {
+        Click += TimePicker_Click;
+    }
+
+    /// <summary>
+    /// Called when the template is applied to initialize popup controls.
+    /// </summary>
+    public override void OnApplyTemplate()
+    {
+        base.OnApplyTemplate();
+
+        // Get references to the popup controls
+        _popup = GetTemplateChild("TimePickerPopup") as Popup;
+        _hourSlider = GetTemplateChild("HourSlider") as Slider;
+        _minuteSlider = GetTemplateChild("MinuteSlider") as Slider;
+
+        // Initialize sliders with current time
+        UpdateSliders();
+    }
+
+    private void TimePicker_Click(object sender, RoutedEventArgs e)
+    {
+        IsPopupOpen = !IsPopupOpen;
+        if (_popup != null)
+        {
+            _popup.IsOpen = IsPopupOpen;
+        }
+        if (IsPopupOpen)
+        {
+            UpdateSliders();
+        }
+    }
+
+    private void UpdateSliders()
+    {
+        _isUpdatingFromTime = true;
+
+        if (_hourSlider != null)
+        {
+            _hourSlider.Value = Time.Hours;
+            _hourSlider.ValueChanged -= HourSlider_ValueChanged;
+            _hourSlider.ValueChanged += HourSlider_ValueChanged;
+        }
+
+        if (_minuteSlider != null)
+        {
+            _minuteSlider.Maximum = 59;
+            _minuteSlider.TickFrequency = MinuteIncrement;
+            _minuteSlider.Value = Time.Minutes;
+            _minuteSlider.ValueChanged -= MinuteSlider_ValueChanged;
+            _minuteSlider.ValueChanged += MinuteSlider_ValueChanged;
+        }
+
+        _isUpdatingFromTime = false;
+    }
+
+    private void HourSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+    {
+        if (!_isUpdatingFromTime && _hourSlider != null && _minuteSlider != null)
+        {
+            int hours = (int)_hourSlider.Value;
+            int minutes = (int)_minuteSlider.Value;
+            Time = new TimeSpan(hours, minutes, 0);
+            SelectedTime = Time;
+        }
+    }
+
+    private void MinuteSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+    {
+        if (!_isUpdatingFromTime && _hourSlider != null && _minuteSlider != null)
+        {
+            int hours = (int)_hourSlider.Value;
+            int minutes = (int)_minuteSlider.Value;
+            Time = new TimeSpan(hours, minutes, 0);
+            SelectedTime = Time;
+        }
+    }
+
+    private static void OnTimeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (d is TimePicker timePicker && !timePicker._isUpdatingFromTime)
+        {
+            timePicker.UpdateSliders();
+        }
     }
 }
