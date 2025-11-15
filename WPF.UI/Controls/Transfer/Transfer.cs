@@ -3,6 +3,7 @@
 // Copyright (C) Leszek Pomianowski and WPF UI Contributors.
 // All Rights Reserved.
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -41,6 +42,8 @@ public class Transfer : Control
     private const string MoveLeftButtonPartName = "PART_MoveLeftButton";
     private const string MoveRightAllButtonPartName = "PART_MoveRightAllButton";
     private const string MoveLeftAllButtonPartName = "PART_MoveLeftAllButton";
+    private const string DragItemsFormat = "TransferItems";
+    private const string DragSourceFormat = "TransferSource";
 
     private ListBox? _leftListBox;
     private ListBox? _rightListBox;
@@ -51,6 +54,9 @@ public class Transfer : Control
 
     private INotifyCollectionChanged? _leftItemsCollection;
     private INotifyCollectionChanged? _rightItemsCollection;
+    private ListBox? _dragSourceListBox;
+    private ListBoxItem? _draggedItem;
+    private Point _dragStartPoint;
     /// <summary>Identifies the <see cref="LeftItemsSource"/> dependency property.</summary>
     public static readonly DependencyProperty LeftItemsSourceProperty = DependencyProperty.Register(
         nameof(LeftItemsSource),
@@ -249,13 +255,13 @@ public class Transfer : Control
     private static void OnLeftItemsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         var control = (Transfer)d;
-        control.HandleItemsSourceChanged(ref control._leftItemsCollection, e.NewValue as IEnumerable);
+        control.HandleItemsSourceChanged(ref control._leftItemsCollection, e.NewValue as IEnumerable, control._leftListBox);
     }
 
     private static void OnRightItemsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         var control = (Transfer)d;
-        control.HandleItemsSourceChanged(ref control._rightItemsCollection, e.NewValue as IEnumerable);
+        control.HandleItemsSourceChanged(ref control._rightItemsCollection, e.NewValue as IEnumerable, control._rightListBox);
     }
 
     private static void OnTransferModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -281,6 +287,8 @@ public class Transfer : Control
         AttachTemplatePartEvents();
 
         UpdateSelectionMode();
+        EnsureDefaultSelection(_leftListBox);
+        EnsureDefaultSelection(_rightListBox);
         UpdateSelectedItems(_leftListBox, SelectedLeftItemsProperty);
         UpdateSelectedItems(_rightListBox, SelectedRightItemsProperty);
         UpdateButtonStates();
@@ -291,12 +299,14 @@ public class Transfer : Control
         if (_leftListBox != null)
         {
             _leftListBox.SelectionChanged -= OnLeftListBoxSelectionChanged;
+            DetachDragDropHandlers(_leftListBox);
             _leftListBox = null;
         }
 
         if (_rightListBox != null)
         {
             _rightListBox.SelectionChanged -= OnRightListBoxSelectionChanged;
+            DetachDragDropHandlers(_rightListBox);
             _rightListBox = null;
         }
 
@@ -330,11 +340,13 @@ public class Transfer : Control
         if (_leftListBox != null)
         {
             _leftListBox.SelectionChanged += OnLeftListBoxSelectionChanged;
+            AttachDragDropHandlers(_leftListBox);
         }
 
         if (_rightListBox != null)
         {
             _rightListBox.SelectionChanged += OnRightListBoxSelectionChanged;
+            AttachDragDropHandlers(_rightListBox);
         }
 
         if (_moveRightButton != null)
@@ -425,10 +437,13 @@ public class Transfer : Control
             return;
         }
 
+        var recordedIndex = _leftListBox?.SelectedIndex ?? -1;
         var itemsToMove = CollectSelectedItems(_leftListBox);
         MoveItems(leftList, rightList, itemsToMove);
         ClearSelection(_leftListBox);
+        RestoreSelectionAfterMove(_leftListBox, recordedIndex);
         UpdateSelectedItems(_leftListBox, SelectedLeftItemsProperty);
+        UpdateSelectedItems(_rightListBox, SelectedRightItemsProperty);
         UpdateButtonStates();
     }
 
@@ -439,10 +454,13 @@ public class Transfer : Control
             return;
         }
 
+        var recordedIndex = _rightListBox?.SelectedIndex ?? -1;
         var itemsToMove = CollectSelectedItems(_rightListBox);
         MoveItems(rightList, leftList, itemsToMove);
         ClearSelection(_rightListBox);
+        RestoreSelectionAfterMove(_rightListBox, recordedIndex);
         UpdateSelectedItems(_rightListBox, SelectedRightItemsProperty);
+        UpdateSelectedItems(_leftListBox, SelectedLeftItemsProperty);
         UpdateButtonStates();
     }
 
@@ -455,7 +473,10 @@ public class Transfer : Control
 
         MoveItems(leftList, rightList, leftList.Cast<object>().ToList());
         ClearSelection(_leftListBox);
+        EnsureDefaultSelection(_leftListBox);
+        EnsureDefaultSelection(_rightListBox);
         UpdateSelectedItems(_leftListBox, SelectedLeftItemsProperty);
+        UpdateSelectedItems(_rightListBox, SelectedRightItemsProperty);
         UpdateButtonStates();
     }
 
@@ -468,11 +489,14 @@ public class Transfer : Control
 
         MoveItems(rightList, leftList, rightList.Cast<object>().ToList());
         ClearSelection(_rightListBox);
+        EnsureDefaultSelection(_rightListBox);
+        EnsureDefaultSelection(_leftListBox);
         UpdateSelectedItems(_rightListBox, SelectedRightItemsProperty);
+        UpdateSelectedItems(_leftListBox, SelectedLeftItemsProperty);
         UpdateButtonStates();
     }
 
-    private void HandleItemsSourceChanged(ref INotifyCollectionChanged? collection, IEnumerable? newSource)
+    private void HandleItemsSourceChanged(ref INotifyCollectionChanged? collection, IEnumerable? newSource, ListBox? listBox)
     {
         if (collection != null)
         {
@@ -486,34 +510,89 @@ public class Transfer : Control
             collection.CollectionChanged += OnItemsSourceCollectionChanged;
         }
 
+        EnsureDefaultSelection(listBox);
+
         UpdateButtonStates();
     }
 
     private void OnItemsSourceCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
+        if (ReferenceEquals(sender, _leftItemsCollection))
+        {
+            EnsureDefaultSelection(_leftListBox);
+        }
+        else if (ReferenceEquals(sender, _rightItemsCollection))
+        {
+            EnsureDefaultSelection(_rightListBox);
+        }
+
         UpdateButtonStates();
     }
 
-    private static void MoveItems(IList source, IList target, IReadOnlyCollection<object> items)
+    private static void MoveItems(IList source, IList target, IReadOnlyCollection<object> items, int insertIndex = -1)
     {
         if (source == target)
+        {
+            ReorderItems(source, items, insertIndex);
+            return;
+        }
+
+        var movableItems = items.Where(source.Contains).ToList();
+        if (movableItems.Count == 0)
         {
             return;
         }
 
-        foreach (var item in items)
+        foreach (var item in movableItems)
         {
-            if (!source.Contains(item))
-            {
-                continue;
-            }
-
             source.Remove(item);
+        }
 
-            if (!target.Contains(item))
+        var targetIndex = insertIndex < 0 ? target.Count : Math.Min(insertIndex, target.Count);
+
+        foreach (var item in movableItems)
+        {
+            if (targetIndex >= target.Count)
             {
                 target.Add(item);
             }
+            else
+            {
+                target.Insert(targetIndex, item);
+            }
+
+            targetIndex++;
+        }
+    }
+
+    private static void ReorderItems(IList list, IReadOnlyCollection<object> items, int insertIndex)
+    {
+        var indexedItems = items
+            .Select(item => (Item: item, Index: list.IndexOf(item)))
+            .Where(entry => entry.Index >= 0)
+            .OrderBy(entry => entry.Index)
+            .ToList();
+
+        if (indexedItems.Count == 0)
+        {
+            return;
+        }
+
+        foreach (var entry in indexedItems.OrderByDescending(entry => entry.Index))
+        {
+            list.RemoveAt(entry.Index);
+        }
+
+        var originalCount = list.Count + indexedItems.Count;
+        var boundedIndex = Math.Min(Math.Max(insertIndex, 0), originalCount);
+        var removedBefore = indexedItems.Count(entry => entry.Index < boundedIndex);
+        var finalIndex = Math.Max(0, boundedIndex - removedBefore);
+        finalIndex = Math.Min(finalIndex, list.Count);
+
+        foreach (var entry in indexedItems)
+        {
+            list.Insert(finalIndex, entry.Item);
+            finalIndex++;
         }
     }
 
@@ -577,5 +656,213 @@ public class Transfer : Control
         }
 
         SetValue(property, listBox.SelectedItems.Cast<object>().ToList());
+    }
+
+    private void EnsureDefaultSelection(ListBox? listBox)
+    {
+        if (listBox == null)
+        {
+            return;
+        }
+
+        if (listBox.Items.Count == 0)
+        {
+            listBox.SelectedIndex = -1;
+            return;
+        }
+
+        if (listBox.SelectedIndex < 0)
+        {
+            listBox.SelectedIndex = 0;
+        }
+    }
+
+    private void RestoreSelectionAfterMove(ListBox? listBox, int index)
+    {
+        if (listBox == null)
+        {
+            return;
+        }
+
+        if (listBox.Items.Count == 0)
+        {
+            listBox.SelectedIndex = -1;
+            return;
+        }
+
+        var desiredIndex = index < 0 ? 0 : index;
+
+        while (desiredIndex >= listBox.Items.Count && desiredIndex > 0)
+        {
+            desiredIndex--;
+        }
+
+        listBox.SelectedIndex = Math.Min(desiredIndex, listBox.Items.Count - 1);
+    }
+
+    private void AttachDragDropHandlers(ListBox listBox)
+    {
+        listBox.AllowDrop = true;
+        listBox.PreviewMouseLeftButtonDown += OnListBoxPreviewMouseLeftButtonDown;
+        listBox.MouseMove += OnListBoxMouseMove;
+        listBox.DragOver += OnListBoxDragOver;
+        listBox.Drop += OnListBoxDrop;
+    }
+
+    private void DetachDragDropHandlers(ListBox listBox)
+    {
+        listBox.AllowDrop = false;
+        listBox.PreviewMouseLeftButtonDown -= OnListBoxPreviewMouseLeftButtonDown;
+        listBox.MouseMove -= OnListBoxMouseMove;
+        listBox.DragOver -= OnListBoxDragOver;
+        listBox.Drop -= OnListBoxDrop;
+    }
+
+    private void OnListBoxPreviewMouseLeftButtonDown(object? sender, MouseButtonEventArgs e)
+    {
+        _dragStartPoint = e.GetPosition(null);
+        _dragSourceListBox = sender as ListBox;
+        _draggedItem = FindVisualAncestor<ListBoxItem>(e.OriginalSource as DependencyObject);
+    }
+
+    private void OnListBoxMouseMove(object? sender, MouseEventArgs e)
+    {
+        if (e.LeftButton != MouseButtonState.Pressed || _dragSourceListBox == null || _draggedItem == null)
+        {
+            return;
+        }
+
+        var currentPosition = e.GetPosition(null);
+        var diff = _dragStartPoint - currentPosition;
+
+        if (Math.Abs(diff.X) < SystemParameters.MinimumHorizontalDragDistance &&
+            Math.Abs(diff.Y) < SystemParameters.MinimumVerticalDragDistance)
+        {
+            return;
+        }
+
+        var selectedItems = _dragSourceListBox.SelectedItems.Cast<object>().ToList();
+
+        if (selectedItems.Count == 0 && _draggedItem.DataContext != null)
+        {
+            selectedItems.Add(_draggedItem.DataContext);
+        }
+
+        if (selectedItems.Count == 0)
+        {
+            return;
+        }
+
+        var dataObject = new DataObject(DragItemsFormat, selectedItems);
+        dataObject.SetData(DragSourceFormat, _dragSourceListBox);
+
+        DragDrop.DoDragDrop(_draggedItem, dataObject, DragDropEffects.Move);
+
+        _draggedItem = null;
+        _dragSourceListBox = null;
+    }
+
+    private void OnListBoxDragOver(object? sender, DragEventArgs e)
+    {
+        e.Effects = e.Data.GetDataPresent(DragItemsFormat) ? DragDropEffects.Move : DragDropEffects.None;
+        e.Handled = true;
+    }
+
+    private void OnListBoxDrop(object? sender, DragEventArgs e)
+    {
+        if (sender is not ListBox targetListBox || !e.Data.GetDataPresent(DragItemsFormat))
+        {
+            return;
+        }
+
+        var data = e.Data.GetData(DragItemsFormat) as List<object>;
+
+        if (data == null || data.Count == 0)
+        {
+            return;
+        }
+
+        var sourceListBox = e.Data.GetData(DragSourceFormat) as ListBox ?? _dragSourceListBox;
+
+        if (sourceListBox == null)
+        {
+            return;
+        }
+
+        var sourceList = GetEditableList(sourceListBox);
+        var targetList = GetEditableList(targetListBox);
+
+        if (!IsCollectionEditable(sourceList) || !IsCollectionEditable(targetList))
+        {
+            return;
+        }
+
+        var insertIndex = CalculateDropIndex(targetListBox, e);
+        MoveItems(sourceList!, targetList!, data, insertIndex);
+
+        EnsureDefaultSelection(sourceListBox == _leftListBox ? _leftListBox : _rightListBox);
+        EnsureDefaultSelection(targetListBox);
+        UpdateSelectedItems(_leftListBox, SelectedLeftItemsProperty);
+        UpdateSelectedItems(_rightListBox, SelectedRightItemsProperty);
+        UpdateButtonStates();
+
+        _draggedItem = null;
+        _dragSourceListBox = null;
+
+        e.Handled = true;
+    }
+
+    private int CalculateDropIndex(ListBox listBox, DragEventArgs e)
+    {
+        var position = e.GetPosition(listBox);
+        var hit = listBox.InputHitTest(position) as DependencyObject;
+        var container = FindVisualAncestor<ListBoxItem>(hit);
+
+        if (container == null)
+        {
+            return listBox.Items.Count;
+        }
+
+        var index = listBox.ItemContainerGenerator.IndexFromContainer(container);
+
+        if (index < 0)
+        {
+            return listBox.Items.Count;
+        }
+
+        var containerPosition = container.TransformToAncestor(listBox).Transform(new Point(0, 0));
+        var relativeY = position.Y - containerPosition.Y;
+
+        if (relativeY > container.ActualHeight / 2)
+        {
+            index++;
+        }
+
+        return Math.Min(index, listBox.Items.Count);
+    }
+
+    private IList? GetEditableList(ListBox? listBox)
+    {
+        if (listBox == null)
+        {
+            return null;
+        }
+
+        return listBox == _leftListBox ? LeftItemsSource as IList : RightItemsSource as IList;
+    }
+
+    private static T? FindVisualAncestor<T>(DependencyObject? current) where T : DependencyObject
+    {
+        while (current != null)
+        {
+            if (current is T typed)
+            {
+                return typed;
+            }
+
+            current = VisualTreeHelper.GetParent(current);
+        }
+
+        return null;
     }
 }
