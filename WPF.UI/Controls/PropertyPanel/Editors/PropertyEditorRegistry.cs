@@ -32,6 +32,7 @@ internal static class PropertyEditorRegistry
         RegisterEditor(new DirectorySelectEditor());
         RegisterEditor(new FontSelectEditor());
         RegisterEditor(new ColorPickerEditor());
+        RegisterEditor(new DateTimePickerEditor());
         RegisterEditor(new DatePickerEditor());
         RegisterEditor(new SliderEditor());
         RegisterEditor(new ComboBoxEditor());

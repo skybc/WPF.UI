@@ -81,6 +81,19 @@
                 </Grid>
             </controls:ControlExample>
 
+            <!--  DateTimeSelect Editor Example  -->
+            <controls:ControlExample
+                Margin="0,0,0,20"
+                HeaderText="DateTimeSelect Editor"
+                XamlCode="&lt;!-- DateTimeSelect editor for editing both date and time --&gt;&#10;&lt;ui:PropertyPanel SelectedObject=&quot;{Binding SampleData}&quot; /&gt;">
+
+                <ui:PropertyPanel
+                    Width="400"
+                    Height="300"
+                    HorizontalAlignment="Left"
+                    SelectedObject="{Binding ViewModel.SampleData}" />
+            </controls:ControlExample>
+
             <!--  Information Section  -->
             <controls:ControlExample HeaderText="PropertyPanel Features" XamlCode="&lt;!-- PropertyPanel automatically generates editors based on:&#10;- Property types (string, bool, int, double, enum, DateTime)&#10;- PropertyPanelAttribute settings&#10;- Custom editor types and templates --&gt;">
 

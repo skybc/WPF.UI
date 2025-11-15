@@ -50,6 +50,9 @@ public partial class SampleObject : ViewModel
     [PropertyPanel(DisplayName = "Created Date", Description = "When the item was created", Order = 7, GroupName = "Timestamps")]
     public DateTime CreatedDate { get; set; } = DateTime.Now;
 
+    [PropertyPanel(DisplayName = "Created DateTime", Description = "When the item was created with time", Order = 7, Editor = PropertyEditorKind.DateTimeSelect, GroupName = "Timestamps")]
+    public DateTime CreatedDateTime { get; set; } = DateTime.Now;
+
     [PropertyPanel(DisplayName = "Password", Description = "A password field example", Order = 8, Editor = PropertyEditorKind.Password, GroupName = "Security")]
     public string Password { get; set; } = "secret123";
 

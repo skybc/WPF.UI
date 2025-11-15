@@ -31,6 +31,9 @@ public enum PropertyEditorKind
     /// <summary>Edits the value through a date picker.</summary>
     DatePicker,
     
+    /// <summary>Edits the value through a date and time picker.</summary>
+    DateTimeSelect,
+    
     /// <summary>Edits the value through a color picker.</summary>
     ColorPicker,
     

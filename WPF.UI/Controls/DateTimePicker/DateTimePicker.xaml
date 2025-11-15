@@ -1,0 +1,270 @@
+﻿<!--
+    This Source Code Form is subject to the terms of the MIT License.
+    If a copy of the MIT was not distributed with this file, You can obtain one at https://opensource.org/licenses/MIT.
+    Copyright (C) Leszek Pomianowski and WPF UI Contributors.
+    All Rights Reserved.
+-->
+
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:Wpf.Ui.Controls"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <Thickness x:Key="DateTimePickerBorderThemeThickness">1,1,1,0</Thickness>
+    <Thickness x:Key="DateTimePickerAccentBorderThemeThickness">0,0,0,1</Thickness>
+    <Thickness x:Key="DateTimePickerLeftIconMargin">10,8,0,0</Thickness>
+    <Thickness x:Key="DateTimePickerRightIconMargin">0,8,10,0</Thickness>
+    <Thickness x:Key="DateTimePickerButtonMargin">0,5,4,0</Thickness>
+    <Thickness x:Key="DateTimePickerButtonPadding">0,0,0,0</Thickness>
+    <system:Double x:Key="DateTimePickerButtonHeight">24</system:Double>
+    <system:Double x:Key="DateTimePickerButtonIconSize">14</system:Double>
+
+    <Style x:Key="DefaultDateTimePickerStyle" TargetType="{x:Type controls:DateTimePicker}">
+        <!--  Universal WPF UI focus  -->
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
+        <!--  Universal WPF UI focus  -->
+        <!--  Universal WPF UI ContextMenu  -->
+        <Setter Property="ContextMenu" Value="{DynamicResource DefaultControlContextMenu}" />
+        <!--  Universal WPF UI ContextMenu  -->
+        <Setter Property="Foreground">
+            <Setter.Value>
+                <SolidColorBrush Color="{DynamicResource TextFillColorPrimary}" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Background">
+            <Setter.Value>
+                <SolidColorBrush Color="{DynamicResource ControlFillColorDefault}" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
+        <Setter Property="BorderThickness" Value="{StaticResource DateTimePickerBorderThemeThickness}" />
+        <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Top" />
+        <Setter Property="MinHeight" Value="{DynamicResource TextControlThemeMinHeight}" />
+        <Setter Property="MinWidth" Value="{DynamicResource TextControlThemeMinWidth}" />
+        <Setter Property="Padding" Value="{DynamicResource TextControlThemePadding}" />
+        <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:DateTimePicker}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid
+                            Grid.Row="0"
+                            HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalAlignment}">
+                            <Border
+                                x:Name="ContentBorder"
+                                MinWidth="{TemplateBinding MinWidth}"
+                                MinHeight="{TemplateBinding MinHeight}"
+                                Padding="0"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding Border.CornerRadius}">
+                                <Grid HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="1*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <!--  Left Icon  -->
+                                    <!-- <controls:SymbolIcon
+                                        Grid.Column="0"
+                                        Margin="{StaticResource DateTimePickerLeftIconMargin}"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        FontSize="16"
+                                        Foreground="{TemplateBinding Foreground}"
+                                        Symbol="Calendar20" />-->
+
+                                    <!--  Display TextBox  -->
+                                    <TextBox
+                                        x:Name="PART_DateTimeTextBox"
+                                        Grid.Column="1"
+                                        MinWidth="120"
+                                        Margin="0,0"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Stretch"
+                                        BorderThickness="0"
+                                        Foreground="{TemplateBinding Foreground}"
+                                        Text="yyyy-MM-dd HH:mm:ss" />
+
+                                    <!--  Button  -->
+                                    <controls:Button
+                                        x:Name="PART_Button"
+                                        Grid.Column="2"
+                                        Width="{StaticResource DateTimePickerButtonHeight}"
+                                        Height="{StaticResource DateTimePickerButtonHeight}"
+                                        Margin="{StaticResource DateTimePickerButtonMargin}"
+                                        Padding="{StaticResource DateTimePickerButtonPadding}"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Top"
+                                        HorizontalContentAlignment="Center"
+                                        VerticalContentAlignment="Center"
+                                        Appearance="Secondary"
+                                        Background="Transparent"
+                                        BorderBrush="Transparent"
+                                        Cursor="Arrow">
+                                        <controls:SymbolIcon
+                                            Margin="{StaticResource DateTimePickerButtonPadding}"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            FontSize="{StaticResource DateTimePickerButtonIconSize}"
+                                            Foreground="{TemplateBinding Foreground}"
+                                            Symbol="Clock24" />
+                                    </controls:Button>
+                                </Grid>
+                            </Border>
+
+                            <!--  Accent Border  -->
+                            <Border
+                                x:Name="AccentBorder"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
+                                BorderThickness="{StaticResource DateTimePickerAccentBorderThemeThickness}"
+                                CornerRadius="{TemplateBinding Border.CornerRadius}">
+                                <Border.BorderBrush>
+                                    <SolidColorBrush Color="{DynamicResource ControlStrongStrokeColorDefault}" />
+                                </Border.BorderBrush>
+                            </Border>
+                        </Grid>
+
+                        <!--  Popup  -->
+                        <Popup
+                            x:Name="PART_Popup"
+                            Grid.Row="1"
+                            AllowsTransparency="True"
+                            Placement="Bottom"
+                            PlacementTarget="{Binding ElementName=ContentBorder}"
+                            StaysOpen="False">
+                            <Border
+                                Padding="16"
+                                Background="{DynamicResource ControlFillColorDefaultBrush}"
+                                BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}"
+                                BorderThickness="1"
+                                CornerRadius="{DynamicResource ControlCornerRadius}">
+                                <StackPanel>
+                                    <!--  Calendar  -->
+                                    <Calendar
+                                        x:Name="PART_Calendar"
+                                        Margin="0,0,0,12"
+                                        Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
+
+                                    <!--  Separator  -->
+                                    <Separator Margin="0,0,0,12" Background="{DynamicResource DividerStrokeColorDefault}" />
+
+                                    <!--  Time Input Grid  -->
+                                    <Grid Margin="0,0,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="80" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="80" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="80" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <!--  Hour NumberBox  -->
+                                        <controls:NumberBox
+                                            x:Name="PART_HourNumberBox"
+                                            Grid.Column="1"
+                                            Maximum="23"
+                                            Minimum="0"
+                                            SpinButtonPlacementMode="Inline"
+                                            Value="0" />
+
+                                        <TextBlock
+                                            Grid.Column="2"
+                                            Margin="8,0,8,0"
+                                            VerticalAlignment="Center"
+                                            Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                            Text=":" />
+
+                                        <!--  Minute NumberBox  -->
+                                        <controls:NumberBox
+                                            x:Name="PART_MinuteNumberBox"
+                                            Grid.Column="3"
+                                            Maximum="59"
+                                            Minimum="0"
+                                            SpinButtonPlacementMode="Inline"
+                                            Value="0" />
+
+                                        <TextBlock
+                                            Grid.Column="4"
+                                            Margin="8,0,8,0"
+                                            VerticalAlignment="Center"
+                                            Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                            Text=":" />
+
+                                        <!--  Second NumberBox  -->
+                                        <controls:NumberBox
+                                            x:Name="PART_SecondNumberBox"
+                                            Grid.Column="5"
+                                            Maximum="59"
+                                            Minimum="0"
+                                            SpinButtonPlacementMode="Inline"
+                                            Value="0" />
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+                        </Popup>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                            <Setter TargetName="AccentBorder" Property="BorderThickness" Value="0,0,0,2" />
+                            <Setter TargetName="AccentBorder" Property="BorderBrush">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{DynamicResource SystemAccentColorSecondary}" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="ContentBorder" Property="Background">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{DynamicResource ControlFillColorInputActive}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="True" />
+                                <Condition Property="IsMouseOver" Value="True" />
+                                <Condition Property="IsKeyboardFocusWithin" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="ContentBorder" Property="Background">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{DynamicResource ControlFillColorSecondary}" />
+                                </Setter.Value>
+                            </Setter>
+                        </MultiTrigger>
+                        <Trigger Property="IsEnabled" Value="True">
+                            <Setter Property="Cursor" Value="Hand" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="ContentBorder" Property="Background" Value="{DynamicResource ControlFillColorDisabledBrush}" />
+                            <Setter TargetName="ContentBorder" Property="BorderBrush" Value="{DynamicResource ControlStrokeColorDefaultBrush}" />
+                            <Setter TargetName="AccentBorder" Property="BorderBrush" Value="{DynamicResource ControlStrokeColorDefaultBrush}" />
+                            <Setter Property="Foreground" Value="{DynamicResource TextFillColorDisabledBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style BasedOn="{StaticResource DefaultDateTimePickerStyle}" TargetType="{x:Type controls:DateTimePicker}" />
+
+</ResourceDictionary>
