@@ -1,0 +1,53 @@
+<Page
+    x:Class="Wpf.Ui.Gallery.Views.Pages.StatusAndInfo.LoadingCirclePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:Wpf.Ui.Gallery.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Wpf.Ui.Gallery.Views.Pages.StatusAndInfo"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    Title="LoadingCirclePage"
+    controls:PageControlDocumentation.DocumentationType="{x:Type ui:LoadingCircle}"
+    d:DataContext="{d:DesignInstance local:LoadingCirclePage, IsDesignTimeCreatable=False}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+    ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    mc:Ignorable="d">
+
+    <StackPanel Margin="0,0,0,24">
+        <ui:TextBlock
+            Text="LoadingCircle mirrors the Fluent loading indicator with animated dots that highlight background work."
+            TextWrapping="WrapWithOverflow" />
+        <ui:TextBlock
+            Margin="0,12,0,0"
+            FontTypography="BodyStrong"
+            Text="Usage"
+            TextWrapping="WrapWithOverflow" />
+
+        <controls:ControlExample
+            Margin="0,12,0,24"
+            HeaderText="Default animated loading circle"
+            XamlCode="&lt;ui:LoadingCircle /&gt;">
+            <ui:LoadingCircle />
+        </controls:ControlExample>
+
+        <controls:ControlExample
+            HeaderText="Custom size and accent color"
+            XamlCode="&lt;StackPanel Orientation=&quot;Horizontal&quot;&gt;&#xD;&#xA;    &lt;ui:LoadingCircle Width=&quot;56&quot; Height=&quot;56&quot; /&gt;&#xD;&#xA;    &lt;ui:LoadingCircle Width=&quot;56&quot; Height=&quot;56&quot; DotDiameter=&quot;8&quot; DotCount=&quot;7&quot; Foreground=&quot;{DynamicResource AccentFillColorDefaultBrush}&quot; Margin=&quot;12,0,0,0&quot; NeedHidden=&quot;False&quot; /&gt;&#xD;&#xA;&lt;/StackPanel&gt;">
+            <StackPanel Orientation="Horizontal">
+                <ui:LoadingCircle Width="56" Height="56" />
+                <ui:LoadingCircle
+                    Width="56"
+                    Height="56"
+                    DotDiameter="8"
+                    DotCount="7"
+                    Foreground="{DynamicResource AccentFillColorDefaultBrush}"
+                    Margin="12,0,0,0"
+                    NeedHidden="False" />
+            </StackPanel>
+        </controls:ControlExample>
+    </StackPanel>
+</Page>

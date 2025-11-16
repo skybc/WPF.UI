@@ -149,6 +149,7 @@ public partial class MainWindowViewModel(IStringLocalizer<Translations> localize
                 new NavigationViewItem("InfoBar", typeof(InfoBarPage)),
                 new NavigationViewItem("ProgressBar", typeof(ProgressBarPage)),
                 new NavigationViewItem("ProgressRing", typeof(ProgressRingPage)),
+                new NavigationViewItem("LoadingCircle", SymbolRegular.ArrowClockwise24, typeof(LoadingCirclePage)),
                 new NavigationViewItem("ToolTip", typeof(ToolTipPage)),
             },
         },

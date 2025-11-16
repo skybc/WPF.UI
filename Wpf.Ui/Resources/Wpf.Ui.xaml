@@ -63,6 +63,7 @@
         <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Controls/ListView/ListView.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Controls/ListView/ListViewItem.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Controls/LoadingScreen/LoadingScreen.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Controls/LoadingCircle/LoadingCircle.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Controls/Menu/Menu.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Controls/Menu/MenuItem.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Controls/Menu/MenuLoader.xaml" />
