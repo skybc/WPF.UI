@@ -35,6 +35,7 @@
         <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Controls/CheckBox/CheckBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Controls/ColorPicker/ColorPicker.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Controls/ComboBox/ComboBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Controls/Container/Container.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Controls/ContentDialog/ContentDialog.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Controls/ContextMenu/ContextMenu.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Controls/ContextMenu/ContextMenuLoader.xaml" />
@@ -109,6 +110,9 @@
         <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Controls/Window/Window.xaml" />
         <!--  PaginationControl.xaml  -->
         <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Controls/Pagination/Pagination.xaml" />
+        <!--  Steps.xaml  -->
+        <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Controls/Steps/Step.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Controls/Steps/Steps.xaml" />
         <!--  Icon.xaml  -->
         <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Resources/Icon.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Controls/Growl/GrowlControl.xaml" />

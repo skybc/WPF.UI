@@ -52,7 +52,7 @@
                                 <!--  Current Color Display  -->
                                 <Border
                                     x:Name="PART_ColorBorder"
-                                    Grid.Column="0"                                 
+                                    Grid.Column="0"
                                     Margin="4,0,0,0"
                                     Background="{Binding Value, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource ColorToBrushConverter}}"
                                     BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}"

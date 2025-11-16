@@ -14,6 +14,7 @@ namespace Wpf.Ui.Controls
             DefaultStyleKeyProperty.OverrideMetadata(typeof(FormItem), new FrameworkPropertyMetadata(typeof(FormItem)));
         }
 
+
         /// <summary>
         /// 表单项标题。
         /// </summary>
@@ -153,7 +154,16 @@ namespace Wpf.Ui.Controls
 
         public FormItem()
         {
-            // 默认绑定主题色
+            if (!DesignerProperties.GetIsInDesignMode(this))
+            {
+
+
+                // 默认绑定主题色
+                SetValue(TitleForegroundProperty, Brushes.Black);
+                SetValue(TitlePaddingProperty, new Thickness(4, 0, 4, 0));
+                return;
+            }
+
             if (TitleForeground == null)
             {
                 SetResourceReference(TitleForegroundProperty, "TextFillColorPrimaryBrush");

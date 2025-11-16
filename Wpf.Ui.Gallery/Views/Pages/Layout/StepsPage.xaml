@@ -1,0 +1,179 @@
+<Page
+    x:Class="Wpf.Ui.Gallery.Views.Pages.Layout.StepsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:Wpf.Ui.Gallery.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Wpf.Ui.Gallery.Views.Pages.Layout"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    Title="StepsPage"
+    d:DesignHeight="800"
+    d:DesignWidth="900"
+    ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+    ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    mc:Ignorable="d">
+    <StackPanel Margin="0,0,0,24">
+
+        <!--  水平步骤条示例  -->
+        <controls:ControlExample
+            Margin="0"
+            HeaderText="水平步骤条 - 3 步（等待 → 进行中 → 完成）"
+            XamlCode="&lt;ui:Steps CurrentStep=&quot;1&quot; Orientation=&quot;Horizontal&quot;&gt;&#10;  &lt;ui:Step Title=&quot;步骤 1&quot; Description=&quot;完成&quot; /&gt;&#10;  &lt;ui:Step Title=&quot;步骤 2&quot; Description=&quot;进行中&quot; /&gt;&#10;  &lt;ui:Step Title=&quot;步骤 3&quot; Description=&quot;等待&quot; /&gt;&#10;&lt;/ui:Steps&gt;">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <ui:Steps
+                    x:Name="HorizontalSteps"
+                    Grid.Row="0"
+                    Margin="0,0,0,24"
+                    CurrentStep="1"
+                    Orientation="Horizontal">
+                    <ui:Step Title="步骤 1" Description="等待用户点击" />
+                    <ui:Step Title="步骤 2" Description="当前进行中" />
+                    <ui:Step Title="步骤 3" Description="尚未开始" />
+                </ui:Steps>
+
+                <StackPanel Grid.Row="1" Margin="0,0,0,16">
+                    <ui:TextBlock
+                        Margin="0,0,0,8"
+                        FontTypography="BodyStrong"
+                        Text="选择步骤:" />
+                    <StackPanel Orientation="Horizontal">
+                        <ui:Button
+                            Content="第 1 步"
+                            Margin="0,0,8,0"
+                            Click="OnHorizontalStep1Click" />
+                        <ui:Button
+                            Content="第 2 步"
+                            Margin="0,0,8,0"
+                            Click="OnHorizontalStep2Click" />
+                        <ui:Button
+                            Content="第 3 步"
+                            Click="OnHorizontalStep3Click" />
+                    </StackPanel>
+                </StackPanel>
+
+                <ui:TextBlock
+                    Grid.Row="2"
+                    Appearance="Secondary"
+                    FontTypography="Caption"
+                    Text="当前步骤: 2" />
+            </Grid>
+        </controls:ControlExample>
+
+        <!--  垂直步骤条示例  -->
+        <controls:ControlExample
+            Margin="0,32,0,0"
+            HeaderText="垂直步骤条 - 4 步（包含错误状态）"
+            XamlCode="&lt;ui:Steps CurrentStep=&quot;2&quot; Orientation=&quot;Vertical&quot;&gt;&#10;  &lt;ui:Step Title=&quot;步骤 1&quot; Description=&quot;完成&quot; /&gt;&#10;  &lt;ui:Step Title=&quot;步骤 2&quot; Description=&quot;进行中&quot; /&gt;&#10;  &lt;ui:Step Title=&quot;步骤 3&quot; Description=&quot;等待&quot; /&gt;&#10;  &lt;ui:Step Title=&quot;步骤 4&quot; Description=&quot;错误状态&quot; /&gt;&#10;&lt;/ui:Steps&gt;">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <ui:Steps
+                    x:Name="VerticalSteps"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Margin="0,0,24,0"
+                    CurrentStep="2"
+                    Orientation="Vertical">
+                    <ui:Step Title="步骤 1" Description="验证用户信息" />
+                    <ui:Step Title="步骤 2" Description="处理数据中" />
+                    <ui:Step Title="步骤 3" Description="等待审核" />
+                    <ui:Step Title="步骤 4" Description="可选错误状态" />
+                </ui:Steps>
+
+                <StackPanel
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    VerticalAlignment="Top">
+                    <ui:TextBlock
+                        Margin="0,0,0,8"
+                        FontTypography="BodyStrong"
+                        Text="选择步骤:" />
+                    <StackPanel Orientation="Vertical">
+                        <ui:Button
+                            Content="第 1 步"
+                            Margin="0,0,0,8"
+                            Click="OnVerticalStep1Click" />
+                        <ui:Button
+                            Content="第 2 步"
+                            Margin="0,0,0,8"
+                            Click="OnVerticalStep2Click" />
+                        <ui:Button
+                            Content="第 3 步"
+                            Margin="0,0,0,8"
+                            Click="OnVerticalStep3Click" />
+                        <ui:Button
+                            Content="第 4 步（错误）"
+                            Click="OnVerticalStep4Click" />
+                    </StackPanel>
+                </StackPanel>
+
+                <ui:TextBlock
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Margin="0,16,0,0"
+                    Appearance="Secondary"
+                    FontTypography="Caption"
+                    Text="当前步骤: 2" />
+            </Grid>
+        </controls:ControlExample>
+
+        <!--  动态切换示例  -->
+        <controls:ControlExample
+            Margin="0,32,0,0"
+            HeaderText="动态步骤状态演示"
+            XamlCode="&lt;ui:Steps CurrentStep=&quot;0&quot; Orientation=&quot;Horizontal&quot;&gt;&#10;  &lt;ui:Step Title=&quot;开始&quot; /&gt;&#10;  &lt;ui:Step Title=&quot;进行中&quot; /&gt;&#10;  &lt;ui:Step Title=&quot;完成&quot; /&gt;&#10;&lt;/ui:Steps&gt;">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <ui:Steps
+                    x:Name="DynamicSteps"
+                    Grid.Row="0"
+                    Margin="0,0,0,24"
+                    CurrentStep="0"
+                    Orientation="Horizontal">
+                    <ui:Step Title="开始" Description="初始状态" />
+                    <ui:Step Title="进行中" Description="处理中" />
+                    <ui:Step Title="完成" Description="已完成" />
+                </ui:Steps>
+
+                <StackPanel Grid.Row="1" Margin="0,0,0,16">
+                    <ui:TextBlock
+                        Margin="0,0,0,8"
+                        FontTypography="BodyStrong"
+                        Text="自动进度演示:" />
+                    <ui:Button
+                        Content="开始演示"
+                        Click="OnStartDemoClick" />
+                </StackPanel>
+
+                <ui:TextBlock
+                    x:Name="DemoStatus"
+                    Grid.Row="2"
+                    Appearance="Secondary"
+                    FontTypography="Caption"
+                    Text="当前步骤: 0 (开始)" />
+            </Grid>
+        </controls:ControlExample>
+
+    </StackPanel>
+</Page>

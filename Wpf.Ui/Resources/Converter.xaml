@@ -6,4 +6,5 @@
     <converter:BoolReToVisibilityConverter x:Key="BoolReToVisibilityConverter" />
     <converter:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     <converter:BoolReConverter x:Key="BoolReConverter" />
+    <converter:AddOneConverter x:Key="AddOneConverter" />
 </ResourceDictionary>

@@ -13,6 +13,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
+//using System.Windows.WeakEventManager;
 
 /// <summary>
 /// Represents a control that lets a user pick a color using a color spectrum, color wheel, and preset colors.
@@ -30,6 +31,13 @@ public class ColorPicker : Control
     private Popup? popup;
     private Border? colorBorder;
     private bool isUpdatingColor;
+
+    /// <summary>Identifies the <see cref="ValueChanged"/> routed event.</summary>
+    public static readonly RoutedEvent ValueChangedEvent = EventManager.RegisterRoutedEvent(
+        nameof(ValueChanged),
+        RoutingStrategy.Bubble,
+        typeof(RoutedPropertyChangedEventHandler<Color>),
+        typeof(ColorPicker));
 
     /// <summary>Identifies the <see cref="Value"/> dependency property.</summary>
     public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
@@ -199,6 +207,15 @@ public class ColorPicker : Control
     }
 
     /// <summary>
+    /// Occurs when the color value changes.
+    /// </summary>
+    public event RoutedPropertyChangedEventHandler<Color> ValueChanged
+    {
+        add => AddHandler(ValueChangedEvent, value);
+        remove => RemoveHandler(ValueChangedEvent, value);
+    }
+
+    /// <summary>
     /// Initializes a new instance of the <see cref="ColorPicker"/> class.
     /// </summary>
     public ColorPicker()
@@ -291,6 +308,13 @@ public class ColorPicker : Control
             picker.UpdateRgbFromColor((Color)e.NewValue);
             picker.UpdateHsvFromColor((Color)e.NewValue);
             picker.isUpdatingColor = false;
+
+            // Raise ValueChanged event
+            var args = new RoutedPropertyChangedEventArgs<Color>((Color)e.OldValue, (Color)e.NewValue)
+            {
+                RoutedEvent = ValueChangedEvent
+            };
+            picker.RaiseEvent(args);
         }
     }
 

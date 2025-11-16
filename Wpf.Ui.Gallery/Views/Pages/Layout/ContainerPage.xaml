@@ -1,0 +1,221 @@
+<Page
+    x:Class="Wpf.Ui.Gallery.Views.Pages.Layout.ContainerPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:Wpf.Ui.Gallery.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Wpf.Ui.Gallery.Views.Pages.Layout"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:system="clr-namespace:System;assembly=System.Runtime"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    Title="ContainerPage"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+    ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    mc:Ignorable="d">
+    <StackPanel Margin="0,0,0,24">
+        <!-- Full Container Example -->
+        <controls:ControlExample
+            Margin="0"
+            HeaderText="A complete Container layout with Header, Main content area, and Footer."
+            XamlCode="&lt;ui:Container Header=&quot;Header Content&quot; Footer=&quot;Footer Content&quot;&gt;&#10;    &lt;ui:Container.Main&gt;&#10;        &lt;TextBlock Text=&quot;Main Content&quot; /&gt;&#10;    &lt;/ui:Container.Main&gt;&#10;&lt;/ui:Container&gt;">
+            <Grid Margin="0,16">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+                <ui:Container
+                    Grid.Row="0"
+                    Height="400"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Top">
+                    <!-- Header -->
+                    <ui:Container.Header>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="16">
+                            <ui:TextBlock
+                                Margin="0,0,12,0"
+                                FontTypography="BodyStrong"
+                                Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                Text="Page Header" />
+                            <ui:TextBlock
+                                Appearance="Secondary"
+                                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                Text="This is the header area" />
+                        </StackPanel>
+                    </ui:Container.Header>
+
+                    <!-- Main Content -->
+                    <ui:Container.Main>
+                        <Border Padding="16">
+                            <StackPanel>
+                                <ui:TextBlock
+                                    Margin="0,0,0,12"
+                                    FontTypography="BodyStrong"
+                                    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                    Text="Main Content Area"
+                                    TextWrapping="WrapWithOverflow" />
+                                <ui:TextBlock
+                                    Margin="0,0,0,16"
+                                    Appearance="Secondary"
+                                    Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                    Text="This is the main scrollable content area. It will automatically show a scrollbar if content exceeds the available space."
+                                    TextWrapping="WrapWithOverflow" />
+
+                                <!-- Large content to test scrolling -->
+                                <ui:TextBlock
+                                    Margin="0,0,0,8"
+                                    FontTypography="Caption"
+                                    Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                                    Text="Sample content for scrolling test:"
+                                    TextWrapping="WrapWithOverflow" />
+
+                                <StackPanel>
+                                    <ui:TextBlock
+                                        Margin="0,4,0,4"
+                                        Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                        Text="• Item 1: Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                                        TextWrapping="WrapWithOverflow" />
+                                    <ui:TextBlock
+                                        Margin="0,4,0,4"
+                                        Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                        Text="• Item 2: Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                                        TextWrapping="WrapWithOverflow" />
+                                    <ui:TextBlock
+                                        Margin="0,4,0,4"
+                                        Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                        Text="• Item 3: Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris."
+                                        TextWrapping="WrapWithOverflow" />
+                                    <ui:TextBlock
+                                        Margin="0,4,0,4"
+                                        Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                        Text="• Item 4: Duis aute irure dolor in reprehenderit in voluptate velit esse cillum."
+                                        TextWrapping="WrapWithOverflow" />
+                                    <ui:TextBlock
+                                        Margin="0,4,0,4"
+                                        Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                        Text="• Item 5: Dolore eu fugiat nulla pariatur excepteur sint occaecat cupidatat."
+                                        TextWrapping="WrapWithOverflow" />
+                                    <ui:TextBlock
+                                        Margin="0,4,0,4"
+                                        Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                        Text="• Item 6: Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia."
+                                        TextWrapping="WrapWithOverflow" />
+                                    <ui:TextBlock
+                                        Margin="0,4,0,4"
+                                        Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                        Text="• Item 7: Deserunt mollit anim id est laborum sed ut perspiciatis unde omnis."
+                                        TextWrapping="WrapWithOverflow" />
+                                    <ui:TextBlock
+                                        Margin="0,4,0,4"
+                                        Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                        Text="• Item 8: Iste natus error sit voluptatem accusantium doloremque laudantium."
+                                        TextWrapping="WrapWithOverflow" />
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </ui:Container.Main>
+
+                    <!-- Footer -->
+                    <ui:Container.Footer>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="16">
+                            <ui:TextBlock
+                                Margin="0,0,12,0"
+                                FontTypography="Caption"
+                                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                Text="Status:" />
+                            <ui:TextBlock
+                                FontTypography="Caption"
+                                Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                Text="Ready" />
+                        </StackPanel>
+                    </ui:Container.Footer>
+                </ui:Container>
+            </Grid>
+        </controls:ControlExample>
+
+        <!-- Without Header Example -->
+        <controls:ControlExample
+            Margin="0,32,0,0"
+            HeaderText="Container without Header (IsHeaderVisible=False)."
+            XamlCode="&lt;ui:Container IsHeaderVisible=&quot;False&quot; Footer=&quot;Footer&quot;&gt;&#10;    &lt;ui:Container.Main&gt;&#10;        &lt;TextBlock Text=&quot;Main Content&quot; /&gt;&#10;    &lt;/ui:Container.Main&gt;&#10;&lt;/ui:Container&gt;">
+            <Grid Margin="0,16">
+                <ui:Container
+                    Height="200"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Top"
+                    IsHeaderVisible="False">
+                    <!-- Main Content -->
+                    <ui:Container.Main>
+                        <Border Margin="16">
+                            <StackPanel>
+                                <ui:TextBlock
+                                    Margin="0,0,0,12"
+                                    FontTypography="BodyStrong"
+                                    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                    Text="Main Content (Header Hidden)"
+                                    TextWrapping="WrapWithOverflow" />
+                                <ui:TextBlock
+                                    Appearance="Secondary"
+                                    Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                    Text="The header area is hidden when IsHeaderVisible is set to False."
+                                    TextWrapping="WrapWithOverflow" />
+                            </StackPanel>
+                        </Border>
+                    </ui:Container.Main>
+
+                    <!-- Footer -->
+                    <ui:Container.Footer>
+                        <ui:TextBlock
+                            Margin="16"
+                            FontTypography="Caption"
+                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                            Text="Footer is still visible" />
+                    </ui:Container.Footer>
+                </ui:Container>
+            </Grid>
+        </controls:ControlExample>
+
+        <!-- Without Footer Example -->
+        <controls:ControlExample
+            Margin="0,32,0,0"
+            HeaderText="Container without Footer (IsFooterVisible=False)."
+            XamlCode="&lt;ui:Container Header=&quot;Header&quot; IsFooterVisible=&quot;False&quot;&gt;&#10;    &lt;ui:Container.Main&gt;&#10;        &lt;TextBlock Text=&quot;Main Content&quot; /&gt;&#10;    &lt;/ui:Container.Main&gt;&#10;&lt;/ui:Container&gt;">
+            <Grid Margin="0,16">
+                <ui:Container
+                    Height="200"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Top"
+                    IsFooterVisible="False">
+                    <!-- Header -->
+                    <ui:Container.Header>
+                        <ui:TextBlock
+                            Margin="16"
+                            FontTypography="BodyStrong"
+                            Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                            Text="Header (Footer Hidden)" />
+                    </ui:Container.Header>
+
+                    <!-- Main Content -->
+                    <ui:Container.Main>
+                        <Border Margin="16">
+                            <StackPanel>
+                                <ui:TextBlock
+                                    Margin="0,0,0,12"
+                                    FontTypography="BodyStrong"
+                                    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                    Text="Main Content"
+                                    TextWrapping="WrapWithOverflow" />
+                                <ui:TextBlock
+                                    Appearance="Secondary"
+                                    Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                    Text="The footer area is hidden when IsFooterVisible is set to False."
+                                    TextWrapping="WrapWithOverflow" />
+                            </StackPanel>
+                        </Border>
+                    </ui:Container.Main>
+                </ui:Container>
+            </Grid>
+        </controls:ControlExample>
+    </StackPanel>
+</Page>
