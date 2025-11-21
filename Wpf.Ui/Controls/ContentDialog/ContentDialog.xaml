@@ -4,7 +4,7 @@
     xmlns:controls="clr-namespace:Wpf.Ui.Controls"
     xmlns:converters="clr-namespace:Wpf.Ui.Converters">
 
-    <converters:ContentDialogButtonEnumToBoolConverter x:Key="EnumToBoolConverter" />
+    <converters:ContentDialogButtonEnumToBoolConverter x:Key="ContentDialogButtonEnumToBoolConverter" />
     <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
 
     <CornerRadius x:Key="DialogOverlayCornerRadius">8,8,0,0</CornerRadius>

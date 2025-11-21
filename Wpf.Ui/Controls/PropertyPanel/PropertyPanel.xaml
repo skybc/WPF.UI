@@ -73,25 +73,31 @@
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <local:ButtonGroup>
-                                    <!--  Sort by Category ToggleButton  -->
-                                    <ToggleButton
-                                        x:Name="SortByCategoryButton"
-                                        Grid.Column="0"
-                                        Style="{StaticResource PropertyPanelToggleButtonStyle}"
-                                        ToolTip="Sort by Category">
-                                        <TextBlock FontSize="18" Text="📁" />
-                                    </ToggleButton>
 
-                                    <!--  Sort by Name ToggleButton  -->
-                                    <ToggleButton
-                                        x:Name="SortByNameButton"
-                                        Grid.Column="1"
-                                        Style="{StaticResource PropertyPanelToggleButtonStyle}"
-                                        ToolTip="Sort by Name">
-                                        <TextBlock FontSize="18" Text="🔤" />
-                                    </ToggleButton>
-                                </local:ButtonGroup>
+                                <!--  Sort by Category ToggleButton  -->
+                                <ToggleButton
+                                    x:Name="SortByCategoryButton"
+                                    Grid.Column="0"
+                                    Width="40"
+                                    Height="40"
+                                    Margin="0,0,4,0"
+                                    Style="{StaticResource PropertyPanelToggleButtonStyle}"
+                                    ToolTip="Sort by Category">
+                                    <TextBlock FontSize="18" Text="📁" />
+                                </ToggleButton>
+
+                                <!--  Sort by Name ToggleButton  -->
+                                <ToggleButton
+                                    x:Name="SortByNameButton"
+                                    Grid.Column="1"
+                                    Width="40"
+                                    Height="40"
+                                    Margin="0,0,12,0"
+                                    Style="{StaticResource PropertyPanelToggleButtonStyle}"
+                                    ToolTip="Sort by Name">
+                                    <TextBlock FontSize="18" Text="🔤" />
+                                </ToggleButton>
+
                                 <!--  Search TextBox  -->
                                 <TextBox
                                     Grid.Column="2"

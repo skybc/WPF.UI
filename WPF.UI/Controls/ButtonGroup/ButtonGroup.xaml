@@ -10,7 +10,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:Wpf.Ui.Controls">
 
-    <!-- ItemsPanelTemplates -->
+    <!--  ItemsPanelTemplates  -->
     <ItemsPanelTemplate x:Key="ButtonGroupHorizontalUniformItemsPanelTemplate">
         <StackPanel Orientation="Horizontal" />
     </ItemsPanelTemplate>
@@ -19,10 +19,10 @@
         <StackPanel Orientation="Vertical" />
     </ItemsPanelTemplate>
 
-    <!-- Style Selectors -->
+    <!--  Style Selectors  -->
     <controls:ButtonGroupItemStyleSelector x:Key="ButtonGroupItemStyleSelector" />
 
-    <!-- Button Styles for ButtonGroup -->
+    <!--  Button Styles for ButtonGroup  -->
     <Style x:Key="ButtonGroupItemButtonBaseStyle" TargetType="Button">
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -86,37 +86,55 @@
         </Style.Triggers>
     </Style>
 
-    <!-- Specific Button Positions -->
-    <Style x:Key="ButtonGroupItemButtonDefault" BasedOn="{StaticResource ButtonGroupItemButtonBaseStyle}" TargetType="Button">
+    <!--  Specific Button Positions  -->
+    <Style
+        x:Key="ButtonGroupItemButtonDefault"
+        BasedOn="{StaticResource ButtonGroupItemButtonBaseStyle}"
+        TargetType="Button">
         <Setter Property="Border.CornerRadius" Value="0" />
     </Style>
 
-    <Style x:Key="ButtonGroupItemButtonHorizontalFirst" BasedOn="{StaticResource ButtonGroupItemButtonBaseStyle}" TargetType="Button">
+    <Style
+        x:Key="ButtonGroupItemButtonHorizontalFirst"
+        BasedOn="{StaticResource ButtonGroupItemButtonBaseStyle}"
+        TargetType="Button">
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Border.CornerRadius" Value="8,0,0,8" />
     </Style>
 
-    <Style x:Key="ButtonGroupItemButtonHorizontalLast" BasedOn="{StaticResource ButtonGroupItemButtonBaseStyle}" TargetType="Button">
+    <Style
+        x:Key="ButtonGroupItemButtonHorizontalLast"
+        BasedOn="{StaticResource ButtonGroupItemButtonBaseStyle}"
+        TargetType="Button">
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Border.CornerRadius" Value="0,8,8,0" />
     </Style>
 
-    <Style x:Key="ButtonGroupItemButtonSingle" BasedOn="{StaticResource ButtonGroupItemButtonBaseStyle}" TargetType="Button">
+    <Style
+        x:Key="ButtonGroupItemButtonSingle"
+        BasedOn="{StaticResource ButtonGroupItemButtonBaseStyle}"
+        TargetType="Button">
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Border.CornerRadius" Value="8" />
     </Style>
 
-    <Style x:Key="ButtonGroupItemButtonVerticalFirst" BasedOn="{StaticResource ButtonGroupItemButtonBaseStyle}" TargetType="Button">
+    <Style
+        x:Key="ButtonGroupItemButtonVerticalFirst"
+        BasedOn="{StaticResource ButtonGroupItemButtonBaseStyle}"
+        TargetType="Button">
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Border.CornerRadius" Value="8,8,0,0" />
     </Style>
 
-    <Style x:Key="ButtonGroupItemButtonVerticalLast" BasedOn="{StaticResource ButtonGroupItemButtonBaseStyle}" TargetType="Button">
+    <Style
+        x:Key="ButtonGroupItemButtonVerticalLast"
+        BasedOn="{StaticResource ButtonGroupItemButtonBaseStyle}"
+        TargetType="Button">
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Border.CornerRadius" Value="0,0,8,8" />
     </Style>
 
-    <!-- ToggleButton Styles for ButtonGroup -->
+    <!--  ToggleButton Styles for ButtonGroup  -->
     <Style x:Key="ButtonGroupItemToggleButtonBaseStyle" TargetType="ToggleButton">
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -189,12 +207,18 @@
         </Style.Triggers>
     </Style>
 
-    <!-- Specific ToggleButton Positions -->
-    <Style x:Key="ButtonGroupItemToggleButtonDefault" BasedOn="{StaticResource ButtonGroupItemToggleButtonBaseStyle}" TargetType="ToggleButton">
+    <!--  Specific ToggleButton Positions  -->
+    <Style
+        x:Key="ButtonGroupItemToggleButtonDefault"
+        BasedOn="{StaticResource ButtonGroupItemToggleButtonBaseStyle}"
+        TargetType="ToggleButton">
         <Setter Property="Border.CornerRadius" Value="0" />
     </Style>
 
-    <Style x:Key="ButtonGroupItemToggleButtonHorizontalFirst" BasedOn="{StaticResource ButtonGroupItemToggleButtonBaseStyle}" TargetType="ToggleButton">
+    <Style
+        x:Key="ButtonGroupItemToggleButtonHorizontalFirst"
+        BasedOn="{StaticResource ButtonGroupItemToggleButtonBaseStyle}"
+        TargetType="ToggleButton">
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Template">
             <Setter.Value>
@@ -250,7 +274,10 @@
         </Setter>
     </Style>
 
-    <Style x:Key="ButtonGroupItemToggleButtonHorizontalLast" BasedOn="{StaticResource ButtonGroupItemToggleButtonBaseStyle}" TargetType="ToggleButton">
+    <Style
+        x:Key="ButtonGroupItemToggleButtonHorizontalLast"
+        BasedOn="{StaticResource ButtonGroupItemToggleButtonBaseStyle}"
+        TargetType="ToggleButton">
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Template">
             <Setter.Value>
@@ -306,7 +333,10 @@
         </Setter>
     </Style>
 
-    <Style x:Key="ButtonGroupItemToggleButtonSingle" BasedOn="{StaticResource ButtonGroupItemToggleButtonBaseStyle}" TargetType="ToggleButton">
+    <Style
+        x:Key="ButtonGroupItemToggleButtonSingle"
+        BasedOn="{StaticResource ButtonGroupItemToggleButtonBaseStyle}"
+        TargetType="ToggleButton">
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Template">
             <Setter.Value>
@@ -362,7 +392,10 @@
         </Setter>
     </Style>
 
-    <Style x:Key="ButtonGroupItemToggleButtonVerticalFirst" BasedOn="{StaticResource ButtonGroupItemToggleButtonBaseStyle}" TargetType="ToggleButton">
+    <Style
+        x:Key="ButtonGroupItemToggleButtonVerticalFirst"
+        BasedOn="{StaticResource ButtonGroupItemToggleButtonBaseStyle}"
+        TargetType="ToggleButton">
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Template">
             <Setter.Value>
@@ -418,7 +451,10 @@
         </Setter>
     </Style>
 
-    <Style x:Key="ButtonGroupItemToggleButtonVerticalLast" BasedOn="{StaticResource ButtonGroupItemToggleButtonBaseStyle}" TargetType="ToggleButton">
+    <Style
+        x:Key="ButtonGroupItemToggleButtonVerticalLast"
+        BasedOn="{StaticResource ButtonGroupItemToggleButtonBaseStyle}"
+        TargetType="ToggleButton">
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Template">
             <Setter.Value>
@@ -474,7 +510,7 @@
         </Setter>
     </Style>
 
-    <!-- ButtonGroup Control Style -->
+    <!--  ButtonGroup Control Style  -->
     <Style x:Key="DefaultButtonGroupStyle" TargetType="controls:ButtonGroup">
         <Setter Property="ItemContainerStyleSelector" Value="{StaticResource ButtonGroupItemStyleSelector}" />
         <Setter Property="ItemsPanel" Value="{StaticResource ButtonGroupHorizontalUniformItemsPanelTemplate}" />

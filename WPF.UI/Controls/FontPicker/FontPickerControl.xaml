@@ -44,7 +44,7 @@
                                 FontWeight="{TemplateBinding FontSettings,
                                                              Converter={StaticResource FontWeightExtractor}}"
                                 Foreground="{TemplateBinding FontSettings,
-                                                            Converter={StaticResource ForegroundExtractor}}"
+                                                             Converter={StaticResource ForegroundExtractor}}"
                                 Text="{TemplateBinding PreviewText}" />
                         </Border>
 

@@ -69,7 +69,8 @@
                                     FontSize="16"
                                     FontWeight="SemiBold"
                                     Foreground="{TemplateBinding Foreground}"
-                                    Text="{TemplateBinding Time, Converter={StaticResource TimeSpanToHourConverter}}" />
+                                    Text="{TemplateBinding Time,
+                                                           Converter={StaticResource TimeSpanToHourConverter}}" />
 
                                 <!--  Separator  -->
                                 <TextBlock
@@ -90,7 +91,8 @@
                                     FontSize="16"
                                     FontWeight="SemiBold"
                                     Foreground="{TemplateBinding Foreground}"
-                                    Text="{TemplateBinding Time, Converter={StaticResource TimeSpanToMinuteConverter}}" />
+                                    Text="{TemplateBinding Time,
+                                                           Converter={StaticResource TimeSpanToMinuteConverter}}" />
 
                                 <!--  AM/PM Separator  -->
                                 <TextBlock
@@ -110,7 +112,8 @@
                                     VerticalAlignment="Center"
                                     FontSize="14"
                                     Foreground="{TemplateBinding Foreground}"
-                                    Text="{TemplateBinding Time, Converter={StaticResource TimeSpanToAMPMConverter}}"
+                                    Text="{TemplateBinding Time,
+                                                           Converter={StaticResource TimeSpanToAMPMConverter}}"
                                     Visibility="Visible" />
                             </Grid>
                         </Border>
@@ -144,15 +147,15 @@
                                                 x:Name="HourSlider"
                                                 Grid.Column="0"
                                                 Height="32"
+                                                VerticalAlignment="Center"
+                                                IsSnapToTickEnabled="True"
                                                 Maximum="23"
                                                 Minimum="0"
-                                                TickFrequency="1"
-                                                IsSnapToTickEnabled="True"
-                                                VerticalAlignment="Center" />
+                                                TickFrequency="1" />
                                             <TextBlock
                                                 Grid.Column="1"
-                                                Margin="12,0,0,0"
                                                 MinWidth="40"
+                                                Margin="12,0,0,0"
                                                 FontSize="14"
                                                 FontWeight="SemiBold"
                                                 Text="{Binding Value, ElementName=HourSlider, StringFormat='00'}" />
@@ -176,15 +179,15 @@
                                                 x:Name="MinuteSlider"
                                                 Grid.Column="0"
                                                 Height="32"
+                                                VerticalAlignment="Center"
+                                                IsSnapToTickEnabled="True"
                                                 Maximum="59"
                                                 Minimum="0"
-                                                TickFrequency="1"
-                                                IsSnapToTickEnabled="True"
-                                                VerticalAlignment="Center" />
+                                                TickFrequency="1" />
                                             <TextBlock
                                                 Grid.Column="1"
-                                                Margin="12,0,0,0"
                                                 MinWidth="40"
+                                                Margin="12,0,0,0"
                                                 FontSize="14"
                                                 FontWeight="SemiBold"
                                                 Text="{Binding Value, ElementName=MinuteSlider, StringFormat='00'}" />

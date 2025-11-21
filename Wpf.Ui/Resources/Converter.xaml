@@ -7,4 +7,5 @@
     <converter:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     <converter:BoolReConverter x:Key="BoolReConverter" />
     <converter:AddOneConverter x:Key="AddOneConverter" />
+    <converter:EnumToBoolConverter x:Key="EnumToBoolConverter" />
 </ResourceDictionary>
