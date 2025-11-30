@@ -22,7 +22,23 @@ public sealed class PropertyItem : INotifyPropertyChanged, IDisposable
     private IValueConverter? _converter;
     private bool _converterInitialized;
     private bool _isDisposed;
-
+    /// <summary>
+    /// 获取枚举项的描述（DescriptionAttribute），若无描述则返回枚举名称。
+    /// </summary>
+    /// <param name="value">枚举值</param>
+    /// <returns>枚举的描述或名称</returns>
+    public string GetEnumDescription(Enum value)
+    {
+        var type = value.GetType();
+        var name = Enum.GetName(type, value);
+        if (name == null)
+        {
+            return null;
+        }
+        var field = type.GetField(name);
+        var attr = System.Attribute.GetCustomAttribute(field, typeof(System.ComponentModel.DescriptionAttribute)) as System.ComponentModel.DescriptionAttribute;
+        return attr == null ? name : attr.Description;
+    }
     public PropertyItem(object owner, PropertyInfo property, PropertyPanelAttribute attribute)
     {
         this._owner = owner;
@@ -40,7 +56,20 @@ public sealed class PropertyItem : INotifyPropertyChanged, IDisposable
 
         if (IsEnum)
         {
-            EnumValues = Enum.GetValues(_underlyingType);
+            var enums = Enum.GetValues(_underlyingType);
+            var list = new KeyValuePair<string, Enum>[enums.Length];
+            for (int i = 0; i < enums.Length; i++)
+            {
+                var enumValue = (Enum)enums.GetValue(i)!;
+                // describe attribute support can be added here if needed
+                var key = GetEnumDescription(enumValue);
+                if (key == null)
+                {
+                    key = enumValue.ToString()!;
+                }
+                list[i] = new KeyValuePair<string, Enum>(key, enumValue);
+            }
+            EnumValues = list;
         }
 
         _ownerInpc = owner as INotifyPropertyChanged;
@@ -72,7 +101,7 @@ public sealed class PropertyItem : INotifyPropertyChanged, IDisposable
 
     public bool IsEnum => _underlyingType.IsEnum;
 
-    public Array? EnumValues { get; }
+    public KeyValuePair<string, Enum>[]? EnumValues { get; }
 
     public double Min => _attribute.Min;
 

@@ -83,7 +83,7 @@
                                     Margin="0,0,4,0"
                                     Style="{StaticResource PropertyPanelToggleButtonStyle}"
                                     ToolTip="Sort by Category">
-                                    <TextBlock FontSize="18" Text="📁" />
+                                    <local:SymbolIcon FontSize="18" Symbol="Folder24" />
                                 </ToggleButton>
 
                                 <!--  Sort by Name ToggleButton  -->
@@ -95,7 +95,8 @@
                                     Margin="0,0,12,0"
                                     Style="{StaticResource PropertyPanelToggleButtonStyle}"
                                     ToolTip="Sort by Name">
-                                    <TextBlock FontSize="18" Text="🔤" />
+                                    <local:SymbolIcon FontSize="18" Symbol="List24" />
+
                                 </ToggleButton>
 
                                 <!--  Search TextBox  -->

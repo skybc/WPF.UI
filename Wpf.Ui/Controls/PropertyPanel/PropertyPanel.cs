@@ -42,7 +42,7 @@ public class PropertyPanel : ItemsControl
         nameof(DisplayNameWidth),
         typeof(double),
         typeof(PropertyPanel),
-        new PropertyMetadata(100d, OnDisplayNamePropertiesChanged));
+        new PropertyMetadata(80d, OnDisplayNamePropertiesChanged));
 
     /// <summary>
     /// Dependency property for DisplayNameHorizontalAlignment.
@@ -51,7 +51,7 @@ public class PropertyPanel : ItemsControl
         nameof(DisplayNameHorizontalAlignment),
         typeof(HorizontalAlignment),
         typeof(PropertyPanel),
-        new PropertyMetadata(HorizontalAlignment.Left, OnDisplayNamePropertiesChanged));
+        new PropertyMetadata(HorizontalAlignment.Right, OnDisplayNamePropertiesChanged));
 
     /// <summary>
     /// Dependency property for DisplayNameVerticalAlignment.
@@ -368,7 +368,7 @@ public class PropertyPanel : ItemsControl
         var props = type.GetProperties(BindingFlags.Instance | BindingFlags.Public)
             .Where(p => p.GetMethod != null)
             .Select(p => new { Prop = p, Attr = p.GetCustomAttribute<PropertyPanelAttribute>(true) })
-            .Where(x => x.Attr != null && x.Attr.IsVisible)
+            .Where(x => x.Attr != null )
             .OrderBy(x => x.Attr.Order)
             .ThenBy(x => x.Prop.Name)
             .ToList();

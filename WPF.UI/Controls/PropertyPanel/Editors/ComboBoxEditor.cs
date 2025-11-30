@@ -32,6 +32,8 @@ internal class ComboBoxEditor : PropertyEditorBase
         if (item.IsEnum)
         {
             comboBox.ItemsSource = item.EnumValues;
+            comboBox.DisplayMemberPath = "Key";
+            comboBox.SelectedValuePath = "Value";
         }
         else
         {
@@ -65,7 +67,15 @@ internal class ComboBoxEditor : PropertyEditorBase
         }
         else
         {
-            comboBox.SetBinding(ComboBox.SelectedItemProperty, binding);
+            if (item.IsEnum)
+            {
+                comboBox.SetBinding(ComboBox.SelectedValueProperty, binding);
+
+            }
+            else
+            {
+                comboBox.SetBinding(ComboBox.SelectedItemProperty, binding);
+            }
         }
         SetCommonProperties(comboBox, item);
 
