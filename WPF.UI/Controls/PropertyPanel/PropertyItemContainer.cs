@@ -25,7 +25,7 @@ internal sealed class PropertyItemContainer : Grid, IDisposable
     /// </summary>
     public PropertyItemContainer()
     {
-        this.VerticalAlignment = VerticalAlignment.Top; 
+        this.VerticalAlignment = VerticalAlignment.Top;
         this.Margin = new Thickness(0, 4, 0, 4);
 
         // Create columns
@@ -104,8 +104,24 @@ internal sealed class PropertyItemContainer : Grid, IDisposable
 
         // Create editor
         this.editor = PropertyEditorFactory.CreateEditor(item, panel);
+        if (editor == null)
+        {
+            return;
+        }
+        // Bind visibility if IsVisible path is specified
+        if (!string.IsNullOrEmpty(item.Attribute.IsVisible))
+        {
+            var visibilityBinding = new Binding(item.Attribute.IsVisible)
+            {
+                Source = item.Owner,
+                Mode = BindingMode.OneWay,
+                Converter = new System.Windows.Controls.BooleanToVisibilityConverter()
+            };
+            this.SetBinding(Grid.VisibilityProperty, visibilityBinding);
+        }
+
         this.editor.VerticalAlignment = VerticalAlignment.Center;
-        this.editor.Margin = new Thickness(0, 2, 0, 2);
+        this.editor.Margin = new Thickness(0, 0, 0, 0);
         Grid.SetColumn(this.editor, 2);
         this.Children.Add(this.editor);
     }

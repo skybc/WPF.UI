@@ -10,7 +10,7 @@ namespace Wpf.Ui.Controls;
 /// <summary>
 /// Registry for property editors. Manages the creation and selection of appropriate editors.
 /// </summary>
-internal static class PropertyEditorRegistry
+public static class PropertyEditorRegistry
 {
     private static readonly List<IPropertyEditor> _registeredEditors = new();
     private static bool _initialized = false;

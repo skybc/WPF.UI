@@ -1,4 +1,4 @@
-// This Source Code Form is subject to the terms of the MIT License.
+﻿// This Source Code Form is subject to the terms of the MIT License.
 // If a copy of the MIT was not distributed with this file, You can obtain one at https://opensource.org/licenses/MIT.
 // Copyright (C) Leszek Pomianowski and WPF UI Contributors.
 // All Rights Reserved.
@@ -38,7 +38,7 @@ internal static class PropertyEditorFactory
     /// <param name="item">The property item to create an editor for.</param>
     /// <param name="panel">The parent PropertyPanel for resource lookup.</param>
     /// <returns>A FrameworkElement that can edit the property value.</returns>
-    public static FrameworkElement CreateEditor(PropertyItem item, PropertyPanel panel)
+    public static FrameworkElement? CreateEditor(PropertyItem item, PropertyPanel panel)
     {
         if (item == null)
         {
@@ -62,6 +62,7 @@ internal static class PropertyEditorFactory
                     if (element != null)
                     {
                         BindEditorProperty(element, attr.EditorValuePath, item);
+                        
                         return element;
                     }
                 }
@@ -74,7 +75,14 @@ internal static class PropertyEditorFactory
 
         // Get editor from registry
         var editor = PropertyEditorRegistry.GetEditor(item);
-        return editor.CreateEditor(item, panel);
+        if (editor == null)
+        {
+            return null;
+        }
+        var ele = editor.CreateEditor(item, panel);
+
+     
+        return ele;
     }
 
     /// <summary>

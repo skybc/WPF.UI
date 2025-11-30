@@ -9,9 +9,10 @@ namespace Wpf.Ui.Controls;
 public sealed class PropertyPanelAttribute : Attribute
 {
     /// <summary>
-    /// Whether this property will be visible in the panel.
+    /// Binding path for visibility. If not null/empty, binds to this path and converts to Visibility.
+    /// Example: "IsAdvancedMode" will bind to the source object's IsAdvancedMode property.
     /// </summary>
-    public bool IsVisible { get; set; } = true;
+    public string? IsVisible { get; set; }
 
     /// <summary>
     /// Optional display name shown in the panel. If null, the property name is used.
