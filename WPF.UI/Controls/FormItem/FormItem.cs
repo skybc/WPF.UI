@@ -26,7 +26,7 @@ namespace Wpf.Ui.Controls
         /// Changed to GridLength so it can be bound to ColumnDefinition.Width.
         /// </summary>
         public static readonly DependencyProperty TitleWidthProperty = DependencyProperty.Register(
-            nameof(TitleWidth), typeof(GridLength), typeof(FormItem), new PropertyMetadata(new GridLength(120.0), OnTitleWidthChanged));
+            nameof(TitleWidth), typeof(GridLength), typeof(FormItem), new PropertyMetadata(new GridLength(80), OnTitleWidthChanged));
 
         private static void OnTitleWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
