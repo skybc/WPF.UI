@@ -227,8 +227,8 @@
                                 Grid.Row="0"
                                 Grid.Column="0"
                                 Width="3"
-                                Height="18"
-                                Margin="0"
+                                Height="32"
+                                Margin="0" 
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 Fill="{DynamicResource ListViewItemPillFillBrush}"
@@ -502,7 +502,7 @@
     <!--  Style and template for the resize control on the DataGridColumnHeader.  -->
     <Style x:Key="ColumnHeaderGripperStyle" TargetType="{x:Type Thumb}">
         <Setter Property="VerticalAlignment" Value="Stretch" />
-        <Setter Property="Padding" Value="4,0" />
+        <Setter Property="Padding" Value="4,2" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Cursor" Value="SizeWE" />
