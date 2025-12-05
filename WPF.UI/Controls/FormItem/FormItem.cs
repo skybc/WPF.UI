@@ -81,6 +81,12 @@ namespace Wpf.Ui.Controls
             nameof(ContentPadding), typeof(Thickness), typeof(FormItem), new PropertyMetadata(new Thickness(0)));
 
         /// <summary>
+        /// 标题的放置位置。
+        /// </summary>
+        public static readonly DependencyProperty TitlePlacementProperty = DependencyProperty.Register(
+            nameof(TitlePlacement), typeof(TitlePlacement), typeof(FormItem), new PropertyMetadata(TitlePlacement.Left));
+
+        /// <summary>
         /// 表单项标题。
         /// </summary>
         public string Title
@@ -150,6 +156,15 @@ namespace Wpf.Ui.Controls
         {
             get => (Thickness)GetValue(ContentPaddingProperty);
             set => SetValue(ContentPaddingProperty, value);
+        }
+
+        /// <summary>
+        /// 标题的放置位置。
+        /// </summary>
+        public TitlePlacement TitlePlacement
+        {
+            get => (TitlePlacement)GetValue(TitlePlacementProperty);
+            set => SetValue(TitlePlacementProperty, value);
         }
 
         public FormItem()
