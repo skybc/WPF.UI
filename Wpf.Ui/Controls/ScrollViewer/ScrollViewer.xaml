@@ -64,8 +64,20 @@
                             Value="{TemplateBinding HorizontalOffset}" />
                     </Grid>
                 </ControlTemplate>
+
             </Setter.Value>
+
         </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+                <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="False">
+                <Setter Property="VerticalScrollBarVisibility" Value="Hidden" />
+                <Setter Property="HorizontalScrollBarVisibility" Value="Hidden" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <Style BasedOn="{StaticResource UiScrollViewer}" TargetType="{x:Type ScrollViewer}" />
