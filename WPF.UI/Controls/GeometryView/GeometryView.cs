@@ -41,6 +41,8 @@ public class GeometryView : Control
         set => SetValue(GeometryProperty, value);
     }
 
+    
+
     /// <summary>
     /// Static constructor to set default style key.
     /// </summary>
@@ -101,6 +103,11 @@ public class GeometryView : Control
         }
     }
 
+    public GeometryView()
+    {
+        
+    }
+
     /// <summary>
     /// Updates the DrawingImage based on the current Geometry, FontSize, and Foreground.
     /// </summary>
@@ -113,7 +120,7 @@ public class GeometryView : Control
         }
 
         try
-        {
+        {        
             // Parse the geometry string
             var geometry = System.Windows.Media.Geometry.Parse(Geometry);
 
@@ -127,6 +134,7 @@ public class GeometryView : Control
                 Brush = Foreground ?? Brushes.Black,
                 Geometry = geometry
             };
+            
 
             drawingGroup.Children.Add(geometryDrawing);
 
