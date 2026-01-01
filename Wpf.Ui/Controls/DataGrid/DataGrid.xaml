@@ -228,7 +228,7 @@
                                 Grid.Column="0"
                                 Width="3"
                                 Height="32"
-                                Margin="0" 
+                                Margin="0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 Fill="{DynamicResource ListViewItemPillFillBrush}"

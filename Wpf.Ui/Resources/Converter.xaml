@@ -8,5 +8,5 @@
     <converter:BoolReConverter x:Key="BoolReConverter" />
     <converter:AddOneConverter x:Key="AddOneConverter" />
     <converter:EnumToBoolConverter x:Key="EnumToBoolConverter" />
-    <converter:LanguageConverter x:Key="LanguageConverter"></converter:LanguageConverter>
+    <converter:LanguageConverter x:Key="LanguageConverter" />
 </ResourceDictionary>
