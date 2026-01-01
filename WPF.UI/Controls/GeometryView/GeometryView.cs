@@ -68,6 +68,15 @@ public class GeometryView : Control
                 OnFontSizeChanged
             )
         );
+        // 监听 IsEnabled 属性变化
+        IsEnabledProperty.OverrideMetadata(
+            typeof(GeometryView),
+            new FrameworkPropertyMetadata(
+                true,
+                FrameworkPropertyMetadataOptions.AffectsRender,
+                OnIsEnabledChanged
+            )
+        );
     }
 
     /// <summary>
@@ -103,10 +112,22 @@ public class GeometryView : Control
         }
     }
 
+    /// <summary>
+    /// Handles changes to the IsEnabled property.
+    /// </summary>
+    private static void OnIsEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (d is GeometryView geometryView)
+        {
+            geometryView.UpdateDrawingImage();
+        }
+    }
+
     public GeometryView()
     {
         
     }
+    
 
     /// <summary>
     /// Updates the DrawingImage based on the current Geometry, FontSize, and Foreground.
@@ -128,10 +149,31 @@ public class GeometryView : Control
             var drawingImage = new DrawingImage();
             var drawingGroup = new DrawingGroup();
 
+            // 根据 IsEnabled 状态调整前景色亮度
+            Brush brush = Foreground ?? Brushes.Black;
+            if (!IsEnabled && brush is SolidColorBrush solidBrush)
+            {
+                // 禁用状态：降低亮度，使用灰色
+                var color = solidBrush.Color;
+                // 计算灰度值并降低亮度到 60%
+                var disabledColor = Color.FromArgb(
+                    color.A,
+                    (byte)(color.R * 0.6),
+                    (byte)(color.G * 0.6),
+                    (byte)(color.B * 0.6)
+                );
+                brush = new SolidColorBrush(disabledColor);
+            }
+            else if (!IsEnabled && !(brush is SolidColorBrush))
+            {
+                // 对于非 SolidColorBrush，使用灰色
+                brush = new SolidColorBrush(Color.FromArgb(255, (byte)(211 * 0.6), (byte)(211 * 0.6), (byte)(211 * 0.6)));
+            }
+
             // Create GeometryDrawing
             var geometryDrawing = new GeometryDrawing
             {
-                Brush = Foreground ?? Brushes.Black,
+                Brush = brush,
                 Geometry = geometry
             };
             

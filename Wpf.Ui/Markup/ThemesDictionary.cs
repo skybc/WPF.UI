@@ -42,6 +42,7 @@ public class ThemesDictionary : ResourceDictionary
     {
         SetSourceBasedOnSelectedTheme(ApplicationTheme.Light);
     }
+    static string lastTheme = "";
 
     private void SetSourceBasedOnSelectedTheme(ApplicationTheme? selectedApplicationTheme)
     {
@@ -52,6 +53,8 @@ public class ThemesDictionary : ResourceDictionary
             ApplicationTheme.VS_Light => "VS_Light",
             _ => "Light",
         };
+        if(themeName == lastTheme)
+            return;
 
         Source = new Uri($"{ApplicationThemeManager.ThemesDictionaryPath}{themeName}.xaml", UriKind.Absolute);
     }
