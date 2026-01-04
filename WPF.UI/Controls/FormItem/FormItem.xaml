@@ -3,10 +3,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converters="clr-namespace:Wpf.Ui.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:Wpf.Ui.Controls">
+    xmlns:local="clr-namespace:Wpf.Ui.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
     <converters:LanguageConverter x:Key="LanguageConverter" />
     <Style TargetType="{x:Type local:FormItem}">
-        <Setter Property="TitlePadding" Value="{DynamicResource ControlPadding}" />
+        <Setter Property="TitlePadding" Value="4,2" />
         <Setter Property="Title" Value="标题" />
         <Setter Property="Content" Value="内容" />
         <Setter Property="Padding" Value="2" />
@@ -59,7 +61,8 @@
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <DataTrigger Binding="{Binding TitlePlacement, RelativeSource={RelativeSource Self}}" Value="Top">
+
+                        <DataTrigger Binding="{Binding TitlePlacement, RelativeSource={RelativeSource self}}" Value="Top">
                             <Setter TargetName="LeftLayout" Property="Visibility" Value="Collapsed" />
                             <Setter TargetName="TopLayout" Property="Visibility" Value="Visible" />
                         </DataTrigger>

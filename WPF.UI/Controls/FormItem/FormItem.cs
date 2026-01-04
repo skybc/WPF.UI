@@ -169,29 +169,28 @@ namespace Wpf.Ui.Controls
 
         public FormItem()
         {
-            if (!DesignerProperties.GetIsInDesignMode(this))
+            // 设计模式下设置资源引用
+            if (DesignerProperties.GetIsInDesignMode(this))
             {
-
-
-                // 默认绑定主题色
-                SetValue(TitleForegroundProperty, Brushes.Black);
-                SetValue(TitlePaddingProperty, new Thickness(4, 0, 4, 0));
+                if (TitleForeground == null)
+                {
+                    SetResourceReference(TitleForegroundProperty, "TextFillColorPrimaryBrush");
+                }
+                // 默认 Padding
+                if (TitlePadding == new Thickness(0))
+                {
+                    SetResourceReference(TitlePaddingProperty, "ControlPadding");
+                }
+                if (ContentPadding == new Thickness(0))
+                {
+                    SetResourceReference(ContentPaddingProperty, "ControlPadding");
+                }
                 return;
             }
 
-            if (TitleForeground == null)
-            {
-                SetResourceReference(TitleForegroundProperty, "TextFillColorPrimaryBrush");
-            }
-            // 默认 Padding
-            if (TitlePadding == new Thickness(0))
-            {
-                SetResourceReference(TitlePaddingProperty, "ControlPadding");
-            }
-            if (ContentPadding == new Thickness(0))
-            {
-                SetResourceReference(ContentPaddingProperty, "ControlPadding");
-            }
+            // 运行时默认绑定主题色
+            SetValue(TitleForegroundProperty, Brushes.Black);
+            SetValue(TitlePaddingProperty, new Thickness(4, 0, 4, 0));
         }
     }
 }

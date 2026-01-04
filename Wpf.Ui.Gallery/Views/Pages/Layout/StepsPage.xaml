@@ -38,7 +38,7 @@
                     <ui:Step Title="步骤 2" Description="当前进行中" />
                     <ui:Step Title="步骤 3" Description="尚未开始" />
                 </ui:Steps>
-
+                <ui:FormItem Title="aaa" />
                 <StackPanel Grid.Row="1" Margin="0,0,0,16">
                     <ui:TextBlock
                         Margin="0,0,0,8"
@@ -46,16 +46,14 @@
                         Text="选择步骤:" />
                     <StackPanel Orientation="Horizontal">
                         <ui:Button
-                            Content="第 1 步"
                             Margin="0,0,8,0"
-                            Click="OnHorizontalStep1Click" />
+                            Click="OnHorizontalStep1Click"
+                            Content="第 1 步" />
                         <ui:Button
-                            Content="第 2 步"
                             Margin="0,0,8,0"
-                            Click="OnHorizontalStep2Click" />
-                        <ui:Button
-                            Content="第 3 步"
-                            Click="OnHorizontalStep3Click" />
+                            Click="OnHorizontalStep2Click"
+                            Content="第 2 步" />
+                        <ui:Button Click="OnHorizontalStep3Click" Content="第 3 步" />
                     </StackPanel>
                 </StackPanel>
 
@@ -105,20 +103,18 @@
                         Text="选择步骤:" />
                     <StackPanel Orientation="Vertical">
                         <ui:Button
-                            Content="第 1 步"
                             Margin="0,0,0,8"
-                            Click="OnVerticalStep1Click" />
+                            Click="OnVerticalStep1Click"
+                            Content="第 1 步" />
                         <ui:Button
-                            Content="第 2 步"
                             Margin="0,0,0,8"
-                            Click="OnVerticalStep2Click" />
+                            Click="OnVerticalStep2Click"
+                            Content="第 2 步" />
                         <ui:Button
-                            Content="第 3 步"
                             Margin="0,0,0,8"
-                            Click="OnVerticalStep3Click" />
-                        <ui:Button
-                            Content="第 4 步（错误）"
-                            Click="OnVerticalStep4Click" />
+                            Click="OnVerticalStep3Click"
+                            Content="第 3 步" />
+                        <ui:Button Click="OnVerticalStep4Click" Content="第 4 步（错误）" />
                     </StackPanel>
                 </StackPanel>
 
@@ -161,9 +157,7 @@
                         Margin="0,0,0,8"
                         FontTypography="BodyStrong"
                         Text="自动进度演示:" />
-                    <ui:Button
-                        Content="开始演示"
-                        Click="OnStartDemoClick" />
+                    <ui:Button Click="OnStartDemoClick" Content="开始演示" />
                 </StackPanel>
 
                 <ui:TextBlock

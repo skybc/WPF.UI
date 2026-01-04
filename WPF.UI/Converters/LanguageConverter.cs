@@ -9,6 +9,11 @@ namespace Wpf.Ui.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            // 设计时直接返回原值，不进行转换
+            if (DesignerProperties.GetIsInDesignMode(new System.Windows.DependencyObject()))
+            {
+                return value?.ToString() ?? string.Empty;
+            }
             return value?.ToString().ToLanguage();
         }
 
