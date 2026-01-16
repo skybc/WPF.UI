@@ -19,6 +19,7 @@
     <PackageId>Dirkster.AvalonDock.Themes.VS2013</PackageId>
     <Authors>https://github.com/Dirkster99/AvalonDock</Authors>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>

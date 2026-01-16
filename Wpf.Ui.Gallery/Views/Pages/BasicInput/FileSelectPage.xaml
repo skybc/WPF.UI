@@ -1,0 +1,84 @@
+<Page
+    x:Class="Wpf.Ui.Gallery.Views.Pages.BasicInput.FileSelectPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:Wpf.Ui.Gallery.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Wpf.Ui.Gallery.Views.Pages.BasicInput"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    Title="FileSelectPage"
+    controls:PageControlDocumentation.DocumentationType="{x:Type ui:FileSelect}"
+    d:DataContext="{d:DesignInstance local:FileSelectPage,
+                                     IsDesignTimeCreatable=False}"
+    d:DesignHeight="800"
+    d:DesignWidth="800"
+    ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+    ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    mc:Ignorable="d">
+
+    <StackPanel Margin="0,0,0,24">
+        <!-- 基本文件选择示例 -->
+        <controls:ControlExample
+            Margin="0"
+            HeaderText="Basic file selection"
+            XamlCode="&lt;ui:FileSelect DialogTitle='Select a file' FileExtensions='*.txt;*.pdf' /&gt;">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <ui:FileSelect
+                    x:Name="BasicFileSelect"
+                    Grid.Column="0"
+                    DialogTitle="Select a file"
+                    FileExtensions="*.txt;*.pdf"
+                    FilePath="{Binding ViewModel.SelectedFilePath, Mode=TwoWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:FileSelectPage}}" />
+            </Grid>
+        </controls:ControlExample>
+
+        <!-- 必选文件示例 -->
+        <controls:ControlExample
+            Margin="0,32,0,0"
+            HeaderText="Required file selection"
+            XamlCode="&lt;ui:FileSelect DialogTitle='Select a required file' FileExtensions='*.doc;*.docx' IsRequired='True' /&gt;">
+            <ui:FileSelect
+                DialogTitle="Select a required file"
+                FileExtensions="*.doc;*.docx"
+                IsRequired="True" />
+        </controls:ControlExample>
+
+        <!-- 图片文件选择示例 -->
+        <controls:ControlExample
+            Margin="0,32,0,0"
+            HeaderText="Image file selection"
+            XamlCode="&lt;ui:FileSelect DialogTitle='Select an image' FileExtensions='*.jpg;*.png;*.bmp;*.gif' /&gt;">
+            <ui:FileSelect
+                DialogTitle="Select an image"
+                FileExtensions="*.jpg;*.png;*.bmp;*.gif" />
+        </controls:ControlExample>
+
+        <!-- 所有文件类型示例 -->
+        <controls:ControlExample
+            Margin="0,32,0,0"
+            HeaderText="Select any file"
+            XamlCode="&lt;ui:FileSelect DialogTitle='Select any file' /&gt;">
+            <ui:FileSelect
+                DialogTitle="Select any file"
+                FileExtensions="*.*" />
+        </controls:ControlExample>
+
+        <!-- 初始目录设置示例 -->
+        <controls:ControlExample
+            Margin="0,32,0,0"
+            HeaderText="With initial directory"
+            XamlCode="&lt;ui:FileSelect DialogTitle='Select from Documents' InitialDirectory='C:\Users\Public\Documents' FileExtensions='*.xlsx;*.csv' /&gt;">
+            <ui:FileSelect
+                DialogTitle="Select from Documents"
+                FileExtensions="*.xlsx;*.csv"
+                InitialDirectory="C:\Users\Public\Documents" />
+        </controls:ControlExample>
+    </StackPanel>
+</Page>
