@@ -133,12 +133,9 @@ public partial class FolderSelect : System.Windows.Controls.Control
     /// 浏览按钮点击事件处理
     /// </summary>
     private void BrowseButton_Click(object sender, RoutedEventArgs e)
-    {
-
-
-        var folderBrowserDialog = new OpenFolderDialog();
-
-        folderBrowserDialog.Title = DialogTitle;
+    { 
+        var folderBrowserDialog = new OpenFolderDialog(); 
+        folderBrowserDialog.Title = DialogTitle; 
 
         // 如果已有选定的路径，则设置为初始路径
         if (!string.IsNullOrWhiteSpace(FolderPath) && System.IO.Directory.Exists(FolderPath))
@@ -149,7 +146,6 @@ public partial class FolderSelect : System.Windows.Controls.Control
         if (folderBrowserDialog.ShowDialog() == true)
         {
             FolderPath = folderBrowserDialog.FolderName;
-        }
-
+        } 
     }
 }

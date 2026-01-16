@@ -160,7 +160,7 @@ public partial class FileSelect : Control
         {
             Title = DialogTitle,
             InitialDirectory = InitialDirectory,
-            Filter = BuildFilterString(FileExtensions),
+            Filter = FileExtensions,// BuildFilterString(FileExtensions),
             CheckFileExists = true,
             CheckPathExists = true,
             Multiselect = false
@@ -171,38 +171,5 @@ public partial class FileSelect : Control
             FilePath = openFileDialog.FileName;
         }
     }
-
-    /// <summary>
-    /// 构建文件对话框的筛选字符串
-    /// </summary>
-    /// <param name="extensions">扩展名字符串，格式如 "*.txt;*.pdf"</param>
-    /// <returns>筛选字符串，格式如 "Text files (*.txt)|*.txt|PDF files (*.pdf)|*.pdf"</returns>
-    private string BuildFilterString(string extensions)
-    {
-        if (string.IsNullOrWhiteSpace(extensions) || extensions == "*.*")
-        {
-            return "All files (*.*)|*.*";
-        }
-
-        var filterParts = new List<string>();
-        var extensionList = extensions.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-
-        // 添加指定扩展名
-        foreach (var ext in extensionList)
-        {
-            var cleanExt = ext.Trim();
-            if (cleanExt.StartsWith("*."))
-            {
-                cleanExt = cleanExt.Substring(2);
-            }
-
-            var displayName = char.ToUpper(cleanExt[0]) + cleanExt.Substring(1) + " files";
-            filterParts.Add($"{displayName} (*.{cleanExt})|*.{cleanExt}");
-        }
-
-        // 添加"所有文件"选项
-        filterParts.Add("All files (*.*)|*.*");
-
-        return string.Join("|", filterParts);
-    }
+ 
 }
