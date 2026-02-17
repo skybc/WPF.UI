@@ -100,45 +100,79 @@ public class DataGrid : System.Windows.Controls.DataGrid
     protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
     {
         base.OnPreviewMouseLeftButtonDown(e);
-
-        // 如果整个DataGrid是只读的，直接返回
-        if (this.IsReadOnly)
-            return;
-
-        // 获取点击的单元格
-        var hitTest = VisualTreeHelper.HitTest(this, e.GetPosition(this));
-        if (hitTest?.VisualHit != null)
+        try
         {
-            var cell = FindParent<DataGridCell>(hitTest.VisualHit);
-            if (cell != null && !cell.IsReadOnly)
+            // 如果整个DataGrid是只读的，直接返回
+            if (this.IsReadOnly)
+                return;
+
+            // 获取点击的单元格
+            var hitTest = VisualTreeHelper.HitTest(this, e.GetPosition(this));
+            if (hitTest?.VisualHit != null)
             {
-                var row = FindParent<DataGridRow>(cell);
-
-                // 检查是否是ComboBox列
-                if (cell.Column is DataGridComboBoxColumn)
+                var cell = FindParent<DataGridCell>(hitTest.VisualHit);
+                if (cell != null && !cell.IsReadOnly)
                 {
-                    // 如果正在操作ComboBox且点击的不是当前编辑的单元格，跳过处理
-                    if (_isComboBoxSelecting && this.CurrentCell.IsValid)
+                    var row = FindParent<DataGridRow>(cell);
+
+                    // 检查是否是ComboBox列
+                    if (cell.Column is DataGridComboBoxColumn)
                     {
-                        var currentCell = GetCellFromCellInfo(this.CurrentCell);
-                        if (currentCell != cell)
+                        // 如果正在操作ComboBox且点击的不是当前编辑的单元格，跳过处理
+                        if (_isComboBoxSelecting && this.CurrentCell.IsValid)
                         {
-                            return;
+                            var currentCell = GetCellFromCellInfo(this.CurrentCell);
+                            if (currentCell != cell)
+                            {
+                                return;
+                            }
                         }
-                    }
 
-                    // ComboBox列的正常编辑处理
-                    if (row != null)
-                    {
-                        this.SelectedItem = row.DataContext;
-                        this.CurrentCell = new DataGridCellInfo(cell);
-                        this.BeginEdit();
+                        // ComboBox列的正常编辑处理
+                        if (row != null)
+                        {
+                            this.SelectedItem = row.DataContext;
+                            this.CurrentCell = new DataGridCellInfo(cell);
+                            this.BeginEdit();
+                        }
+                        return;
                     }
-                    return;
-                }
-                if (cell.Column is DataGridTemplateColumn templateColumn)
-                {
-                    // 检查编辑元素是否是ComboBox
+                    if (cell.Column is DataGridTemplateColumn templateColumn)
+                    {
+                        // 检查编辑元素是否是ComboBox
+                        if (row != null)
+                        {
+                            this.SelectedItem = row.DataContext;
+                            this.CurrentCell = new DataGridCellInfo(cell);
+
+                            // 开始编辑
+                            this.BeginEdit();
+
+                            // 延迟查找并打开ComboBox下拉列表
+                            _ = this.Dispatcher.BeginInvoke(
+                                new Action(() =>
+                            {
+                                var comboBox = FindComboBoxInCell(cell);
+                                if (comboBox != null)
+                                {
+                                    // 设置焦点并打开下拉列表
+                                    comboBox.Focus();
+                                    comboBox.IsDropDownOpen = true;
+
+                                    // 标记正在操作ComboBox
+                                    _isComboBoxSelecting = true;
+
+                                    // 添加事件处理器
+                                    comboBox.SelectionChanged -= ComboBox_SelectionChanged;
+                                    comboBox.DropDownClosed -= ComboBox_DropDownClosed;
+                                    comboBox.SelectionChanged += ComboBox_SelectionChanged;
+                                    comboBox.DropDownClosed += ComboBox_DropDownClosed;
+                                }
+                            }), System.Windows.Threading.DispatcherPriority.Background);
+                        }
+                        return;
+                    }
+                    // 非ComboBox列的正常编辑处理
                     if (row != null)
                     {
                         this.SelectedItem = row.DataContext;
@@ -146,42 +180,10 @@ public class DataGrid : System.Windows.Controls.DataGrid
 
                         // 开始编辑
                         this.BeginEdit();
-
-                        // 延迟查找并打开ComboBox下拉列表
-                        _ = this.Dispatcher.BeginInvoke(
-                            new Action(() =>
-                        {
-                            var comboBox = FindComboBoxInCell(cell);
-                            if (comboBox != null)
-                            {
-                                // 设置焦点并打开下拉列表
-                                comboBox.Focus();
-                                comboBox.IsDropDownOpen = true;
-
-                                // 标记正在操作ComboBox
-                                _isComboBoxSelecting = true;
-
-                                // 添加事件处理器
-                                comboBox.SelectionChanged -= ComboBox_SelectionChanged;
-                                comboBox.DropDownClosed -= ComboBox_DropDownClosed;
-                                comboBox.SelectionChanged += ComboBox_SelectionChanged;
-                                comboBox.DropDownClosed += ComboBox_DropDownClosed;
-                            }
-                        }), System.Windows.Threading.DispatcherPriority.Background);
                     }
-                    return;
-                }
-                // 非ComboBox列的正常编辑处理
-                if (row != null)
-                {
-                    this.SelectedItem = row.DataContext;
-                    this.CurrentCell = new DataGridCellInfo(cell);
-
-                    // 开始编辑
-                    this.BeginEdit();
                 }
             }
-        }
+        }catch(Exception ex) { }
     }
 
     protected override void OnKeyDown(KeyEventArgs e)
