@@ -178,7 +178,7 @@ public class LoadingService : ILoadingService
     {
         Application.Current.Dispatcher.Invoke(() =>
         {
-            this.loadingWindow?.HideWithAnimation();
+            this.loadingWindow?.Hide();
         });
     }
 
