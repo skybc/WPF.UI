@@ -17,6 +17,18 @@ namespace Wpf.Ui.Controls;
 /// </summary>
 public class GeometryView : Control
 {
+    /// <summary>Identifies the <see cref="GeometryPath"/> dependency property.</summary>
+    public static readonly DependencyProperty GeometryPathProperty = DependencyProperty.Register(
+        nameof(GeometryPath),
+        typeof(Geometry),
+        typeof(GeometryView),
+        new FrameworkPropertyMetadata(
+            null,
+            FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender,
+            OnGeometryPathChanged
+        )
+    );
+
     /// <summary>Identifies the <see cref="Geometry"/> dependency property.</summary>
     public static readonly DependencyProperty GeometryProperty = DependencyProperty.Register(
         nameof(Geometry),
@@ -28,6 +40,18 @@ public class GeometryView : Control
             OnGeometryChanged
         )
     );
+
+    /// <summary>
+    /// Gets or sets the geometry object that will be displayed directly.
+    /// Prefer this property when the source data is already a <see cref="Geometry"/> instance.
+    /// </summary>
+    [Bindable(true)]
+    [Category("Appearance")]
+    public Geometry? GeometryPath
+    {
+        get => (Geometry?)GetValue(GeometryPathProperty);
+        set => SetValue(GeometryPathProperty, value);
+    }
 
     /// <summary>
     /// Gets or sets the geometry string that will be parsed and displayed.
@@ -91,6 +115,17 @@ public class GeometryView : Control
     }
 
     /// <summary>
+    /// Handles changes to the GeometryPath property.
+    /// </summary>
+    private static void OnGeometryPathChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (d is GeometryView geometryView)
+        {
+            geometryView.UpdateDrawingImage();
+        }
+    }
+
+    /// <summary>
     /// Handles changes to the Foreground property.
     /// </summary>
     private static void OnForegroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -134,7 +169,8 @@ public class GeometryView : Control
     /// </summary>
     private void UpdateDrawingImage()
     {
-        if (string.IsNullOrEmpty(Geometry))
+        var geometry = GeometryPath;
+        if (geometry is null && string.IsNullOrWhiteSpace(Geometry))
         {
             Background = null;
             return;
@@ -142,8 +178,11 @@ public class GeometryView : Control
 
         try
         {        
-            // Parse the geometry string
-            var geometry = System.Windows.Media.Geometry.Parse(Geometry);
+            if (geometry is null)
+            {
+                // Parse the geometry string only when a Geometry object is not supplied.
+                geometry = System.Windows.Media.Geometry.Parse(Geometry);
+            }
 
             // Create DrawingImage
             var drawingImage = new DrawingImage();
