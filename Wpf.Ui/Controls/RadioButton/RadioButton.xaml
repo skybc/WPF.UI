@@ -293,6 +293,7 @@
                             </MultiTrigger.Conditions>
                             <Setter Property="Background" Value="{DynamicResource ToggleButtonBackgroundChecked}" />
                             <Setter Property="BorderBrush" Value="{DynamicResource AccentControlElevationBorderBrush}" />
+                            <Setter Property="Foreground" Value="{DynamicResource TextIconBrush}" />
                             <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ToggleButtonForegroundChecked}" />
                         </MultiTrigger>
                         <MultiTrigger>

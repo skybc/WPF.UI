@@ -17,6 +17,9 @@ namespace Wpf.Ui.Controls;
 /// </summary>
 public class GeometryView : Control
 {
+    /// <summary>缓存的 Foreground 值，用于检测继承属性变化</summary>
+    private Brush? _cachedForeground;
+
     /// <summary>Identifies the <see cref="GeometryPath"/> dependency property.</summary>
     public static readonly DependencyProperty GeometryPathProperty = DependencyProperty.Register(
         nameof(GeometryPath),
@@ -65,7 +68,7 @@ public class GeometryView : Control
         set => SetValue(GeometryProperty, value);
     }
 
-    
+
 
     /// <summary>
     /// Static constructor to set default style key.
@@ -80,7 +83,7 @@ public class GeometryView : Control
             typeof(GeometryView),
             new FrameworkPropertyMetadata(
                 Brushes.Black,
-                FrameworkPropertyMetadataOptions.AffectsRender,
+                FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits,
                 OnForegroundChanged
             )
         );
@@ -88,7 +91,7 @@ public class GeometryView : Control
             typeof(GeometryView),
             new FrameworkPropertyMetadata(
                 14.0,
-                FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender,
+                FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits,
                 OnFontSizeChanged
             )
         );
@@ -160,9 +163,42 @@ public class GeometryView : Control
 
     public GeometryView()
     {
-        
+        _cachedForeground = Brushes.Black;
     }
-    
+
+    /// <summary>
+    /// 重写 OnRender 以检测继承的 Foreground 属性变化。
+    /// 当父控件的 Foreground 改变时，继承值会改变，但可能不会触发 PropertyChanged 回调。
+    /// </summary>
+    protected override void OnRender(DrawingContext drawingContext)
+    {
+        base.OnRender(drawingContext);
+
+        // 检测继承的 Foreground 属性是否改变
+        var currentForeground = Foreground;
+        if (!BrushesEqual(_cachedForeground, currentForeground))
+        {
+            _cachedForeground = currentForeground?.CloneCurrentValue() ?? Brushes.Black;
+            UpdateDrawingImage();
+        }
+    }
+
+    /// <summary>
+    /// 比较两个 Brush 是否相等。
+    /// </summary>
+    private static bool BrushesEqual(Brush? brush1, Brush? brush2)
+    {
+        if (ReferenceEquals(brush1, brush2))
+            return true;
+
+        if (brush1 is null || brush2 is null)
+            return false;
+
+        if (brush1 is SolidColorBrush scb1 && brush2 is SolidColorBrush scb2)
+            return scb1.Color == scb2.Color;
+
+        return brush1.Equals(brush2);
+    }
 
     /// <summary>
     /// Updates the DrawingImage based on the current Geometry, FontSize, and Foreground.
@@ -177,7 +213,7 @@ public class GeometryView : Control
         }
 
         try
-        {        
+        {
             if (geometry is null)
             {
                 // Parse the geometry string only when a Geometry object is not supplied.
@@ -215,7 +251,7 @@ public class GeometryView : Control
                 Brush = brush,
                 Geometry = geometry
             };
-            
+
 
             drawingGroup.Children.Add(geometryDrawing);
 
