@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.ComponentModel;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 // ReSharper disable once CheckNamespace
 namespace Wpf.Ui.Controls;
@@ -33,6 +34,12 @@ public class DataGrid : System.Windows.Controls.DataGrid
     // Descriptors used to observe column Width changes
     private readonly Dictionary<DataGridColumn, DependencyPropertyDescriptor> _widthDescriptors = new();
 
+    // 拖拽排序相关字段
+    private const string DragRowDataFormat = "Wpf.Ui.Controls.DataGrid.DragRow";
+    private Point _dragStartPoint;
+    private bool _isDragging = false;
+    private object? _dragItem = null;
+
     /// <summary>
     /// Raised when any column's width changes.
     /// </summary>
@@ -42,6 +49,28 @@ public class DataGrid : System.Windows.Controls.DataGrid
     {
         // 设置单击编辑功能
         this.PreparingCellForEdit += OnPreparingCellForEdit;
+        // 拖拽排序事件
+        this.AllowDrop = true;
+        this.Drop += OnDrop;
+        this.DragOver += OnDragOver;
+    }
+
+    /// <summary>Identifies the <see cref="CanDrop"/> dependency property.</summary>
+    public static readonly DependencyProperty CanDropProperty =
+        DependencyProperty.Register(
+            nameof(CanDrop),
+            typeof(bool),
+            typeof(DataGrid),
+            new FrameworkPropertyMetadata(false)
+        );
+
+    /// <summary>
+    /// 获取或设置是否启用拖拽排序功能，默认为 false
+    /// </summary>
+    public bool CanDrop
+    {
+        get => (bool)GetValue(CanDropProperty);
+        set => SetValue(CanDropProperty, value);
     }
 
     /// <summary>Identifies the <see cref="CheckBoxColumnElementStyle"/> dependency property.</summary>
@@ -99,6 +128,24 @@ public class DataGrid : System.Windows.Controls.DataGrid
 
     protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
     {
+        // 记录拖拽起始点
+        _dragStartPoint = e.GetPosition(null);
+        _dragItem = null;
+
+        // 记录拖拽源数据项
+        if (CanDrop)
+        {
+            var hitTest = VisualTreeHelper.HitTest(this, e.GetPosition(this));
+            if (hitTest?.VisualHit != null)
+            {
+                var row = FindParent<DataGridRow>(hitTest.VisualHit);
+                if (row != null)
+                {
+                    _dragItem = row.DataContext;
+                }
+            }
+        }
+
         try
         {
             // 如果整个DataGrid是只读的，直接调用基类
@@ -131,7 +178,7 @@ public class DataGrid : System.Windows.Controls.DataGrid
                             {
                                 // 切换IsChecked值
                                 bool? newValue = checkBox.IsChecked == true ? false : true;
-                                checkBox.IsChecked = newValue;
+                                //checkBox.IsChecked = newValue;
                             }
                             else
                             {
@@ -221,6 +268,104 @@ public class DataGrid : System.Windows.Controls.DataGrid
                 }
             }
         }catch(Exception ex) { }
+    }
+
+    protected override void OnPreviewMouseMove(MouseEventArgs e)
+    {
+        // 拖拽排序处理
+        if (CanDrop && e.LeftButton == MouseButtonState.Pressed && !_isDragging && _dragItem != null)
+        {
+            Point position = e.GetPosition(null);
+            if (Math.Abs(position.X - _dragStartPoint.X) > SystemParameters.MinimumHorizontalDragDistance ||
+                Math.Abs(position.Y - _dragStartPoint.Y) > SystemParameters.MinimumVerticalDragDistance)
+            {
+                _isDragging = true;
+                var dataObject = new DataObject(DragRowDataFormat, _dragItem);
+                DragDrop.DoDragDrop(this, dataObject, DragDropEffects.Move);
+                _isDragging = false;
+                _dragItem = null;
+            }
+        }
+
+        base.OnPreviewMouseMove(e);
+    }
+
+    private void OnDragOver(object sender, DragEventArgs e)
+    {
+        if (!CanDrop)
+        {
+            e.Effects = DragDropEffects.None;
+            e.Handled = true;
+            return;
+        }
+
+        // 检查是否是本 DataGrid 的拖拽数据
+        if (e.Data.GetDataPresent(DragRowDataFormat))
+        {
+            e.Effects = DragDropEffects.Move;
+        }
+        else
+        {
+            e.Effects = DragDropEffects.None;
+        }
+        e.Handled = true;
+    }
+
+    private void OnDrop(object sender, DragEventArgs e)
+    {
+        if (!CanDrop)
+            return;
+
+        try
+        {
+            // 获取拖放的数据
+            if (!e.Data.GetDataPresent(DragRowDataFormat))
+                return;
+
+            var droppedData = e.Data.GetData(DragRowDataFormat);
+            if (droppedData == null)
+                return;
+
+            // 获取目标行
+            var hitTest = VisualTreeHelper.HitTest(this, e.GetPosition(this));
+            if (hitTest?.VisualHit == null)
+                return;
+
+            var targetRow = FindParent<DataGridRow>(hitTest.VisualHit);
+            if (targetRow == null)
+                return;
+
+            var targetData = targetRow.DataContext;
+
+            // 获取源索引和目标索引
+            int sourceIndex = this.Items.IndexOf(droppedData);
+            int targetIndex = this.Items.IndexOf(targetData);
+
+            if (sourceIndex < 0 || targetIndex < 0 || sourceIndex == targetIndex)
+                return;
+
+            // 处理数据源移动
+            if (ItemsSource is System.Collections.IList list && list.IsFixedSize == false)
+            {
+                // 使用反射调用 Move 方法（对于 ObservableCollection<T>）
+                var moveMethod = list.GetType().GetMethod("Move", new[] { typeof(int), typeof(int) });
+                if (moveMethod != null)
+                {
+                    moveMethod.Invoke(list, new object[] { sourceIndex, targetIndex });
+                }
+                else
+                {
+                    // 如果没有 Move 方法，手动移动
+                    var item = list[sourceIndex];
+                    list.RemoveAt(sourceIndex);
+                    list.Insert(targetIndex > sourceIndex ? targetIndex - 1 : targetIndex, item);
+                }
+            }
+        }
+        catch (Exception)
+        {
+            // 忽略拖放过程中的异常
+        }
     }
 
     protected override void OnKeyDown(KeyEventArgs e)
@@ -367,53 +512,7 @@ public class DataGrid : System.Windows.Controls.DataGrid
                key == Key.Delete;
     }
 
-    private bool IsComboBoxRelatedElement(DependencyObject element)
-    {
-        // 向上遍历视觉树，检查是否在ComboBox或其下拉列表中
-        var current = element;
-        while (current != null)
-        {
-            // 直接检查ComboBox和ComboBoxItem
-            if (current is ComboBox || current is ComboBoxItem)
-            {
-                return true;
-            }
-
-            // 检查是否是ComboBox的Popup部分
-            if (current.GetType().Name == "Popup")
-            {
-                // 进一步确认这个Popup是否属于ComboBox
-                var parent = VisualTreeHelper.GetParent(current);
-                while (parent != null)
-                {
-                    if (parent is ComboBox)
-                        return true;
-                    parent = VisualTreeHelper.GetParent(parent);
-                }
-            }
-
-            // 如果到达DataGridCell，停止向上搜索
-            if (current is DataGridCell)
-            {
-                break;
-            }
-
-            current = VisualTreeHelper.GetParent(current);
-        }
-        return false;
-    }
-
-    private bool IsComboBoxColumnInEditMode(DataGridCell cell)
-    {
-        // 检查单元格是否属于ComboBox列且正在编辑模式
-        if (cell.Column is DataGridComboBoxColumn)
-        {
-            // 查找单元格中是否有ComboBox控件
-            return FindComboBoxInCell(cell) != null;
-        }
-        return false;
-    }
-
+    
     private ComboBox FindComboBoxInCell(DataGridCell cell)
     {
         // 在单元格中查找ComboBox控件
