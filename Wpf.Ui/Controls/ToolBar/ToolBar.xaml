@@ -26,7 +26,7 @@
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
                     <Border
                         x:Name="Border"
-                        Padding="12,6"
+                        Padding="6,6"
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}">

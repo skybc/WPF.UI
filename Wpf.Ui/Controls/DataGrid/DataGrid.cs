@@ -99,12 +99,14 @@ public class DataGrid : System.Windows.Controls.DataGrid
 
     protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
     {
-        base.OnPreviewMouseLeftButtonDown(e);
         try
         {
-            // 如果整个DataGrid是只读的，直接返回
+            // 如果整个DataGrid是只读的，直接调用基类
             if (this.IsReadOnly)
+            {
+                base.OnPreviewMouseLeftButtonDown(e);
                 return;
+            }
 
             // 获取点击的单元格
             var hitTest = VisualTreeHelper.HitTest(this, e.GetPosition(this));
@@ -115,6 +117,41 @@ public class DataGrid : System.Windows.Controls.DataGrid
                 {
                     var row = FindParent<DataGridRow>(cell);
 
+                    // CheckBox列：点击时立即切换值
+                    if (cell.Column is DataGridCheckBoxColumn checkBoxColumn)
+                    {
+                        if (row != null)
+                        {
+                            this.SelectedItem = row.DataContext;
+                            this.CurrentCell = new DataGridCellInfo(cell);
+
+                            // 查找CheckBox并切换值
+                            var checkBox = FindCheckBoxInCell(cell);
+                            if (checkBox != null)
+                            {
+                                // 切换IsChecked值
+                                bool? newValue = checkBox.IsChecked == true ? false : true;
+                                checkBox.IsChecked = newValue;
+                            }
+                            else
+                            {
+                                // 如果找不到CheckBox，进入编辑模式后切换
+                                this.BeginEdit();
+                                _ = this.Dispatcher.BeginInvoke(
+                                    new Action(() =>
+                                    {
+                                        var editCheckBox = FindCheckBoxInCell(cell);
+                                        if (editCheckBox != null)
+                                        {
+                                            bool? newValue = editCheckBox.IsChecked == true ? false : true;
+                                            editCheckBox.IsChecked = newValue;
+                                            this.CommitEdit();
+                                        }
+                                    }), System.Windows.Threading.DispatcherPriority.Background);
+                            }
+                        }
+                        return;
+                    }
                     // 检查是否是ComboBox列
                     if (cell.Column is DataGridComboBoxColumn)
                     {
@@ -390,6 +427,42 @@ public class DataGrid : System.Windows.Controls.DataGrid
 
             // 递归查找
             var found = FindComboBoxRecursive(child);
+            if (found != null)
+                return found;
+        }
+        return null;
+    }
+
+    private CheckBox FindCheckBoxInCell(DataGridCell cell)
+    {
+        // 在单元格中查找CheckBox控件
+        for (int i = 0; i < VisualTreeHelper.GetChildrenCount(cell); i++)
+        {
+            var child = VisualTreeHelper.GetChild(cell, i);
+            if (child is CheckBox checkBox)
+            {
+                return checkBox;
+            }
+
+            // 递归查找
+            var found = FindCheckBoxRecursive(child);
+            if (found != null)
+                return found;
+        }
+        return null;
+    }
+
+    private CheckBox FindCheckBoxRecursive(DependencyObject parent)
+    {
+        for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
+        {
+            var child = VisualTreeHelper.GetChild(parent, i);
+            if (child is CheckBox checkBox)
+            {
+                return checkBox;
+            }
+
+            var found = FindCheckBoxRecursive(child);
             if (found != null)
                 return found;
         }
