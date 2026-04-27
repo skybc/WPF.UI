@@ -164,41 +164,41 @@ public class DataGrid : System.Windows.Controls.DataGrid
                 {
                     var row = FindParent<DataGridRow>(cell);
 
-                    // CheckBox列：点击时立即切换值
-                    if (cell.Column is DataGridCheckBoxColumn checkBoxColumn)
-                    {
-                        if (row != null)
-                        {
-                            this.SelectedItem = row.DataContext;
-                            this.CurrentCell = new DataGridCellInfo(cell);
+                    //// CheckBox列：点击时立即切换值
+                    //if (cell.Column is DataGridCheckBoxColumn checkBoxColumn)
+                    //{
+                    //    if (row != null)
+                    //    {
+                    //        this.SelectedItem = row.DataContext;
+                    //        this.CurrentCell = new DataGridCellInfo(cell);
 
-                            // 查找CheckBox并切换值
-                            var checkBox = FindCheckBoxInCell(cell);
-                            if (checkBox != null)
-                            {
-                                // 切换IsChecked值
-                                bool? newValue = checkBox.IsChecked == true ? false : true;
-                                //checkBox.IsChecked = newValue;
-                            }
-                            else
-                            {
-                                // 如果找不到CheckBox，进入编辑模式后切换
-                                this.BeginEdit();
-                                _ = this.Dispatcher.BeginInvoke(
-                                    new Action(() =>
-                                    {
-                                        var editCheckBox = FindCheckBoxInCell(cell);
-                                        if (editCheckBox != null)
-                                        {
-                                            bool? newValue = editCheckBox.IsChecked == true ? false : true;
-                                            editCheckBox.IsChecked = newValue;
-                                            this.CommitEdit();
-                                        }
-                                    }), System.Windows.Threading.DispatcherPriority.Background);
-                            }
-                        }
-                        return;
-                    }
+                    //        // 查找CheckBox并切换值
+                    //        var checkBox = FindCheckBoxInCell(cell);
+                    //        if (checkBox != null)
+                    //        {
+                    //            // 切换IsChecked值
+                    //            bool? newValue = checkBox.IsChecked == true ? false : true;
+                    //            //checkBox.IsChecked = newValue;
+                    //        }
+                    //        else
+                    //        {
+                    //            // 如果找不到CheckBox，进入编辑模式后切换
+                    //            this.BeginEdit();
+                    //            _ = this.Dispatcher.BeginInvoke(
+                    //                new Action(() =>
+                    //                {
+                    //                    var editCheckBox = FindCheckBoxInCell(cell);
+                    //                    if (editCheckBox != null)
+                    //                    {
+                    //                        bool? newValue = editCheckBox.IsChecked == true ? false : true;
+                    //                        editCheckBox.IsChecked = newValue;
+                    //                        this.CommitEdit();
+                    //                    }
+                    //                }), System.Windows.Threading.DispatcherPriority.Background);
+                    //        }
+                    //    }
+                    //    return;
+                    //}
                     // 检查是否是ComboBox列
                     if (cell.Column is DataGridComboBoxColumn)
                     {
