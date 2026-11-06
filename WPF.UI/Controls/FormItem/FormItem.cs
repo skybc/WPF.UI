@@ -189,8 +189,8 @@ namespace Wpf.Ui.Controls
             }
 
             // 运行时默认绑定主题色
-            SetValue(TitleForegroundProperty, Brushes.Black);
-            SetValue(TitlePaddingProperty, new Thickness(4, 0, 4, 0));
+            SetCurrentValue(TitleForegroundProperty, Brushes.Black);
+            SetCurrentValue(TitlePaddingProperty, new Thickness(4, 0, 4, 0));
         }
     }
 }

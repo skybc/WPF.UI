@@ -1,0 +1,72 @@
+<Page
+    x:Class="Wpf.Ui.Gallery.Views.Pages.Layout.FormPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:Wpf.Ui.Gallery.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    Title="FormPage"
+    d:DesignHeight="800"
+    d:DesignWidth="900"
+    ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+    ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    mc:Ignorable="d">
+    <StackPanel Margin="0,0,0,24">
+
+        <controls:ControlExample
+            Margin="0"
+            HeaderText="Form - 统一设置 TitleWidth 与 TitleHorizontalAlignment"
+            XamlCode="&lt;ui:Form TitleWidth=&quot;100&quot; TitleHorizontalAlignment=&quot;Right&quot;&gt;&#10;  &lt;ui:FormItem Title=&quot;姓名&quot;&gt;&lt;ui:TextBox /&gt;&lt;/ui:FormItem&gt;&#10;  &lt;ui:FormItem Title=&quot;邮箱&quot;&gt;&lt;ui:TextBox /&gt;&lt;/ui:FormItem&gt;&#10;&lt;/ui:Form&gt;">
+            <ui:Form
+                Width="420"
+                HorizontalAlignment="Left"
+                TitleHorizontalAlignment="Right"
+                TitleWidth="100">
+                <ui:FormItem Title="姓名">
+                    <ui:TextBox PlaceholderText="请输入姓名" />
+                </ui:FormItem>
+                <ui:FormItem Title="邮箱">
+                    <ui:TextBox PlaceholderText="请输入邮箱" />
+                </ui:FormItem>
+                <ui:FormItem Title="备注信息">
+                    <ui:TextBox PlaceholderText="请输入备注" />
+                </ui:FormItem>
+            </ui:Form>
+        </controls:ControlExample>
+
+        <controls:ControlExample
+            Margin="0,32,0,0"
+            HeaderText="Form - 标题左对齐，单项覆盖 TitleWidth"
+            XamlCode="&lt;ui:Form TitleWidth=&quot;80&quot; TitleHorizontalAlignment=&quot;Left&quot;&gt;&#10;  &lt;ui:FormItem Title=&quot;用户名&quot; /&gt;&#10;  &lt;ui:FormItem Title=&quot;很长的标题&quot; TitleWidth=&quot;140&quot; /&gt;&#10;&lt;/ui:Form&gt;">
+            <ui:Form
+                Width="420"
+                HorizontalAlignment="Left"
+                TitleHorizontalAlignment="Left"
+                TitleWidth="80">
+                <ui:FormItem Title="用户名">
+                    <ui:TextBox />
+                </ui:FormItem>
+                <ui:FormItem Title="很长的标题" TitleWidth="140">
+                    <ui:TextBox />
+                </ui:FormItem>
+            </ui:Form>
+        </controls:ControlExample>
+
+        <controls:ControlExample Margin="0,32,0,0" HeaderText="Form - 标题置于顶部">
+            <ui:Form
+                Width="420"
+                HorizontalAlignment="Left"
+                TitleFontWeight="SemiBold"
+                TitlePlacement="Top">
+                <ui:FormItem Title="姓名">
+                    <ui:TextBox />
+                </ui:FormItem>
+                <ui:FormItem Title="地址">
+                    <ui:TextBox />
+                </ui:FormItem>
+            </ui:Form>
+        </controls:ControlExample>
+    </StackPanel>
+</Page>
